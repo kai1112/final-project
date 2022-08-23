@@ -1,0 +1,8 @@
+.edichapter-author {
+    display: flex;
+    gap: 20px;
+}
+
+.edit-chapter {
+    flex: 1
+}

@@ -1,0 +1,8 @@
+.create-chapter {
+    display: flex;
+    gap: 20px;
+}
+
+.create-chapter-info {
+    flex: 1
+}

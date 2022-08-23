@@ -1,0 +1,8 @@
+.createManga {
+    display: flex;
+    gap: 20px;
+}
+
+.createManga-info {
+    flex: 1
+}

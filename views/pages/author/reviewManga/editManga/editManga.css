@@ -1,0 +1,8 @@
+.editManga {
+    display: flex;
+    gap: 20px;
+}
+
+.editManga-info {
+    flex: 1
+}

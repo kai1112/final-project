@@ -1,0 +1,8 @@
+.manageUser {
+    display: flex;
+    gap: 20px;
+}
+
+.use-info {
+    flex: 1
+}

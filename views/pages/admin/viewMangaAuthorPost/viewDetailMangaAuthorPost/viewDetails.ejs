@@ -1,0 +1,42 @@
+<div class="viewDetailMangaAuthorPost">
+  <div class="adminMenu">
+    <%- include('../../../../components/adminMenu/adminMenu.ejs') %>
+  </div>
+  <div class="viewDetailMangaAuthorPost-info">
+    <td>
+      <%= manga.name %>
+    </td>
+    <td><img src="<%= manga.avatar %>" alt="avatar" width="50px" /></td>
+    <td>
+      <%= manga.category %>
+    </td>
+    <td>
+      <%= manga.author %>
+    </td>
+    <td>
+      <%= manga.description %>
+    </td>
+    <!-- chapter -->
+    <h1>chapter</h1>
+    <% chapter.map((chapter, index)=>{%>
+      <td>
+        <a onclick="viewChap('<%= chapter._id %>')"> chap <%= chapter.title %></a>
+        <button onclick="post('<%= chapter._id%>')">
+          <%= chapter.stautus %>
+        </button>
+        <button onclick="viewDetailChapter('<%= chapter._id %>')">
+          view detail chapter
+        </button>
+        <button onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
+        <button onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
+      </td>
+      <%})%>
+  </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="/views/pages/admin/viewMangaAuthorPost/viewDetailMangaAuthorPost/viewDetails.css">
+<script src="/views/pages/admin/viewMangaAuthorPost/viewDetailMangaAuthorPost/viewDetails.js"></script>

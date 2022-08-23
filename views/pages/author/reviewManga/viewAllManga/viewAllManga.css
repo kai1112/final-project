@@ -1,0 +1,8 @@
+.viewAllMangaAuthorPost {
+    display: flex;
+    gap: 20px;
+}
+
+.mangaAuthor-post {
+    flex: 1
+}

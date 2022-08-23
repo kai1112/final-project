@@ -1,0 +1,8 @@
+.wrapper-author_info {
+    display: flex;
+    gap: 20px;
+}
+
+.author-info {
+    flex: 1
+}

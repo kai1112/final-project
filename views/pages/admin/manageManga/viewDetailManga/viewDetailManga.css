@@ -1,0 +1,8 @@
+.view-detail-manga {
+    display: flex;
+    gap: 20px;
+}
+
+.detail-Manga {
+    flex: 1
+}

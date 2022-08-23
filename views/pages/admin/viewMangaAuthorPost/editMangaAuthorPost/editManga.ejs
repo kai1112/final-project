@@ -1,0 +1,24 @@
+<div class="editMangaAuthorPost">
+  <div class="adminMenu">
+    <%- include('../../../../components/adminMenu/adminMenu.ejs') %>
+  </div>
+  <div class="editMangaAuthorPost-info">
+    <form action="" enctype="multipart/form-data">
+      <p>avatar</p>
+      <input type="file" name="avatar" id="avatar" placeholder="avatar" />
+      <p>category</p>
+      <input type="text" name="category" id="category" placeholder="category" />
+      <p>discription</p>
+      <input type="text" name="description" id="description" placeholder="input description manga" />
+      <p>price</p>
+      <input type="number" name="price" id="price" placeholder="input price manga" />
+      <button type="button" onclick="edit()">submit</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="/views/pages/admin/viewMangaAuthorPost/editMangaAuthorPost/editManga.css">
+<script src="/views/pages/author/reviewManga/editManga/editManga.js"></script>

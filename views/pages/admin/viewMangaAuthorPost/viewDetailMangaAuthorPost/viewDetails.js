@@ -1,0 +1,33 @@
+function viewDetailChapter(id) {
+  window.location.href = `/reviewChapter/viewDetailChapter/${id}`;
+}
+
+async function edichapter(id, status) {
+  try {
+    console.log(status);
+    if (status === 'posted') {
+      alert('ban k the edit manga nay')
+    } else {
+      // window.location.href = `/chapter/editChapter/${id}`;
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+async function deleteChapter(id) {
+  let mangaId = window.location.href.split("/")[5];
+  try {
+    let data1 = await $.ajax({
+      url: `/reviewChapter/deleteChapter/${id}`,
+      type: "DELETE",
+      data: {
+        id,
+      },
+    });
+    // console.log(data1);
+    window.location.href = `/reviewManga/viewDetails/${mangaId}`;
+  } catch (error) {
+    console.log(error);
+  }
+}

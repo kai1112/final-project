@@ -1,0 +1,8 @@
+.editMangaAuthorPost {
+    display: flex;
+    gap: 20px;
+}
+
+.editMangaAuthorPost-infocreate-chapter-info {
+    flex: 1
+}

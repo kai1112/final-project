@@ -1,0 +1,36 @@
+<div>
+</div>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">avatar</th>
+        <th scope="col">price</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% allManga.map((manga, index)=>{%>
+      <tr>
+        <th scope="row"><%=index + 1%></th>
+        <td><%=manga.name%></td>
+        <td><img src="<%=manga.avatar%>" alt="" width="40px"></td>
+        <td><%=manga.price%></td>
+        <td> 
+          <button onclick="edit('<%= manga._id%>')">edit</button>
+          <button onclick="viewDetails('<%= manga._id%>')">view detail</button>
+          <button onclick="delette('<%= manga._id%>')">delete</button>
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <link rel="stylesheet" href="/views/pages/admin/viewMangaAuthorPost/viewMangaAuthorPostCss/viewpaginationMangaAuthorPost.css">
