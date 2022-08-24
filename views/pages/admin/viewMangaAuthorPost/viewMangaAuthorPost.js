@@ -9,6 +9,10 @@ async function post(id) {
                 price
             }
         })
+        if (data.status === 200) {
+            alert(data.message);
+            window.location.reload();
+        }
     } catch (e) {
         console.log(e)
     }
@@ -20,7 +24,7 @@ async function edit(id, status) {
         if (status === 'posted') {
             alert('ban k the edit manga nay')
         } else {
-            window.location.href = `/reviewManga/editManga/${id}`
+            window.location.href = `/manga/editMangaAuthor/${id}`
         }
     } catch (e) {
         console.log(e)
@@ -28,7 +32,7 @@ async function edit(id, status) {
 }
 
 async function viewDetails(id) {
-    window.location.href = `/reviewManga/viewDetails/${id}`
+    window.location.href = `/manga/viewDetailsAuthor/${id}`
 }
 
 async function delette(id) {

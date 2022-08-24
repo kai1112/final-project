@@ -25,7 +25,7 @@ router.get('/viewDetailsAuthor/:id', controller.viewDetailsManga)
 // post manga
 router.post('/createManga/:id', controller.createManga)
 // edit manga
-router.get('/editMangaAuthor/:id', controller.editManga)
+router.get('/editMangaAuthor/:id', controller.editMangaAuthor)
 
 
 //-------------------------------------------

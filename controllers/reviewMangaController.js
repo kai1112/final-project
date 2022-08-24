@@ -46,6 +46,7 @@ module.exports.createMangaAuthor = async (req, res) => {
         category: req.body.category,
         author: user._id,
         description: req.body.description,
+        price: req.body.price
       });
     }
     res.json({
