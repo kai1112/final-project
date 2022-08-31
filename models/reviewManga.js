@@ -4,14 +4,14 @@ const mongoose = require("./dbConnection");
 const ReviewMangaSchema = mongoose.Schema(
   {
     avatar: String,
-    category: [String],
+    category: [{}],
     name: String,
     author: String,
     description: String,
     views: Number,
     like: Number,
-    price: Number,   
-    stautus: {type: String, enum: ['posted', 'review'], default: 'review'},
+    price: Number,
+    stautus: { type: String, enum: ['posted', 'review'], default: 'review' },
   },
   { collection: "ReviewManga", timestamps: true }
 );

@@ -17,6 +17,7 @@ module.exports.viewProfile = async (req, res) => {
   }
 }
 // change profile
+
 module.exports.changeProfile = async (req, res) => {
   try {
     let userID = req.params.id;

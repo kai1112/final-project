@@ -15,8 +15,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get('/adminProfile', controller.viewProfile)
-router.post('/changeProfile/:id', upload.single('avatar'), controller.changeProfile)
+router.get('/adminProfile', auth.checkToken, auth.checkRoleAdmin, controller.viewProfile)
+
+router.patch('/change-name', auth.checkToken, auth.checkRoleAdmin, controller.ChangeUserName)
+router.patch('/change-des', auth.checkToken, auth.checkRoleAdmin, controller.ChangeUserDes)
+router.post('/change-avatar', auth.checkToken, auth.checkRoleAdmin, upload.single('avatar'), controller.ChangeUserAvatar)
+router.patch('/change-email', auth.checkToken, auth.checkRoleAdmin, controller.ChangeUserEmail)
+router.patch('/change-password', auth.checkToken, auth.checkRoleAdmin, controller.ChangeUserPassword)
 
 
+router.get('/logout', auth.checkToken, auth.checkRoleAdmin, controller.Logout)
 module.exports = router;

@@ -30,7 +30,11 @@
             </td>
             <td><img src="<%=manga.avatar%>" alt="" width="40px"></td>
             <td>
-              <%=manga.category%>
+              <% for(let i=0; i < manga.category.length; i++) {%>
+                <a href="">
+                  <%=manga.category[i].name%>
+                </a>
+                <%}%>
             </td>
             <td>
               <%=user%>

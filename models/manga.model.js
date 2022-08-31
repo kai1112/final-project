@@ -17,7 +17,8 @@ const MangaSchema = mongoose.Schema(
     reviewManga: {
       type: String,
       ref: 'ReviewManga'
-    }
+    },
+    buyed: [String]
   },
   { collection: "Manga", timestamps: true }
 );

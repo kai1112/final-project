@@ -38,4 +38,12 @@ router.use('/manga', mangaRoute)
 // using chapter router
 const chapterRoute = require("./chapterRouter")
 router.use('/chapter', chapterRoute)
+
+//using libary routes
+const followRoute = require("./followRouter")
+router.use('/follow', followRoute)
+
+//using comment routes
+const commentRoute = require("./commentRouter")
+router.use('/comment', commentRoute)
 module.exports = router;

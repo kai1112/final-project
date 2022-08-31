@@ -9,8 +9,19 @@
       <input type="text" name="name" id="name" placeholder="input name manga" />
       <p>avatar</p>
       <input type="file" name="avatar" id="avatar" placeholder="avatar" />
-      <p>category</p>
-      <input type="text" name="category" id="category" placeholder="category" />
+      <div id="selectCategory">Choose Category
+        <select id="selectNode" onchange="handleOption()">
+          <option value="" selected>Selectect</option>
+          <% category.forEach((e)=> {%>
+            <option value="category" onclick="changeCategory(this)" id="<%= e._id %>">
+              <%= e.name %>
+            </option>
+            <% }) %>
+        </select>
+      </div>
+      <div id="showcategory">
+
+      </div>
       <p>discription</p>
       <input type="text" name="description" id="description" placeholder="input description manga" />
       <p>price</p>

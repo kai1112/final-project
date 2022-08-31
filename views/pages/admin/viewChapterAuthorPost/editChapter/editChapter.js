@@ -30,7 +30,7 @@ async function ChangeName(id) {
     console.log(newName);
     let res = await $.ajax({
         type: "PATCH",
-        url: `/chapter/change-title/${id}`,
+        url: `/chapter/change-title-chapter/${id}`,
         data: { newName }
     })
     if (res.status === 200) {
@@ -43,7 +43,7 @@ async function ChangeDes(id) {
     let newDes = $('.Des-span').text();
     let res = await $.ajax({
         type: "PATCH",
-        url: `/chapter/change-content/${id}`,
+        url: `/chapter/change-content-chapter/${id}`,
         data: { newDes }
     })
     alert(res.mess)

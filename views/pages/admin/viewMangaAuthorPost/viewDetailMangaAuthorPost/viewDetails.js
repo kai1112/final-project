@@ -8,7 +8,7 @@ async function edichapter(id, status) {
     if (status === 'posted') {
       alert('ban k the edit manga nay')
     } else {
-      // window.location.href = `/chapter/editChapter/${id}`;
+      window.location.href = `/chapter/editChapterAuthor/${id}`;
     }
   } catch (e) {
     console.log(e)

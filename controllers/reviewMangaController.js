@@ -2,6 +2,7 @@ const ReviewMangaModel = require('../models/reviewManga')
 const ReviewChapterModel = require('../models/reviewChapter')
 const CategoryModel = require('../models/category.model')
 const UserModel = require('../models/user.model')
+const category = require('../models/category.model')
 const fs = require("fs");
 
 
@@ -24,7 +25,8 @@ module.exports.viewAllMangaAuthorCreated = async (req, res) => {
 // view pages created manga
 module.exports.viewMangaAuthorCreated = async (req, res) => {
   try {
-    let category = CategoryModel.find()
+    let category = await CategoryModel.find()
+    // console.log(category);
     res.render('pages/author/reviewManga/createManga/createManga', { category })
   } catch (e) {
     console.log(e)
@@ -34,16 +36,23 @@ module.exports.viewMangaAuthorCreated = async (req, res) => {
 module.exports.createMangaAuthor = async (req, res) => {
   try {
     const cookies = req.cookies;
-    // console.log(cookies);
     let user = await UserModel.findOne({ token: cookies.user })
     const newManga = await ReviewMangaModel.findOne({ name: req.body.name });
+    let category = []
+    let categoryID = req.body.categoryID.split(',')
+    let categoryName = req.body.categoryName.split(',')
+    console.log(categoryName);
+    for (let i = 0; i < categoryName.length; i++) {
+      category.push({ name: categoryName[i], id: categoryID[i] })
+    }
+    console.log(41, category);
     if (newManga) {
-      res.json({ manga: manga });
+      res.json({ message: 'manga da ton tai' });
     } else {
       await ReviewMangaModel.create({
         avatar: "/" + req.file.path,
         name: req.body.name,
-        category: req.body.category,
+        category: category,
         author: user._id,
         description: req.body.description,
         price: req.body.price

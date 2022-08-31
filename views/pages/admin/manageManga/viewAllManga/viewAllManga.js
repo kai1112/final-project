@@ -15,11 +15,23 @@ async function delette(id) {
                 id,
             },
         });
-        if (data.status === 200) {
+        if (data1.status === 200) {
             alert('delette successfully')
             window.location.reload();
         }
         // console.log(data1);
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function pagination(page, limit) {
+    try {
+        const data = await $.ajax({
+            url: `/manga/viewPaginationManga?page=${page}&limit=${limit}`,
+            type: "GET",
+        });
+        $(".pagination").html(data);
     } catch (e) {
         console.log(e)
     }

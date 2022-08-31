@@ -1,27 +1,3 @@
-// async function changInfo(id)
-// {   
-//     let username = $("#username").val();
-//     const form = $("form")[0];
-//     const formData = new FormData(form);
-//     if (username.length > 5) {
-//       let data = await $.ajax({
-//         url: `/author/changeProfile/${id}`,
-//         type: "POST",
-//         data: formData,
-//         processData: false,
-//         contentType: false,
-//         }
-//       );
-//       console.log(data);
-//       if (data.status == 200) {
-//         alert("create successful");
-//         window.location.href = `/auth/changeProfile/${id}`;
-//       }
-//     } else {
-//       alert("nhap name lon hon 5");
-//     }
-// }
-
 let imgInp = $('#change-avatar')[0]
 let blah = $('.preview-avatar')[0]
 let imgSrc = $('.preview-avatar').attr('src')
@@ -81,28 +57,15 @@ $('.detailHideBtn').on('click', (e) => {
   $('.detailContainer').css({ display: 'none' })
 })
 
-//show follow and block detail
-async function ShowDetail(route) {
-  $('.detailContainer').css({ display: 'flex' })
-  let res = await $.ajax({
-    url: `/api/${route}/get-all-${route}-author`
-  })
-  $('.detailContainer').html(res)
-}
-async function UnfollowAndUnblockDetail(authorId, route, element) {
-  await $.ajax({
-    url: `/api/${route}/un${route}-author/${authorId}`,
-    type: 'DELETE'
-  })
-  $(element).text(`Un${route}ed`)
-  $(element).css({ background: 'rgb(26, 137, 23)', color: 'white' })
-}
+
+
 //change
 async function ChangeName() {
   let newName = $('.Name-span').text();
+  console.log(newName);
   let res = await $.ajax({
     type: "PATCH",
-    url: '/admin/change-name',
+    url: '/author/change-name',
     data: { newName }
   })
   alert(res.mess)
@@ -112,7 +75,7 @@ async function ChangeDes() {
   let newDes = $('.Des-span').text();
   let res = await $.ajax({
     type: "PATCH",
-    url: '/admin/change-des',
+    url: '/author/change-des',
     data: { newDes }
   })
   alert(res.mess)
@@ -123,15 +86,18 @@ async function ChangeAvatar() {
   try {
     const form = $('.changeAvatar-form')[0]//chuyen ve DOM
     const formData = new FormData(form)//Tra ve formData
+
     const res = await $.ajax({
-      url: '/admin/change-avatar',
+      url: '/author/change-avatar',
       type: 'POST',
       data: formData,
       processData: false,
       contentType: false,
     })
-    alert(res.mess)
-    window.location.reload();
+    if (res.status === 200) {
+      alert('success')
+      window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -140,11 +106,14 @@ async function ChangeEmail() {
   let newEmail = $('.Email-span').text();
   let res = await $.ajax({
     type: "PATCH",
-    url: '/admin/change-email',
+    url: '/author/change-email',
     data: { newEmail }
   })
-  alert(res.mess)
-  window.location.reload();
+  if (res.status === 200) {
+
+    alert('success')
+    window.location.reload();
+  }
 }
 async function ChangePassword() {
   let oldPass = $('#oldPassword').val()
@@ -154,7 +123,7 @@ async function ChangePassword() {
   }
   let res = await $.ajax({
     type: "PATCH",
-    url: '/admin/change-password',
+    url: '/author/change-password',
     data: { oldPass, newPass }
   })
   alert(res.mess)

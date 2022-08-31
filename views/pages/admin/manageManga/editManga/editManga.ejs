@@ -11,33 +11,67 @@
   <div class="adminMenu">
     <%- include('../../../../components/adminMenu/adminMenu.ejs') %>
   </div>
-
-
-
   <div class="editManga-info">
-    <form enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="exampleFormControlFile1">Chose avatar update</label>
-        <input type="file" class="form-control-file" name="avatar" id="avatar" placeholder="avatar">
+    <div class="mainUserProfile">
+      <h2>About manga edit</h2>
+      <!-- name -->
+      <div class="mainUserProfile__item">
+        <div class="mainUserProfile__itemLeft">
+          <h3>Name</h3>
+          <p class="Name-span">
+            <%= manga.name %>
+          </p>
+        </div>
+        <div class="mainUserProfile__itemRight">
+          <button class="btnEdit editName">Edit</button>
+          <div class="buttonSet setEditName">
+            <button class="btnSave saveName" onclick="ChangeName('<%= manga._id %>')">Save</button>
+            <button class="btnCancel cancelName">Cancel</button>
+          </div>
+        </div>
       </div>
-      <div class="form-group" enctype="multipart/form-data">
-        <label for="exampleFormControlInput1">Input price update</label>
-        <input type="number" class="form-control" name="price" id="price" placeholder="input price manga">
+      <hr class="change-splitter">
+      <!-- des -->
+      <div class="mainUserProfile__item">
+        <div class="mainUserProfile__itemLeft">
+          <h3>description</h3>
+          <p class="Des-span">
+            <%= manga.description %>
+          </p>
+        </div>
+        <div class="mainUserProfile__itemRight">
+          <button class="btnEdit editDes">Edit</button>
+          <div class="buttonSet setEditDes">
+            <button class="btnSave saveDes" onclick="ChangeDes('<%= manga._id %>')">Save</button>
+            <button class="btnCancel cancelDes">Cancel</button>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">category</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </select>
+      <hr class="change-splitter">
+
+      <!-- avatar -->
+      <div class="mainUserProfile__item">
+        <div class="mainUserProfile__itemLeft">
+          <h3>Avatar</h3>
+          <form enctype="multipart/form-data" class="changeAvatar-form">
+            <label for="change-avatar">Browse your Avatar</label>
+            <input type="file" name="avatar" id="change-avatar" />
+          </form>
+        </div>
+        <div class="mainUserProfile__itemCenter">
+          <img class="preview-avatar" src="/<%= manga.avatar %>" alt="">
+        </div>
+        <div class="mainUserProfile__itemRight">
+          <button class="btnEdit editAvatar">Edit</button>
+          <div class="buttonSet setEditAvatar">
+            <button class="btnSave saveAvatar" onclick="ChangeAvatar('<%= manga._id %>')">Save</button>
+            <button class="btnCancel cancelAvatar">Cancel</button>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">description</label>
-        <textarea class="form-control" name="category" id="category" placeholder="category" rows="3"></textarea>
-      </div>
-      <button type="button" onclick="edit()">submit</button>
-    </form>
+      <hr class="change-splitter">
+      <hr style="border: 0;height:1px;background: rgba(0,0,0,0.15);">
+    </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="

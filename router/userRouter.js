@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/userProfile', controller.viewProfile)
-router.post('/changeProfile/:id', upload.single('avatar'), controller.changeProfile)
+// router.post('/changeProfile/:id', upload.single('avatar'), controller.changeProfile)
+
 // get all user
 router.get('/getAllUsers', controller.getAllUsers)
 // phaan tran user

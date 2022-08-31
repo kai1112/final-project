@@ -18,33 +18,80 @@ module.exports.viewProfile = async (req, res) => {
   }
 }
 // change profile
-module.exports.changeProfile = async (req, res) => {
-  try {
-    let userID = req.params.id;
-    let user = await UserModel.findOne({ _id: req.params.id })
-    console.log(26, user.avatar);
-    if (user) {
-      let user = await UserModel.updateOne({ _id: userID },
-        req.body
-      )
-      fs.unlinkSync(user.avatar.slice(1))
-      console.log('Success');
-      res.json({
-        status: 200,
-        message: 'Success',
-        err: false,
-      })
-    } else {
-      res.status(400).json({
-        message: 'user not found',
-      })
 
-    }
-  } catch (err) {
-    console.log(err);
-    res.json(err);
+module.exports.ChangeUserName = async (req, res) => {
+  let newName = req.body.newName
+  console.log(newName);
+  let userId = req.user._id
+  try {
+    await UserModel.updateOne({ _id: userId }, { username: newName })
+    res.json({ mess: 'success' })
+  } catch (error) {
+    res.status(500).json(error)
   }
 }
+module.exports.ChangeUserDes = async (req, res) => {
+  let { newDes } = req.body
+  let userId = req.user._id
+  console.log(62, 'hello');
+  try {
+    await UserModel.updateOne({ _id: userId }, { discription: newDes })
+    res.json({ mess: 'success' })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+module.exports.ChangeUserAvatar = async (req, res) => {
+  let userId = req.user._id
+  // console.log(46, userId);
+  try {
+    let userInfo = await UserModel.findOne({ _id: userId })
+    // console.log(49, userInfo);
+    let path
+    if (req.file == undefined) {
+      path = userInfo.avatar
+    } else {
+      // fs.unlinkSync(userInfo.avatar)
+      path = req.file.path;
+    }
+    await UserModel.updateOne({ _id: userId }, { avatar: path })
+    res.json({ status: 200 })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+module.exports.ChangeUserEmail = async (req, res) => {
+  let { newEmail } = req.body
+  let userId = req.user._id
+  try {
+    let findByEmail = await UserModel.find({ email: newEmail })
+    if (findByEmail.length)
+      return res.json({ mess: 'Email da ton tai' })
+    await UserModel.updateOne({ _id: userId }, { email: newEmail })
+    res.json({ status: 200 })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+module.exports.ChangeUserPassword = async (req, res) => {
+  let { oldPass, newPass } = req.body
+  let userId = req.user._id
+  try {
+    let findUser = await UserModel.find({ _id: userId })
+    const checkPassword = await bcrypt.compare(
+      oldPass,
+      findUser[0].password
+    );
+    if (!checkPassword)
+      return res.json({ mess: 'Nhap sai password' })
+    const password = await bcrypt.hash(newPass, 10);
+    await UserModel.updateOne({ _id: userId }, { password })
+    res.json({ mess: 'success' })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 //view create author page
 module.exports.viewCreateAuthor = async (req, res) => {
   try {
@@ -167,5 +214,21 @@ module.exports.giftPointAuthor = async (req, res) => {
 
   } catch (e) {
     res.json({ message: 'Error tang diem cho user' });
+  }
+}
+
+module.exports.Logout = async (req, res) => {
+  try {
+    let token = req.cookies
+    let user = UserModel.findOne({ token: token.user })
+    if (user) {
+      user.token = "";
+      res.cookie("user", user.token);
+      res.render('components/login/login')
+    } else {
+      res.json("nguwoif dung chua dang nhap")
+    }
+  } catch (e) {
+    console.log(e)
   }
 }

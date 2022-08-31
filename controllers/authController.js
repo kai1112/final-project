@@ -3,86 +3,93 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 // show login form
-module.exports.viewLogin = async (req, res)=>{
-    try{
-        res.render('components/login/login')
-    }catch(e){
-        console.log(e);
-    }
+module.exports.viewLogin = async (req, res) => {
+  try {
+    res.render('components/login/login')
+  } catch (e) {
+    console.log(e);
+  }
 }
 // login
-module.exports.login = async (req, res)=>{
-    try {
-      // console.log(req.body);
-        const data = await UserModel.findOne({
-          email: req.body.email,
+module.exports.login = async (req, res) => {
+  try {
+    // console.log(req.body);
+    const data = await UserModel.findOne({
+      email: req.body.email,
+    });
+    if (data) {
+      const checkPassword = await bcrypt.compare(
+        req.body.password,
+        data.password
+      );
+      if (checkPassword) {
+        const UserID = data._id;
+        const token = jwt.sign(`${UserID}`, "kai");
+        await UserModel.updateOne(
+          { _id: data._id },
+          { token: token }
+        );
+        res.cookie("user", token, {
+          expires: new Date(Date.now() + 6000000),
         });
-        if (data) {
-          const checkPassword = await bcrypt.compare(
-            req.body.password,
-            data.password
-          );
-          if (checkPassword) {
-            const UserID = data._id;
-            const token = jwt.sign(`${UserID}`, "kai");
-            await UserModel.updateOne(
-              { _id: data._id },
-              { token: token }
-            );
-            res.cookie("user", token, {
-              expires: new Date(Date.now() + 6000000),
-            });
-          let user = await UserModel.findOne({email : req.body.email} )
-          res.json({role: user.role})
-          console.log(user.role);
-          } else {
-            res.json({ message: " incorrect password" });
-          }
+        let user = await UserModel.findOne({ email: req.body.email })
+        res.json({ role: user.role })
+        if (user.role === 'admin') {
+          res.render(res.render('pages/admin/profileAdmin/profileAdmin', { user }))
+        } else if (user.role === 'author') {
+          res.render('pages/author/profileAuthor/profileAuthor', { user })
         } else {
-          res.json({ message: "login failed", status: 400, err: false });
+          alert('user profile')
         }
-      } catch (err) {
-        console.log(76, err);
+        // console.log(user.role);
+      } else {
+        res.json({ message: " incorrect password" });
       }
+    } else {
+      res.json({ message: "login failed", status: 400, err: false });
+    }
+  } catch (err) {
+    console.log(76, err);
+  }
 }
 // view regiter
 module.exports.viewRegister = async (req, res) => {
-    try{
-        res.render('components/register/register')
-    }catch (err) {
-        console.log(err);
-    }
+  try {
+    res.render('components/register/register')
+  } catch (err) {
+    console.log(err);
+  }
 }
 // register 
-module.exports.register = async (req, res)=>{
-    try {
-        // console.log(61, req.body);
-        let user = await UserModel.find({email : req.body.email})
-        if(user){
-          console.log('user da ton tai');
-          res.json({
-            status: 400,
-            message: 'email da ton tai',
-          })
-        }else{
-          const password = await bcrypt.hash(req.body.password, 10);
-          let newUser = await UserModel.create({
-            username: req.body.username,
-            password: password,
-            name: req.body.name,
-            dateOfBirth: req.body.dateOfBirth,
-            monney: 0,
-            email: req.body.email,
-            role: "user",
-          });
-                  // console.log(72,newUser);
-        res.json({
-          message: "login success",
-          status: 200,
-        });
-        }
+module.exports.register = async (req, res) => {
+  try {
+    // console.log(61, req.body);
+    let user = await UserModel.find({ email: req.body.email })
+    if (user) {
+      console.log('user da ton tai');
+      res.json({
+        status: 400,
+        message: 'email da ton tai',
+      })
+    } else {
+      const password = await bcrypt.hash(req.body.password, 10);
+      let newUser = await UserModel.create({
+        username: req.body.username,
+        password: password,
+        name: req.body.name,
+        dateOfBirth: req.body.dateOfBirth,
+        monney: 0,
+        email: req.body.email,
+        role: "user",
+      });
+      // console.log(72,newUser);
+      res.json({
+        message: "login success",
+        status: 200,
+      });
+    }
 
-      } catch (err) {
-        res.json(err);
-      }
+  } catch (err) {
+    res.json(err);
+  }
 }
