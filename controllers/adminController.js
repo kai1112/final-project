@@ -10,10 +10,10 @@ module.exports.viewProfile = async (req, res) => {
     if (user) {
       res.render('pages/admin/profileAdmin/profileAdmin', { user })
     } else {
-      console.log('user chuwa dang nhap');
+      res.json('user chuwa dang nhap');
     }
   } catch (err) {
-    console.log(err);
+    res.json(err);
   }
 }
 // change profile
@@ -31,7 +31,7 @@ module.exports.ChangeUserName = async (req, res) => {
 module.exports.ChangeUserDes = async (req, res) => {
   let { newDes } = req.body
   let userId = req.user._id
-  console.log(62, 'hello');
+  // console.log(62, 'hello');
   try {
     await UserModel.updateOne({ _id: userId }, { discription: newDes })
     res.json({ mess: 'success' })
@@ -47,8 +47,8 @@ module.exports.ChangeUserAvatar = async (req, res) => {
     if (req.file == undefined) {
       path = userInfo.avatar
     } else {
-      fs.unlinkSync(userInfo.avatar)
       path = req.file.path;
+      // console.log(51, userInfo.avatar.slice(1))
     }
     await UserModel.updateOne({ _id: userId }, { avatar: path })
     res.json({ mess: "success" })
@@ -102,6 +102,7 @@ module.exports.Logout = async (req, res) => {
       res.json("nguwoif dung chua dang nhap")
     }
   } catch (e) {
-    console.log(e)
+    // console.log(e)
+    res.json(e)
   }
 }

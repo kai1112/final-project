@@ -2,9 +2,8 @@ const ReviewMangaModel = require('../models/reviewManga')
 const ReviewChapterModel = require('../models/reviewChapter')
 const CategoryModel = require('../models/category.model')
 const UserModel = require('../models/user.model')
-const category = require('../models/category.model')
 const fs = require("fs");
-
+const { sendMail } = require('../service/nodemail')
 
 // view all manga author created  
 module.exports.viewAllMangaAuthorCreated = async (req, res) => {
@@ -35,36 +34,47 @@ module.exports.viewMangaAuthorCreated = async (req, res) => {
 // create manga
 module.exports.createMangaAuthor = async (req, res) => {
   try {
-    const cookies = req.cookies;
-    let user = await UserModel.findOne({ token: cookies.user })
-    const newManga = await ReviewMangaModel.findOne({ name: req.body.name });
-    let category = []
-    let categoryID = req.body.categoryID.split(',')
-    let categoryName = req.body.categoryName.split(',')
-    console.log(categoryName);
-    for (let i = 0; i < categoryName.length; i++) {
-      category.push({ name: categoryName[i], id: categoryID[i] })
-    }
-    console.log(41, category);
-    if (newManga) {
-      res.json({ message: 'manga da ton tai' });
+    // const cookies = req.cookies;
+    // let user = await UserModel.findOne({ token: cookies.user })
+    let user = req.user
+    if (user.status === 'active') {
+
+      const newManga = await ReviewMangaModel.findOne({ name: req.body.name });
+      let category = []
+      let categoryID = req.body.categoryID.split(',')
+      let categoryName = req.body.categoryName.split(',')
+      // console.log(categoryName);
+      for (let i = 0; i < categoryName.length; i++) {
+        category.push({ name: categoryName[i], id: categoryID[i] })
+      }
+      // console.log(41, category);
+      if (newManga) {
+        console.log({ message: 'manga da ton tai' });
+      } else {
+        let newManga = await ReviewMangaModel.create({
+          avatar: "/" + req.file.path,
+          name: req.body.name,
+          category: category,
+          author: user._id,
+          description: req.body.description,
+          price: req.body.price
+        });
+      }
     } else {
-      await ReviewMangaModel.create({
-        avatar: "/" + req.file.path,
-        name: req.body.name,
-        category: category,
-        author: user._id,
-        description: req.body.description,
-        price: req.body.price
-      });
+      console.log('user nay dang bi ban khong cos quyen create manga')
     }
+
+    // console.log(68, subject);
+    await sendMail()
+    console.log(70, 'aa');
     res.json({
-      message: "login success",
+      message: "create manga success",
       status: 200,
       err: false,
     });
   } catch (e) {
-    console.log(e)
+    // res.json(e)
+    console.log(76, e)
   }
 }
 
@@ -152,9 +162,14 @@ module.exports.deleteManga = async (req, res) => {
   // console.log(mangaID);
   try {
     const manga = await ReviewMangaModel.findOne({ _id: mangaID });
+    const chapter = await ReviewChapterModel.find({ mangaID: manga._id })
     if (manga) {
+      // console.log(manga.avatar.slice(1));
+      fs.unlinkSync(manga.avatar.slice(1))
       await ReviewMangaModel.findByIdAndDelete(manga._id);
-      // fs.unlinkSync(manga.avatar.slice[0])
+      for (let i = 0; i < chapter.length; i++) {
+        await ReviewChapterModel.findByIdAndDelete(chapter[i]._id);
+      }
     } else {
       res.json({ message: "manga not found" });
     }

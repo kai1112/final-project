@@ -7,7 +7,7 @@ module.exports.viewLogin = async (req, res) => {
   try {
     res.render('components/login/login')
   } catch (e) {
-    console.log(e);
+    res.json(e);
   }
 }
 // login
@@ -34,14 +34,6 @@ module.exports.login = async (req, res) => {
         });
         let user = await UserModel.findOne({ email: req.body.email })
         res.json({ role: user.role })
-        if (user.role === 'admin') {
-          res.render(res.render('pages/admin/profileAdmin/profileAdmin', { user }))
-        } else if (user.role === 'author') {
-          res.render('pages/author/profileAuthor/profileAuthor', { user })
-        } else {
-          alert('user profile')
-        }
-        // console.log(user.role);
       } else {
         res.json({ message: " incorrect password" });
       }
@@ -49,7 +41,7 @@ module.exports.login = async (req, res) => {
       res.json({ message: "login failed", status: 400, err: false });
     }
   } catch (err) {
-    console.log(76, err);
+    res.json(76, err);
   }
 }
 // view regiter
@@ -57,16 +49,17 @@ module.exports.viewRegister = async (req, res) => {
   try {
     res.render('components/register/register')
   } catch (err) {
-    console.log(err);
+    res.json(err);
   }
 }
 // register 
 module.exports.register = async (req, res) => {
   try {
     // console.log(61, req.body);
-    let user = await UserModel.find({ email: req.body.email })
+    let user = await UserModel.findOne({ email: req.body.email })
+    // console.log(user);
     if (user) {
-      console.log('user da ton tai');
+      // console.log('user da ton tai');
       res.json({
         status: 400,
         message: 'email da ton tai',

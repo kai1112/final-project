@@ -48,5 +48,9 @@ router.get('/viewDetailManga/:id', auth.checkToken, auth.checkRoleAdmin, control
 // quản lý manga User interface
 router.get('/manga', controller.userViewManga)
 router.get('/pagination', controller.userViewPagination)
-router.get('/mangaDetail/:id', controller.userViewMangaDetail)
+router.get('/:id', controller.userViewMangaDetail)
+router.get('/:id/:chap', controller.userViewChap)
+
+
+
 module.exports = router

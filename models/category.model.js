@@ -3,7 +3,8 @@ const mongoose = require('./dbConnection');
 // mongoose.connect("mongodb://localhost/ExpressDemo");
 
 const CategorySchema = mongoose.Schema({
-    name: String
+    name: String,
+    description: String,
 }, { collection: "category", timestamps: true });
 const CategoryModel = mongoose.model("category", CategorySchema);
 

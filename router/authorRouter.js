@@ -23,13 +23,13 @@ router.patch('/change-email', auth.checkToken, auth.checkRoleAuthor, controller.
 router.patch('/change-password', auth.checkToken, auth.checkRoleAuthor, controller.ChangeUserPassword)
 
 // create author 
-router.get('/viewCreateAuthor', auth.checkToken, auth.checkRoleAuthor, controller.viewCreateAuthor)
-router.post('/createAuthor', auth.checkToken, auth.checkRoleAuthor, controller.createAuthor)
+router.get('/viewCreateAuthor', auth.checkToken, auth.checkRoleAdmin, controller.viewCreateAuthor)
+router.post('/createAuthor', auth.checkToken, auth.checkRoleAdmin, controller.createAuthor)
 // get all author
-router.get('/getAllAuthor', auth.checkToken, auth.checkRoleAuthor, controller.getAllAuthor)
-router.post('/banAuthor', auth.checkToken, auth.checkRoleAuthor, controller.banAuthor)
+router.get('/getAllAuthor', auth.checkToken, auth.checkRoleAdmin, controller.getAllAuthor)
+router.post('/banAuthor', auth.checkToken, auth.checkRoleAdmin, controller.banAuthor)
 // gift point author
-router.post('/giftPointAuthor', auth.checkToken, auth.checkRoleAuthor, controller.giftPointAuthor)
+router.post('/giftPointAuthor', auth.checkToken, auth.checkRoleAdmin, controller.giftPointAuthor)
 // logout 
 router.get('/logout', auth.checkToken, auth.checkRoleAuthor, controller.Logout)
 

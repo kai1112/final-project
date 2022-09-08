@@ -56,7 +56,7 @@ module.exports.deleteComment = async (req, res) => {
         // console.log(comment);
         if (comment.userID === req.user._id) {
             await CommentModel.findByIdAndDelete(comment._id);
-            fs.unlinkSync(comment.audio.slice(1));
+            fs.unlinkSync(comment.audio);
             res.json("deleteComment success");
         } else {
             res.json("manga not found");

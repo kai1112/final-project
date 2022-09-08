@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const controller = require('../controllers/reviewMangaController')
+const auth = require('../middleware/auth')
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,14 +17,14 @@ const upload = multer({ storage: storage });
 
 
 // view all managa author created
-router.get('/viewAllManga', controller.viewAllMangaAuthorCreated)
+router.get('/viewAllManga', auth.checkToken, auth.checkRoleAuthor, controller.viewAllMangaAuthorCreated)
 //view page author's create  manga 
-router.get('/createManga', controller.viewMangaAuthorCreated)
-router.post('/createManga', upload.single('avatar'), controller.createMangaAuthor)
+router.get('/createManga', auth.checkToken, auth.checkRoleAuthor, controller.viewMangaAuthorCreated)
+router.post('/createManga', auth.checkToken, auth.checkRoleAuthor, upload.single('avatar'), controller.createMangaAuthor)
 // view detail manga
-router.get('/viewDetails/:id', controller.viewDetails)
+router.get('/viewDetails/:id', auth.checkToken, auth.checkRoleAuthor, controller.viewDetails)
 // view edit manga
-router.get('/editManga/:id', controller.viewEditManga)
-router.post('/editManga/:id', upload.single('avatar'), controller.editManga)
-router.delete('/deleteManga/:id', controller.deleteManga)
+router.get('/editManga/:id', auth.checkToken, auth.checkRoleAuthor, controller.viewEditManga)
+router.post('/editManga/:id', auth.checkToken, auth.checkRoleAuthor, upload.single('avatar'), controller.editManga)
+router.delete('/deleteManga/:id', auth.checkToken, auth.checkRoleAuthor, controller.deleteManga)
 module.exports = router

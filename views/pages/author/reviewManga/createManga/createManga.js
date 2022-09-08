@@ -14,7 +14,7 @@ function handleOption() {
     showcategory.appendChild(newcategory);
     categorySelected.parentNode.removeChild(categorySelected);
 
-    console.log(categoriesID);
+    // console.log(categoriesID);
 }
 
 function changeCategory(e) {

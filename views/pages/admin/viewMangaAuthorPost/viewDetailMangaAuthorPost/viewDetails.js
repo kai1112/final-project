@@ -2,6 +2,19 @@ function viewDetailChapter(id) {
   window.location.href = `/reviewChapter/viewDetailChapter/${id}`;
 }
 
+async function post(id) {
+  try {
+    let data = await $.ajax({
+      type: "POST",
+      url: `/chapter/createChapter/${id}`
+    })
+    if (data.status === 200) {
+      window.location.reload();
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
 async function edichapter(id, status) {
   try {
     console.log(status);

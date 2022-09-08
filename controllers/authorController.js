@@ -1,6 +1,7 @@
 const UserModel = require('../models/user.model')
-const fs = require("fs");
+const fs = require('fs');
 const bcrypt = require('bcrypt');
+const { ifError } = require('assert');
 
 //view profile
 module.exports.viewProfile = async (req, res) => {
@@ -43,16 +44,17 @@ module.exports.ChangeUserDes = async (req, res) => {
 }
 module.exports.ChangeUserAvatar = async (req, res) => {
   let userId = req.user._id
-  // console.log(46, userId);
   try {
     let userInfo = await UserModel.findOne({ _id: userId })
-    // console.log(49, userInfo);
+    console.log(userInfo.avatar);
     let path
     if (req.file == undefined) {
       path = userInfo.avatar
     } else {
-      // fs.unlinkSync(userInfo.avatar)
       path = req.file.path;
+    }
+    if (userInfo.avatar !== "") {
+      fs.unlinkSync(userInfo.avatar)
     }
     await UserModel.updateOne({ _id: userId }, { avatar: path })
     res.json({ status: 200 })

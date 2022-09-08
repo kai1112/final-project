@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema(
     monney: { type: Number, default: 0 },
     status: { type: String, enum: ['active', 'banned'], default: 'active' },
     role: { type: String, enum: ['user', 'admin', 'author'], default: 'user' },
-    avatar: { type: String, default: '/public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }
+    avatar: { type: String, default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }
   },
   { collection: "User", timestamps: true }
 );

@@ -10,7 +10,7 @@ function edichapter(id, status) {
   if (status === 'posted') {
     alert('khong the edichapter')
   } else {
-    window.location.href = `/reviewChapter/editChapterAuthor/${id}`;
+    window.location.href = `/reviewChapter/editChapter/${id}`;
   }
 }
 
@@ -31,18 +31,3 @@ async function deleteChapter(id) {
   }
 }
 
-async function post(id) {
-  try {
-    let price = $('#price').val()
-    let data = await $.ajax({
-      url: `/chapter/createChapter/${id}`,
-      type: "POST",
-    })
-    if (data.status === 200) {
-      alert('create Chapter successfully')
-      window.location.reload()
-    }
-  } catch (e) {
-    console.log(e)
-  }
-}

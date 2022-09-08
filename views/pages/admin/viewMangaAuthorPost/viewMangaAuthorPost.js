@@ -44,7 +44,7 @@ async function delette(id) {
                 id,
             },
         });
-        if (data.status === 200) {
+        if (data1.status === 200) {
             alert('delette successfully')
             window.location.reload();
         }

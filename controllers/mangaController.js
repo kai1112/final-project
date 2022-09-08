@@ -4,8 +4,9 @@ const ReviewChapterModel = require('../models/reviewChapter')
 const ChapterModel = require('../models/chapter.model')
 const UserModel = require('../models/user.model')
 const Follow = require('../models/library.model')
-
-
+const fs = require('fs');
+const slug = require('slugify');
+const { ifError } = require('assert');
 
 
 
@@ -31,6 +32,7 @@ module.exports.createManga = async (req, res) => {
                 views: manga.view,
                 like: manga.like,
                 price: price,
+                slug: slug(manga.name)
             })
             await ReviewMangaModel.updateOne({ _id: req.params.id }, { stautus: 'posted' })
             res.json({
@@ -147,7 +149,7 @@ module.exports.ChangeMangaAuthorAvatar = async (req, res) => {
             path = manga.avatar
         } else {
             // console.log(manga.avatar);
-            // fs.unlinkSync(manga.avatar)
+            fs.unlinkSync(manga.avatar)
             path = req.file.path;
         }
         await ReviewMangaModel.updateOne({ _id: req.params.id }, { avatar: path })
@@ -174,18 +176,12 @@ module.exports.ChangePrice = async (req, res) => {
 // view all manga
 module.exports.viewAllManga = async (req, res) => {
     try {
-        let allManga = await MangaModel.find()
-        let listManga = await MangaModel.find().limit(10);
+        let allManga = await MangaModel.find().populate('author')
+        let listManga = await MangaModel.find().populate('author').limit(10);
         // console.log(101, allManga);
-        let listAuthor = []
-        for (let i = 0; i < listManga.length; i++) {
-            let author = await UserModel.findOne({ _id: allManga[i].author })
-            listAuthor.push(author);
-        }
         let total = allManga.length
-        // console.log(author);
         if (allManga) {
-            res.render('pages/admin/manageManga/viewAllManga/viewAllMangaEjs/viewAllManga', { listAuthor, allManga, listManga, total: Math.ceil(total / 10) })
+            res.render('pages/admin/manageManga/viewAllManga/viewAllMangaEjs/viewAllManga', { allManga, listManga, total: Math.ceil(total / 10) })
         } else {
             console.log('khong co manga')
         }
@@ -196,16 +192,11 @@ module.exports.viewAllManga = async (req, res) => {
 // phân trang manga
 module.exports.PaginationManga = async (req, res) => {
     try {
-        let allManga = await MangaModel.find().skip(req.query.limit * (req.query.page - 1))
+        let allManga = await MangaModel.find().populate('author').skip(req.query.limit * (req.query.page - 1))
             .limit(req.query.limit);
-        let listAuthor = []
-        for (let i = 0; i < listManga.length; i++) {
-            let author = await UserModel.find({ _id: allManga[i].author })
-            listAuthor.push(author)
-        }
-
+        // console.log(allManga);
         if (allManga) {
-            res.render('pages/admin/manageManga/viewAllManga/viewAllMangaEjs/paginationManga', { listAuthor, allManga })
+            res.render('pages/admin/manageManga/viewAllManga/viewAllMangaEjs/paginationManga', { allManga })
         } else {
             res.json('khong co manga ton tai')
         }
@@ -311,7 +302,12 @@ module.exports.userViewMangaDetail = async (req, res) => {
     try {
         const cookie = req.cookies;
         let manga = await MangaModel.findById(req.params.id).populate('author');
-        let user = await UserModel.findById({ token: cookie.user })
+        let user
+        if (cookie) {
+            user = await UserModel.findOne({ token: cookie.user })
+        }
+        // console.log(user);
+
         let buyed = manga.buyed
         let checked
         for (let i = 0; i < buyed.length; i++) {
@@ -324,24 +320,28 @@ module.exports.userViewMangaDetail = async (req, res) => {
         if (manga) {
             let chapter = await ChapterModel.find({ mangaID: manga._id })
             let followers = await Follow.find({ mangaID: manga._id }).populate('userID')
+            let follow = await Follow.findOne({ mangaID: manga._id, UserID: user.id })
+            // console.log(follow[0].userID === user.id);
+            // console.log(user.id);
             if (manga.price > 0 && user) {
                 if (checked) {
-
-                    console.log(309, manga, chapter, followers);
+                    res.render('pages/home/page/page', { manga, chapter, followers, user })
+                    console.log(327, manga, chapter, followers);
                 } else if (req.body.accept && user.monney > manga.price) {
                     console.log('ban co muon mua chuyen khong');
                     let monney = user.monney - manga.price;
                     let user = await UserModel.findOneAndUpdate({ _id: user._id }, { monney: monney })
                     let manga = await MangaModel.findOneAndUpdate({ _id: manga._id }, { buyed: buyed })
-
-                    console.log(309, manga, chapter, followers);
+                    res.render('pages/home/page/page', { manga, chapter, followers, user })
+                    console.log(334, manga, chapter, followers);
                 } else {
                     console.log('ban khong co du tien de mua truyen');
                 }
             } else if (manga.price > 0 && !user) {
                 console.log('ban chua dang nhap');
             } else {
-                console.log(309, manga, chapter, followers);
+                res.render('pages/home/page/page', { manga, chapter, followers, user, follow })
+                console.log(342, follow);
             }
 
         } else {
@@ -349,6 +349,29 @@ module.exports.userViewMangaDetail = async (req, res) => {
         }
         res.json({ status: 200 })
     } catch (error) {
-        res.json(error)
+        // res.json(error)
     }
+}
+
+
+module.exports.HomePage = async (req, res) => {
+    try {
+        let manga = await MangaModel.find().sort({ views: 'asc' })
+        // console.log(manga);
+        let chapter = []
+        for (let i = 0; i < manga.length; i++) {
+            let chap = await ChapterModel.find({ mangaID: manga[i]._id }).sort({ chap: 'desc' })
+            chapter.push(chap)
+        }
+        console.log(chapter);
+        res.render('./pages/home/home/home', { manga, chapter })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+
+module.exports.userViewChap = async (req, res) => {
+    res.render('pages/Home/read/read')
 }

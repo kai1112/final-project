@@ -1,7 +1,6 @@
 const router = require("express").Router();
-router.get('/', (req, res) => {
-    res.render('./pages/user/manageMangaUser/viewAllMangaUser/viewAllMangaUser')
-})
+const { HomePage } = require("../controllers/mangaController")
+router.get('/', HomePage)
 
 //using auth router
 const authRoute = require("./authRouter")

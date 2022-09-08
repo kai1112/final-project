@@ -11,7 +11,7 @@ async function createChapter() {
       content,
     },
   });
-  // console.log(15, data1);
+  console.log(15, data1);
   if (data1.status == 200) {
     alert("create successful");
     window.location.href = `/reviewManga/viewdetails/${id}`;

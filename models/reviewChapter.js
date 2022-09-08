@@ -10,7 +10,8 @@ const ReviewChapterSchema = mongoose.Schema({
   mangaID: {
     type: String,
     ref: "ReviewManga", required: true
-  }
+  },
+  slug: String
 }, { collection: "ReviewChapter", timestamps: true });
 const ReviewChapterModel = mongoose.model("ReviewChapter", ReviewChapterSchema);
 

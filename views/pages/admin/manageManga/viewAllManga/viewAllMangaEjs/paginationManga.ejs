@@ -36,9 +36,7 @@
           <%=manga.price%>
         </td>
         <td>
-          <% if(manga.author==listAuthor[index].id){%>
-            <%= listAuthor[index].username%>
-              <%}%>
+          <%= manga.author.username%>
         </td>
         <td>
           <button onclick="edit('<%= manga._id%>')">edit</button>

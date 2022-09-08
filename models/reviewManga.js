@@ -1,17 +1,16 @@
 const mongoose = require("./dbConnection");
-// const mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/ExpressDemo");
 const ReviewMangaSchema = mongoose.Schema(
   {
     avatar: String,
     category: [{}],
-    name: String,
-    author: String,
+    name: { type: String, required: true },
+    author: { type: String, ref: 'User', required: true },
     description: String,
     views: Number,
     like: Number,
-    price: Number,
+    price: { type: Number, default: 0 },
     stautus: { type: String, enum: ['posted', 'review'], default: 'review' },
+    slug: String
   },
   { collection: "ReviewManga", timestamps: true }
 );

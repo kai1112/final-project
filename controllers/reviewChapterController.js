@@ -1,31 +1,37 @@
+const ReviewChapterModel = require("../models/reviewChapter");
 const reviewChapterModel = require("../models/reviewChapter");
 const reviewMangaModel = require("../models/reviewManga");
 // const UserModel = require("../models/user.model");
 // create new chapter
 module.exports.createChapter = async (req, res) => {
   try {
-    const revieManga = await reviewMangaModel.findOne({ _id: req.params.id });
-    let chapter = 1;
-    const reviewChapter = await reviewChapterModel.find({ mangaID: req.params.id })
-    chapter = reviewChapter.length + 1;
-    console.log(chapter);
-    // console.log(8, revieManga);
-    if (!revieManga) {
-      res.json({ chapter: chapter });
-    } else {
-      await reviewChapterModel.create({
-        chap: chapter,
-        mangaID: req.params.id,
-        title: req.body.title,
-        content: req.body.content,
-        views: 0,
+    let user = req.user
+    if (user.status === "active") {
+      const revieManga = await reviewMangaModel.findOne({ _id: req.params.id });
+      let chapter = 1;
+      const reviewChapter = await reviewChapterModel.find({ mangaID: req.params.id })
+      chapter = reviewChapter.length + 1;
+      // console.log(chapter);
+      // console.log(8, revieManga);
+      if (!revieManga) {
+        res.json({ chapter: chapter });
+      } else {
+        await reviewChapterModel.create({
+          chap: chapter,
+          mangaID: req.params.id,
+          title: req.body.title,
+          content: req.body.content,
+          views: 0,
+        });
+      }
+      res.json({
+        message: "create chapter success",
+        status: 200,
+        err: false,
       });
+    } else {
+      res.json('author khong co quyen tao chapter do dang bi ban')
     }
-    res.json({
-      message: "login success",
-      status: 200,
-      err: false,
-    });
   } catch (err) {
     res.json({ message: "loi" });
   }
@@ -50,7 +56,13 @@ module.exports.editChapter = async (req, res) => {
   }
 };
 module.exports.viewEditchapter = async (req, res) => {
-  res.render("pages/author/reviewChapter/editChapter/editChapter");
+  try {
+    let chapter = await ReviewChapterModel.findOne({ _id: req.params.id })
+    console.log(chapter);
+    res.render("pages/author/reviewChapter/editChapter/editChapter", { chapter });
+  } catch (err) {
+    res.json({ err });
+  }
 };
 // // delete chapter
 module.exports.deleteChapter = async (req, res) => {

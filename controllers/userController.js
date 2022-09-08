@@ -27,7 +27,7 @@ module.exports.changeProfile = async (req, res) => {
       let user = await UserModel.updateOne({ _id: userID },
         req.body
       )
-      fs.unlinkSync(user.avatar.slice(1))
+      fs.unlinkSync(user.avatar)
       console.log('Success');
       res.json({
         status: 200,

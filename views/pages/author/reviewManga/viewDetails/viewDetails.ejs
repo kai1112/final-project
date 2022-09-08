@@ -23,13 +23,7 @@
     <h1>chapter</h1>
     <% chapter.map((chapter, index)=>{%>
       <td>
-        <a onclick="viewChap('<%= chapter._id %>')"> chap <%= chapter.title %></a>
-        <button onclick="createChapter('<%= chapter._id %>')">
-          <%= chapter.stautus %>
-        </button>
-        <button onclick="viewDetailChapter('<%= chapter._id %>')">
-          view detail chapter
-        </button>
+        <a onclick="viewDetailChapter('<%= chapter._id %>')"> chap <%= chapter.title %></a>
         <button onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
         <button onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
       </td>
