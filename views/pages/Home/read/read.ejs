@@ -173,44 +173,31 @@
     <!-- menu -->
     <!-- main -->
     <div class="feature-bar common-style">
-        <a href="" class="feature-bar-pre-chapter"><i class="fa-solid fa-arrow-left-long"></i></a>
-        <a href="" class="feature-bar-home"><i class="fa-solid fa-house"></i></a>
+        <a onclick="prev('<%=chapter.chap %>')" class="feature-bar-pre-chapter"><i
+                class="fa-solid fa-arrow-left-long"></i></a>
+        <a href="/" class="feature-bar-home"><i class="fa-solid fa-house"></i></a>
         <button class="select-chapter">Select chapter</button>
         <a onclick="window.scrollTo(0, $('.comment-area').offset().top)" class="feature-bar-comment">
             <i class="fa-solid fa-comments"></i>
         </a>
-        <a href="" class="feature-bar-next-chapter"><i class="fa-solid fa-arrow-right-long"></i></a>
+        <a onclick="next('<%=chapter.chap %>','<%= allChapter.length + 1%>')" class="feature-bar-next-chapter"><i
+                class="fa-solid fa-arrow-right-long"></i></a>
         <div class="feature-bar-chapter-list hidden">
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd df sfdsf dsf fsdf sdfsdf sdf sdfsf fdsf sdfd dsf sfsd f</a>
-            <a href="">Chương 1:sdfdfsd sdfs f sdfsd fsd sdf sdfdfdfdf dfdfd fssdfasfsd fsdffsd fsdf sd</a>
-            <a href="">Chương 1:sdfdfsd dsf sf sdf sdfs dfsd fsd fsdf sdfs dfsd fsdf sf sf sdf</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd df sfdsf dsf fsdf sdfsdf sdf sdfsf fdsf sdfd dsf sfsd f</a>
-            <a href="">Chương 1:sdfdfsd sdfs f sdfsd fsd sdf sdfdfdfdf dfdfd fssdfasfsd fsdffsd fsdf sd</a>
-            <a href="">Chương 1:sdfdfsd dsf sf sdf sdfs dfsd fsd fsdf sdfs dfsd fsdf sf sf sdf</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd df sfdsf dsf fsdf sdfsdf sdf sdfsf fdsf sdfd dsf sfsd f</a>
-            <a href="">Chương 1:sdfdfsd sdfs f sdfsd fsd sdf sdfdfdfdf dfdfd fssdfasfsd fsdffsd fsdf sd</a>
-            <a href="">Chương 1:sdfdfsd dsf sf sdf sdfs dfsd fsd fsdf sdfs dfsd fsdf sf sf sdf</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
-            <a href="">Chương 1:sdfdfsd</a>
+            <%for(let i=0; i < allChapter.length; i++){%>
+                <button onclick="goToChap('<%=allChapter[i].chap%>')"><a>Chương <%=allChapter[i].chap%>:
+                            <%=allChapter[i].title%></a></button>
+                <%}%>
         </div>
     </div>
     <div class="main-container common-style">
         <div class="chapter-transfer-top">
-            <a href="" class="pre-chapter-top"><i class="fa-solid fa-arrow-left-long"></i> Chương trước</a>
-            <a href="" class="next-chapter-top">Chương sau <i class="fa-solid fa-arrow-right-long"></i></a>
+            <a onclick="prev('<%=chapter.chap %>')" class="pre-chapter-top"><i class="fa-solid fa-arrow-left-long"></i>
+                Chương trước</a>
+            <a onclick="next('<%=chapter.chap %>','<%= allChapter.length + 1%>')" class="next-chapter-top">Chương sau <i
+                    class="fa-solid fa-arrow-right-long"></i></a>
         </div>
         <div class="item-title">
-            Chương 01: Không đồng dạng thế giới Pokemon
+            Chương <%=chapter.chap %> : <%=chapter.title %>
         </div>
         <div class="item-info">
             <a href="" class="item-name"><i class="fa-solid fa-book"></i> Khấu Văn Tiên Đạo</a>
@@ -220,52 +207,15 @@
             <div class="item-time"><i class="fa-solid fa-clock"></i> 2021-02-26 21:53:49</div>
         </div>
         <div class="chapter-content">
-            'Ầm!'<br><br>Chói tai tiếng thắng xe xé rách đêm dài.<br>
-            <br>Tần Tang còn đang do dự, hắn không phải không có cá chết lưới rách dũng khí,
-            nhưng hắn còn có người nhà, cha mẹ anh em. . .<br><br>
-            Trên thân truyền đến kịch liệt đau nhức đem hắn kéo về hiện thực,
-            chỉ có đau, tay chân không nghe sai khiến. Thân thể thật giống biến hình,
-            đè ép tại một cái nhỏ hẹp góc nhỏ bên trong, răng nanh giống như khung sắt tỏ ra dữ tợn
-            .<br><br>Xe kịch liệt chuyển động lên, đèn đuốc hội tụ ven đường mây hồng,
-            trong tầm mắt xuất hiện một cái ống kính vạn hoa, trước mặt có một đầu tơ hồng,
-            tơ hồng cuối cùng treo ố vàng ngọc phật vạch ra một đoạn rất ngắn đường vòng cung,
-            chợt nện ở hắn trên sống mũi.<br><br>Quang ảnh đan xen ở giữa,
-            hư suối phun máu tươi đem phật ngọc bao phủ, nên đem trên cổ động mạch tan vỡ.<br>
-            <br>"Tai nạn xe cộ!"<br><br>Tần Tang hối hận không kịp, đối phương động thủ trước, không phải do dự!<br>
-            <br>Tử vong, hết thảy sự tình, nỗ lực qua, quan tâm qua đều đã mất đi ý nghĩa, hoa trong gương,
-            trăng trong nước một dạng vỡ vụn.<br><br>Duy nhất có thể nghĩ,
+            <%= chapter.content%>
         </div>
 
     </div>
     <div class="chapter-transfer-bottom common-style">
-        <a href="" class="pre-chapter-bottom"><i class="fa-solid fa-arrow-left-long"></i> Chương trước</a>
-        <a href="" class="next-chapter-bottom">Chương sau <i class="fa-solid fa-arrow-right-long"></i></a>
-    </div>
-    <div class="chapter-list-bottom common-style">
-        <button class="chapter-list-bottom-toggle">Danh sách chương</button>
-        <ul class="chapter-list-bottom-container hidden">
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-            <li>
-                <a href="">Chap 1:dfsdfsd s sdf sdf sdf sfsd fsf sdf sdf sdfsd fsdfdsfd sfsdf sfsdf fsdf </a>
-            </li>
-        </ul>
+        <a onclick="prev('<%=chapter.chap %>')" class="pre-chapter-bottom"><i class="fa-solid fa-arrow-left-long"></i>
+            Chương trước</a>
+        <a onclick="next('<%=chapter.chap %>','<%= allChapter.length + 1%>')" class="next-chapter-bottom">Chương sau <i
+                class="fa-solid fa-arrow-right-long"></i></a>
     </div>
     <div class="comment-area common-style">
         <div class="comment-component ">
@@ -274,7 +224,7 @@
                     <h2>375 bình luận</h2>
                     <form enctype="multipart/form-data" class="addfile-form">
                         <label class="add-file-cover" for="addfile">Add images or files</label>
-                        <input type="file" name="add-file" id="addfile" />
+                        <input type="file" name="addfile" id="addfile" />
                     </form>
                 </div>
                 <div class="your-comment">
@@ -282,45 +232,23 @@
                         <img src="https://metruyenchu.com/images/avatar-profile.png?97b80827721f6116c3dbc797d11d629b"
                             alt="">
                     </a>
-                    <textarea name="" id="" placeholder="Bình luận của bạn"></textarea>
-                    <button class="send-btn">
+                    <textarea name="" id="title" placeholder="Bình luận của bạn"></textarea>
+                    <button class="send-btn" onclick="addComment('<%= chapter._id%>')">
                         <i class="fas fa-paper-plane    "></i>
                     </button>
                 </div>
-
-                <div class="comment-list">
-                    <div class="comment-item">
-                        <a href="">
-                            <img src="https://metruyenchu.com/images/avatar-profile.png?97b80827721f6116c3dbc797d11d629b"
-                                alt="">
-                        </a>
-                        <div class="comment-info">
-                            <a class="comment-username">Huyền Linh</a>
-                            <p class="comment-time"><i class="fa-regular fa-clock"></i> 6 tháng trước</p>
-                            <p class="comment-content">Cầu Hoa, cầu đ sd sdf sdfs sdf sdf sf fs p GẠCH vào mặt.
-                                Cẩn thận nhập hố, bị độc chết ta không chịu trách nhiệm :))</p>
-                            <button class="like-field">
-                                <i class="fa-solid fa-thumbs-up"> 62</i>
-                            </button>
-                        </div>
-                    </div>
+                <div class="comment">
+                    <%- include('./comment.ejs') %>
                 </div>
-                <button class="load-more">Xem thêm bình luận</button>
+                <%for(let i=0; i <total; i ++){ %>
+                    <button onclick="nextComment('<%=i+1%>')">
+                        <%=i+ 1%>
+                    </button>
+                    <%}%>
+
+
             </div>
-            <div class="item-suggest">
-                <a>
-                    <img src="https://static.cdnno.com/storage/topbox/4b855a1cf3dda9794530116feeaff69d.jpg" alt="">
-                </a>
-                <a>
-                    <img src="https://st.quantrimang.com/photos/image/2018/06/14/man-hinh-vo-1.jpg" alt="">
-                </a>
-                <a>
-                    <img src="https://static.cdnno.com/storage/topbox/4b855a1cf3dda9794530116feeaff69d.jpg" alt="">
-                </a>
-                <a>
-                    <img src="https://static.cdnno.com/storage/topbox/4b855a1cf3dda9794530116feeaff69d.jpg" alt="">
-                </a>
-            </div>
+
         </div>
     </div>
     <!-- main -->

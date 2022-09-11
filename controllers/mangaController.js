@@ -6,8 +6,7 @@ const UserModel = require('../models/user.model')
 const Follow = require('../models/library.model')
 const fs = require('fs');
 const slug = require('slugify');
-const { ifError } = require('assert');
-
+const commentModel = require('../models/comment.model');
 
 
 // quản lý manga của author post
@@ -269,34 +268,34 @@ module.exports.ChangeMangaAvatar = async (req, res) => {
 
 
 //-----------------------------------------
-module.exports.userViewManga = async (req, res) => {
-    try {
-        let allManga = await MangaModel.find()
-        let listManga = await MangaModel.find().limit(10)
-        let total = allManga.length
-        if (allManga.length) {
-            console.log(280, allManga);
-        } else {
-            console.log(282, 'No manga found');
-        }
-        res.json({ status: 200 })
-    } catch (error) {
-        res.json(err)
-    }
-}
+// module.exports.userViewManga = async (req, res) => {
+//     try {
+//         let allManga = await MangaModel.find()
+//         let listManga = await MangaModel.find().limit(10)
+//         let total = allManga.length
+//         if (allManga.length) {
+//             console.log(280, allManga);
+//         } else {
+//             console.log(282, 'No manga found');
+//         }
+//         res.json({ status: 200 })
+//     } catch (error) {
+//         res.json(err)
+//     }
+// }
 
-module.exports.userViewPagination = async (req, res) => {
-    try {
-        let listManga = await MangaModel.find().skip(req.query.limit * (req.query.page - 1))
-            .limit(req.query.limit);
-        if (listManga) {
-            console.log(297, listManga);
-        }
-        res.json({ status: 200 })
-    } catch (error) {
-        res.json(error)
-    }
-}
+// module.exports.userViewPagination = async (req, res) => {
+//     try {
+//         let listManga = await MangaModel.find().skip(req.query.limit * (req.query.page - 1))
+//             .limit(req.query.limit);
+//         if (listManga) {
+//             console.log(297, listManga);
+//         }
+//         res.json({ status: 200 })
+//     } catch (error) {
+//         res.json(error)
+//     }
+// }
 
 module.exports.userViewMangaDetail = async (req, res) => {
     try {
@@ -341,7 +340,7 @@ module.exports.userViewMangaDetail = async (req, res) => {
                 console.log('ban chua dang nhap');
             } else {
                 res.render('pages/home/page/page', { manga, chapter, followers, user, follow })
-                console.log(342, follow);
+                // console.log(342, follow);
             }
 
         } else {
@@ -363,7 +362,7 @@ module.exports.HomePage = async (req, res) => {
             let chap = await ChapterModel.find({ mangaID: manga[i]._id }).sort({ chap: 'desc' })
             chapter.push(chap)
         }
-        console.log(chapter);
+        // console.log(chapter);
         res.render('./pages/home/home/home', { manga, chapter })
     } catch (e) {
         console.log(e);
@@ -373,5 +372,36 @@ module.exports.HomePage = async (req, res) => {
 
 
 module.exports.userViewChap = async (req, res) => {
-    res.render('pages/Home/read/read')
+    try {
+        let allChapter = await ChapterModel.find({ mangaID: req.params.id })
+        let chapter = await ChapterModel.findOne({ mangaID: req.params.id, chap: req.params.chap })
+        let allComment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' })
+        let comment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' }).limit(1)
+        let total = Math.ceil((allComment.length + 1) / (comment.length + 1))
+        // console.log(381, total);
+        // console.log(379, comment);
+        // console.log(379, chapter);
+        res.render('pages/Home/read/read', { chapter, allChapter, comment, total })
+    } catch (e) {
+        res.json(e)
+    }
+}
+
+module.exports.getpaginationComment = async (req, res) => {
+    try {
+        console.log(391, req.query.page);
+        let chapter = await ChapterModel.findOne({ mangaID: req.params.id, chap: req.params.chap })
+        let allComment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' })
+        let comment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' }).skip(1 * (req.query.page - 1))
+            .limit(1);
+        console.log(comment);
+        let total = Math.ceil((allComment.length + 1) / (comment.length + 1))
+        if (chapter) {
+            res.render('pages/Home/read/comment', { comment, total })
+        } else {
+            res.json('khong co user ton tai')
+        }
+    } catch (e) {
+        console.log({ message: 'Error getting pagination user' });
+    }
 }

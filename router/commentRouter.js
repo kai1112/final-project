@@ -14,11 +14,24 @@ const storage = multer.diskStorage({
         cb(null, file.fieldname + "-" + uniqueSuffix + `.${ext}`);
     },
 });
-const upload = multer({ storage: storage });
+const upload = multer(
+    { storage: storage, limits: { fileSize: Infinity } },
+    {
+        fileFilter: function (req, file, cb) {
+            if (!file.mimetype.includes("audio") || file !== "") {
+                console.log(20, file.mimetype);
+                return cb(new Error("khong phai audio"), false);
+            }
+            cb(null, true);
+        },
+    }
+);
 
 
 
-router.post('/createComment', auth.checkToken, controller.createComment)
-router.delete('/deleteComment', auth.checkToken, controller.deleteComment)
+router.post('/createComment', upload.single('addfile'), auth.checkToken, controller.createComment)
 router.post('/updateComment', auth.checkToken, controller.updateComment)
+router.delete('/deleteComment', auth.checkToken, controller.deleteComment)
+// router.get('/getPaginationComment', controller.getpaginationComment)
+
 module.exports = router

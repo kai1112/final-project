@@ -11,16 +11,25 @@ $(document).ready(function () {
             $('.des-component').css({ 'display': 'flex' })
             $('.chapterList-component').css({ 'display': 'none' })
             $('.comment-component').css({ 'display': 'none' })
+            $('.follow-component').css({ 'display': 'none' })
         }
         if (aId == 'feature-bar-chapter') {
             $('.des-component').css({ 'display': 'none' })
             $('.chapterList-component').css({ 'display': 'flex' })
             $('.comment-component').css({ 'display': 'none' })
+            $('.follow-component').css({ 'display': 'none' })
         }
         if (aId == 'feature-bar-comment') {
             $('.des-component').css({ 'display': 'none' })
             $('.chapterList-component').css({ 'display': 'none' })
             $('.comment-component').css({ 'display': 'flex' })
+            $('.follow-component').css({ 'display': 'none' })
+        }
+        if (aId == 'feature-bar-follow') {
+            $('.des-component').css({ 'display': 'none' })
+            $('.chapterList-component').css({ 'display': 'none' })
+            $('.comment-component').css({ 'display': 'none' })
+            $('.follow-component').css({ 'display': 'flex' })
         }
     });
 })
@@ -39,10 +48,9 @@ function type_search(type) {
         $(`.result${type}`).css({ 'display': 'none' })
 }
 
-
 async function viewChapter(chap) {
     let id = window.location.href.split('/')[4]
-    console.log(id, chap);
+    // console.log(id, chap);
     window.location.href = `/manga/${id}/${chap}`
 }
 
@@ -57,6 +65,15 @@ async function follow(id) {
             alert(data.message)
             window.location.reload()
         }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function readFirst(chap) {
+    let id = window.location.href.split('/')[4]
+    try {
+        window.location.href = `/manga/${id}/${chap}`
     } catch (e) {
         console.log(e);
     }
