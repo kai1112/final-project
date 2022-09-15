@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.show-search-bar').click(function(){
+    $('.show-search-bar').click(function () {
         $('.search-bar').toggle()
     })
     //dark mode
@@ -10,17 +10,32 @@ $(document).ready(function () {
     //     $('.menu').toggleClass('dark-menu')
     // })
 })
-function click_to_flex(element_click,element_show,class_active){
-    $(`${element_click}`).click(function(){
+function click_to_flex(element_click, element_show, class_active) {
+    $(`${element_click}`).click(function () {
         $(`${element_show}`).toggleClass(class_active)
     })
 }
-click_to_flex('.category-click','.cat-submenu-mobile','hidden')
-click_to_flex('.chart-click','.chart-submenu-mobile','hidden')
-click_to_flex('.toggle_menu_mobile','.menu_mobile_content','height-fit')
-function type_search(type){
-    if($(`.field${type}`).val() != "")
-        $(`.result${type}`).css({'display':'flex'})
+click_to_flex('.category-click', '.cat-submenu-mobile', 'hidden')
+click_to_flex('.chart-click', '.chart-submenu-mobile', 'hidden')
+click_to_flex('.toggle_menu_mobile', '.menu_mobile_content', 'height-fit')
+function type_search(type) {
+    if ($(`.field${type}`).val() != "")
+        $(`.result${type}`).css({ 'display': 'flex' })
     else
-         $(`.result${type}`).css({'display':'none'})
+        $(`.result${type}`).css({ 'display': 'none' })
+}
+
+async function unfollow(id) {
+    try {
+        let data = await $.ajax({
+            type: 'DELETE',
+            url: `/follow/unFollow`,
+            data: id
+        })
+        if (data.status === 200) {
+            alert('unfollow success')
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }

@@ -1,43 +1,43 @@
 const UserModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
-module.exports.checkRoleAdmin = async (req, res, next)=>{
-    try{
-        if(req.user.role === 'admin'){
+module.exports.checkRoleAdmin = async (req, res, next) => {
+    try {
+        if (req.user.role === 'admin') {
             next();
-        }else{
-            res.status(403).json({message: 'role is not allowed'})
+        } else {
+            res.status(403).json({ message: 'role is not allowed' })
         }
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
 
 module.exports.checkRoleAuthor = async (req, res, next) => {
-    try{
-        if(req.user.role === 'author'){
+    try {
+        if (req.user.role === 'author') {
             next();
-        }else{
-            res.status(403).json({message: 'role is not allowed'})
+        } else {
+            res.status(403).json({ message: 'role is not allowed' })
         }
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 }
 
 module.exports.checkRoleUser = async (req, res, next) => {
-    try{
-        if(req.user.role === 'user'){
+    try {
+        if (req.user.role === 'user') {
             next();
-        }else{
-            res.status(403).json({message: 'role is not allowed'})
+        } else {
+            res.status(403).json({ message: 'role is not allowed' })
         }
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 }
 
-module.exports.checkToken = async (req, res, next)=> {
+module.exports.checkToken = async (req, res, next) => {
     let searchTokenUser
     try {
         let token = req.cookies.user
@@ -53,8 +53,7 @@ module.exports.checkToken = async (req, res, next)=> {
                 next()
             }
         } else {
-            res.json('cant not find user')
-
+            res.json({ status: 403, message: 'ban chua dang nhap' })
         }
     } catch (error) {
         if (error.message == 'jwt expired') {

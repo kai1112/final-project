@@ -2,17 +2,21 @@ const Follow = require('../models/library.model')
 
 module.exports.createFollow = async (req, res) => {
     try {
-        let followed = await Follow.findOne({ userID: req.user._id, mangaID: req.body.id })
-        if (followed) {
-            let unFollow = await Follow.findOneAndDelete({ userID: req.user._id, mangaID: req.body.id })
-            res.json({ status: 200, message: 'unFollow successfully' })
+        if (req.user._id === null) {
+            res.json({ message: 'ban chua dang nhap' })
         } else {
-            let createdfollow = await Follow.create({
-                status: 'Followed',
-                userID: req.user._id,
-                mangaID: req.body.id,
-            })
-            res.json({ status: 200, message: 'follow successfully' })
+            let followed = await Follow.findOne({ userID: req.user._id, mangaID: req.body.id })
+            if (followed) {
+                let unFollow = await Follow.findOneAndDelete({ userID: req.user._id, mangaID: req.body.id })
+                res.json({ status: 200, message: 'unFollow successfully' })
+            } else {
+                let createdfollow = await Follow.create({
+                    status: 'Followed',
+                    userID: req.user._id,
+                    mangaID: req.body.id,
+                })
+                res.json({ status: 200, message: 'follow successfully' })
+            }
         }
     } catch (err) {
         res.json(err)
@@ -35,14 +39,14 @@ module.exports.unFollow = async (req, res) => {
 
 module.exports.viewAllFollows = async (req, res) => {
     try {
-        let follows = await Follow.find({ userID: req.user._id })
+        let follows = await Follow.find({ userID: req.user._id }).populate('mangaID')
         if (follows) {
+            res.render('pages/Home/follow/follow', { follows })
             console.log(40, follows);
         } else {
             console.log(42, 'follows not found');
         }
-        res.json({ status: 200 })
     } catch (err) {
-        res.json(err)
+        console.log(err)
     }
 }

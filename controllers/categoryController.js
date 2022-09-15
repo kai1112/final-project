@@ -1,5 +1,5 @@
 const CategoryModel = require('../models/category.model')
-const Reviewmanga = require('../models/reviewmanga')
+const Reviewmanga = require('../models/reviewManga')
 const MangaModel = require('../models/manga.model')
 module.exports.createCategory = async (req, res) => {
     try {
@@ -61,5 +61,16 @@ module.exports.deleteCategory = async (req, res) => {
         res.json({ status: 200 })
     } catch (err) {
         res.json(err)
+    }
+}
+
+module.exports.findMangaByCategory = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        let manga = await MangaModel.find({ 'category.id': req.params.id })
+        res.render('pages/findByCategory/findByCategory', { manga })
+        console.log(79, manga);
+    } catch (err) {
+        console.log(err);
     }
 }
