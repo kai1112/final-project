@@ -45,4 +45,8 @@ router.use('/follow', followRoute)
 //using comment routes
 const commentRoute = require("./commentRouter")
 router.use('/comment', commentRoute)
+
+// using category routes
+const categoryRoute = require("./categoryRouter")
+router.use('/category', categoryRoute)
 module.exports = router;

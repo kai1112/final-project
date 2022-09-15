@@ -64,6 +64,10 @@ async function follow(id) {
         if (data.status === 200) {
             alert(data.message)
             window.location.reload()
+        } else {
+            if (confirm('ban can dang nhap de dung tinh nabg nay')) {
+                window.location.href = '/auth/viewLogin'
+            }
         }
     } catch (e) {
         console.log(e);
@@ -74,6 +78,14 @@ async function readFirst(chap) {
     let id = window.location.href.split('/')[4]
     try {
         window.location.href = `/manga/${id}/${chap}`
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function findbyCategory(id) {
+    try {
+        window.location.href = `/category/${id}`
     } catch (e) {
         console.log(e);
     }

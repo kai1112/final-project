@@ -18,7 +18,7 @@
         <!-- pc -->
         <div class="header">
             <div class="headerFeature">
-                <a href="" class="logo">
+                <a href="/" class="logo">
                     <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
                 </a>
                 <button id="toggle-dark-mode">
@@ -52,7 +52,7 @@
         <div class="menu">
             <div class="menu-content">
                 <ul class="menu_pc">
-                    <li><a href="">Trang chủ</a></li>
+                    <li><a href="/">Trang chủ</a></li>
                     <li class="category-hover">
                         <span>Thể loại <i class="fa fa-caret-down"></i></span>
                         <div class="submenu cat-submenu">
@@ -187,7 +187,7 @@
                 </p>
                 <div class="item-cat">
                     <% manga.category.map((c)=>{%>
-                        <a href="http://">
+                        <a onclick="findbyCategory('<%=c.id%>')">
                             <%= c.name %>
                         </a>
                         <%})%>
@@ -207,7 +207,7 @@
                     </div>
                 </div>
                 <div class="read-and-save">
-                    <button class="read" onclick="readFirst('<%= chapter[0].chap%>')"><i
+                    <button class="read" onclick="readFirst('<%= chapter[0]?.chap%>')"><i
                             class="fa-solid fa-glasses"></i>
                         Đọc truyện</button>
                     <button class="save" onclick="follow('<%=manga._id%>')"><i class="fa-regular fa-bookmark"></i>
@@ -344,61 +344,21 @@
                 <!-- follow-component -->
                 <div class="follow-component">
                     <div class="follow-list">
-                        <div class="follow-item">
-                            <span class="rank">1</span>
-                            <a href="" class="follow-item-info">
-                                <img src="https://static.cdnno.com/user/c6f2737fa620d7e624e4f9d19d8a9f00/100.jpg?1624273042"
-                                    alt="">
-                                <div class="follow-item-other-info">
-                                    <p class="item-name">Diệp Lam Tuyết</p>
-                                    <p class="item-role">Minh chủ</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="follow-item">
-                            <span class="rank">1</span>
-                            <a href="" class="follow-item-info">
-                                <img src="https://static.cdnno.com/user/c6f2737fa620d7e624e4f9d19d8a9f00/100.jpg?1624273042"
-                                    alt="">
-                                <div class="follow-item-other-info">
-                                    <p class="item-name">Diệp Lam Tuyết</p>
-                                    <p class="item-role">Minh chủ</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="follow-item">
-                            <span class="rank">1</span>
-                            <a href="" class="follow-item-info">
-                                <img src="https://static.cdnno.com/user/c6f2737fa620d7e624e4f9d19d8a9f00/100.jpg?1624273042"
-                                    alt="">
-                                <div class="follow-item-other-info">
-                                    <p class="item-name">Diệp Lam Tuyết</p>
-                                    <p class="item-role">Minh chủ</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="follow-item">
-                            <span class="rank">1</span>
-                            <a href="" class="follow-item-info">
-                                <img src="https://static.cdnno.com/user/c6f2737fa620d7e624e4f9d19d8a9f00/100.jpg?1624273042"
-                                    alt="">
-                                <div class="follow-item-other-info">
-                                    <p class="item-name">Diệp Lam Tuyết</p>
-                                    <p class="item-role">Minh chủ</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="follow-item">
-                            <span class="rank">1</span>
-                            <a href="" class="follow-item-info">
-                                <img src="https://static.cdnno.com/user/c6f2737fa620d7e624e4f9d19d8a9f00/100.jpg?1624273042"
-                                    alt="">
-                                <div class="follow-item-other-info">
-                                    <p class="item-name">Diệp Lam Tuyết</p>
-                                    <p class="item-role">Minh chủ</p>
-                                </div>
-                            </a>
-                        </div>
+                        <% followers.map((f, index)=>{%>
+                            <div class="follow-item">
+                                <span class="rank">
+                                    <%= index + 1%>
+                                </span>
+                                <a href="" class="follow-item-info">
+                                    <img src="<%= f.userID.avatar%>" alt="">
+                                    <div class="follow-item-other-info">
+                                        <p class="item-name">
+                                            <%= f.userID.username%>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <%})%>
                     </div>
                 </div>
             </div>
