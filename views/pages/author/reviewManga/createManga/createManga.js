@@ -1,3 +1,11 @@
+//preview img
+let imgInp = $('#avatar')[0]
+let blah = $('.preview-avatar')[0]
+let imgSrc = $('.preview-avatar').attr('src')
+imgInp.onchange = e =>{
+    const [file] = imgInp.files 
+    if(file)    blah.src = URL.createObjectURL(file)
+}
 
 const categoryIdElement = document.querySelector('#selectNode');
 

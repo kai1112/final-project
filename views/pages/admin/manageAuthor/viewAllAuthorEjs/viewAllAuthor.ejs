@@ -6,17 +6,18 @@
   </div>
 
   <div class="author-info">
-    <div>
-      <input type="text" id="searchUser" placeholder="Search User">
-      <button onclick="searchUser()">search</button>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="searchUser" placeholder="Search User" aria-label="Search User" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button onclick="searchUser()" class="btn btn-outline-secondary" type="button">search</button>
+      </div>
     </div>
-
     <div class="pagination">
       <%- include('./paginationAuthor.ejs') %>
     </div>
 
     <% for(let i=1; i <=total; i++) {%>
-      <button onclick="pagination('<%= i %>', 10)">
+      <button class="btn btn-primary" onclick="pagination('<%= i %>', 10)">
         <%= i %>
       </button>
       <%}%>

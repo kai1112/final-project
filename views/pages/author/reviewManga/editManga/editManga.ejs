@@ -4,16 +4,24 @@
   </div>
 
   <div class="editManga-info">
-    <form action="" enctype="multipart/form-data">
-      <p>avatar</p>
-      <input type="file" name="avatar" id="avatar" placeholder="avatar" />
-      <p>category</p>
-      <input type="text" name="category" id="category" placeholder="category" />
-      <p>discription</p>
-      <input type="text" name="description" id="description" placeholder="input description manga" />
-      <p>price</p>
-      <input type="number" name="price" id="price" placeholder="input price manga" />
-      <button type="button" onclick="edit()">submit</button>
+    <form class="edit-form" action="" enctype="multipart/form-data">
+      <div class="edit-form-left">
+        <span>Category</span>
+        <input class="form-control" type="text" name="category" id="category" placeholder="Category..." />
+        <br>
+        <span>Description</span>
+        <input class="form-control" type="text" name="description" id="description" placeholder="Description..." />
+        <br>
+        <span>Price</span>
+        <input class="form-control" type="number" name="price" id="price" placeholder="Price..." />
+        <br>
+        <button class="btn btn-primary" type="button" onclick="edit()">submit</button>
+      </div>
+      <div class="edit-form-right">
+        <label for="avatar">Choose avatar</label>
+        <input type="file" name="avatar" id="avatar" placeholder="avatar" />
+        <img class="preview-avatar" src="" alt="">
+      </div>
     </form>
   </div>
 </div>

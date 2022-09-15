@@ -10,7 +10,7 @@
       <%- include('./paginationManga.ejs') %>
     </div>
     <% for(let i=1; i <=total; i++) {%>
-      <button onclick="pagination('<%= i %>', 10)">
+      <button class="btn btn-primary" onclick="pagination('<%= i %>', 10)">
         <%= i %>
       </button>
       <%}%>

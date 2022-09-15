@@ -8,7 +8,7 @@
     </div>
 
     <% for(let i=1; i <=total; i++) {%>
-      <button onclick="paginationChapter('<%= i %>', 1, '<%= allChapter[i-1].id %>')">
+      <button class="btn btn-primary" onclick="paginationChapter('<%= i %>', 1, '<%= allChapter[i-1].id %>')">
         <%= i %>
       </button>
       <%}%>

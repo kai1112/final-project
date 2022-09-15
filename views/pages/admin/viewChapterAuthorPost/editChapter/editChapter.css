@@ -5,8 +5,11 @@
 
 .editMangaAuthorPost-infocreate-chapter-info {
     flex: 1
-}
 
+}
+.editMangaAuthorPost-info{
+    width: 692px;
+}
 
 body {
     width: 100%;

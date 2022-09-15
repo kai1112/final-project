@@ -4,29 +4,35 @@
   </div>
 
   <div class="createManga-info">
-    <form action="" enctype="multipart/form-data">
-      <p>name</p>
-      <input type="text" name="name" id="name" placeholder="input name manga" />
-      <p>avatar</p>
-      <input type="file" name="avatar" id="avatar" placeholder="avatar" />
-      <div id="selectCategory">Choose Category
-        <select id="selectNode" onchange="handleOption()">
-          <option value="" selected>Selectect</option>
-          <% category.forEach((e)=> {%>
-            <option value="category" onclick="changeCategory(this)" id="<%= e._id %>">
-              <%= e.name %>
-            </option>
-            <% }) %>
-        </select>
-      </div>
-      <div id="showcategory">
+    <form class="create-form" action="" enctype="multipart/form-data">
+      <div class="create-form-left">
+        <span>Name</span>
+        <input class="form-control" type="text" name="name" id="name" placeholder="Name..." /><br>
+        <div id="selectCategory">Choose Category
+          <select class="custom-select" id="selectNode" onchange="handleOption()">
+            <option value="" selected>Selectect</option>
+            <% category.forEach((e)=> {%>
+              <option value="category" onclick="changeCategory(this)" id="<%= e._id %>">
+                <%= e.name %>
+              </option>
+              <% }) %>
+          </select>
+        </div>
+        <div id="showcategory">
 
+        </div>
+        <br>
+        <span>Description</span>
+        <textarea class="form-control z-depth-1"  rows="3" name="description" id="description" placeholder="Description..."></textarea><br>
+        <span>Price</span>
+        <input class="form-control" type="number" name="price" id="price" placeholder="Price" /><br>
+        <button class="btn btn-primary" type="button" onclick="createManga()">submit</button>
       </div>
-      <p>discription</p>
-      <input type="text" name="description" id="description" placeholder="input description manga" />
-      <p>price</p>
-      <input type="number" name="price" id="price" placeholder="input description manga" />
-      <button type="button" onclick="createManga()">submit</button>
+      <div class="create-form-right">
+        <label for="avatar">Browse your Avatar</label>
+        <input type="file" name="avatar" id="avatar" placeholder="avatar" />
+        <img class="preview-avatar" src="" alt="">
+      </div>
     </form>
   </div>
 </div>

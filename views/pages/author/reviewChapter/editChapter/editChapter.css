@@ -6,8 +6,16 @@
 .editMangaAuthorPost-infocreate-chapter-info {
     flex: 1
 }
-
-
+.edit-chapter{
+    margin-left: 300px;
+    padding: 1rem 0 0 1rem;
+}
+.edit-chapter input,.edit-chapter textarea{
+    width: 50%;
+}
+.edit-chapter textarea{
+    min-height: 300px;
+}
 body {
     width: 100%;
     margin: auto;

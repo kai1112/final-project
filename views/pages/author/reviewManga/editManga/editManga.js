@@ -1,5 +1,5 @@
-
-let imgInp = $('#change-avatar')[0]
+//preview img
+let imgInp = $('#avatar')[0]
 let blah = $('.preview-avatar')[0]
 let imgSrc = $('.preview-avatar').attr('src')
 imgInp.onchange = e => {
