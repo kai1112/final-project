@@ -7,11 +7,12 @@
 .container1 {
   height: 100vh;
   width: 300px;
-  background: #172b4d;
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
   color: white;
-  margin-right: 0;
   margin-left: 0;
-
+  position: fixed;
+  bottom: 0;
 }
 
 .img-user {
@@ -33,18 +34,24 @@
   height: 30px;
 }
 
-.row {
-  display: inline-grid;
-  grid-template-columns: 100%;
-}
-
-.row p {
-  padding: 8px 40px;
+.menu-option {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-
-.row p:hover {
+.menu-option a{
+  padding: 8px 40px !important;
+  text-decoration: none !important;
+  width: 100%;
+  color:rgb(9, 255, 0);
+  text-shadow: 2px 2px 3px #000000;
+}
+.menu-option a:hover {
   cursor: pointer;
-  background: cadetblue;
-
+  color:#f18121;
+  background: #fff;
+  text-shadow: none;
+}
+.adminMenu{
+  margin-right: 300px;
 }

@@ -12,23 +12,35 @@
     <%- include('../../../../components/adminMenu/adminMenu.ejs') %>
   </div>
   <div class="viewDetailMangaAuthorPost-info">
-    <td>
-      <%= manga.name %>
-    </td>
-    <td><img src="<%= manga.avatar %>" alt="avatar" width="50px" /></td>
-    <td>
-      <%= manga.category %>
-    </td>
-    <td>
-      <%= manga.author %>
-    </td>
-    <td>
-      <%= manga.description %>
-    </td>
+    <div class="post-info">
+      <div class="left-info">
+        <h4>
+          Name: <%= manga.name %>
+        </h4>
+        <p>
+          Category: <% manga.category.forEach(cat=>{ %>
+            <%= cat.name %>
+          <% }) %>
+        </p>
+        <h5>
+          Author: <%= manga.author %>
+        </h5>
+        <p>
+          Description: <%= manga.description %>
+        </p>
+      </div>
+      <div class="right-info">
+        <img src="<%= manga.avatar %>" alt="avatar" width="50px" />
+      </div>
+    </div>
     <!-- chapter -->
-    <h1> list Chapter</h1>
+    <h1> Chapter List</h1>
     <table class="table table-striped">
-
+      <thead class="thead-dark">
+        <th>#</th>
+        <th>Chapter name</th>
+        <th>Tools</th>
+      </thead>
       <tbody>
         <% chapter.map((chapter, index)=>{%>
           <tr>
@@ -41,12 +53,13 @@
               </a>
             </td>
             <td scope="row">
-              <button onclick="post('<%= chapter._id%>')">
+              <% let classBtn = (chapter.stautus === 'review') ? 'outline-success' : 'success'%>
+              <button class="btn btn-<%=classBtn%>" onclick="post('<%= chapter._id%>')">
                 <%= chapter.stautus %>
               </button>
 
-              <button onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
-              <button onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
+              <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
+              <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
             </td>
           </tr>
           <%})%>

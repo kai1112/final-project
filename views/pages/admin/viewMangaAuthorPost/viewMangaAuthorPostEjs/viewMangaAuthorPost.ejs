@@ -8,7 +8,7 @@
       <%- include('./viewpaginationMangaAuthorPost.ejs') %>
     </div>
     <% for(let i=1; i <=total; i++) {%>
-      <button onclick="pagination('<%= i %>', 5)">
+      <button class="btn btn-primary" onclick="pagination('<%= i %>', 5)">
         <%= i %>
       </button>
       <%}%>

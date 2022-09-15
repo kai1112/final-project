@@ -5,7 +5,7 @@
 
   <div class="mangaAuthor-post">
     <div>
-      <button onclick="authorCreateManga()">create manga</button>
+      <button class="createBtn btn btn-outline-primary" onclick="authorCreateManga()">create manga</button>
     </div>
 
     <table class="table table-striped">
@@ -40,9 +40,9 @@
               <%=user%>
             </td>
             <td>
-              <button onclick="edit('<%= manga._id%>')">edit</button>
-              <button onclick="viewDetails('<%= manga._id%>')">view detail</button>
-              <button onclick="delette('<%= manga._id%>')">delete</button>
+              <button class="btn btn-warning" onclick="edit('<%= manga._id%>')">edit</button>
+              <button class="btn btn-info" onclick="viewDetails('<%= manga._id%>')">view detail</button>
+              <button class="btn btn-danger" onclick="delette('<%= manga._id%>')">delete</button>
             </td>
           </tr>
           <%})%>
