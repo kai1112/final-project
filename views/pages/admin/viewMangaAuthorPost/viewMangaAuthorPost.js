@@ -35,21 +35,21 @@ async function viewDetails(id) {
     window.location.href = `/manga/viewDetailsAuthor/${id}`
 }
 
-async function delette(id) {
-    try {
-        let data1 = await $.ajax({
-            url: `/reviewManga/deleteManga/${id}`,
-            type: "DELETE",
-            data: {
-                id,
-            },
-        });
-        if (data1.status === 200) {
-            alert('delette successfully')
-            window.location.reload();
-        }
-        // console.log(data1);
-    } catch (e) {
-        console.log(e)
-    }
-}
+// async function delette(id) {
+//     try {
+//         let data1 = await $.ajax({
+//             url: `/reviewManga/deleteManga/${id}`,
+//             type: "DELETE",
+//             data: {
+//                 id,
+//             },
+//         });
+//         if (data1.status === 200) {
+//             alert('delette successfully')
+//             window.location.reload();
+//         }
+//         // console.log(data1);
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }

@@ -13,133 +13,11 @@
 </head>
 
 <body>
-    <!-- menu -->
     <header>
-        <!-- pc -->
-        <div class="header">
-            <div class="headerFeature">
-                <a href="/" class="logo">
-                    <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
-                </a>
-                <button id="toggle-dark-mode">
-                    <i class="fa-regular fa-lightbulb"></i>
-                </button>
-                <div class="search-bar">
-                    <input id="name" class="search-field fieldpc" oninput="type_search('pc')" type="text"
-                        placeholder="Search...">
-                    <button class="search-btn" onclick="search()">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                    <div class="search-result resultpc">
-                        <%- include('./search.ejs') %>
-                    </div>
-                </div>
-                <div class="rightFeature">
-                    <button class="btnFeature" onclick="viewRegister()">Đăng kí</button>
-                    <button class="btnFeature" onclick="viewLogin()">Đăng nhập</button>
-                </div>
-            </div>
-        </div>
-        <div class="menu">
-            <div class="menu-content">
-                <ul class="menu_pc">
-                    <li><a href="/">Trang chủ</a></li>
-                    <li class="category-hover">
-                        <span>Thể loại <i class="fa fa-caret-down"></i></span>
-
-                        <div class="submenu cat-submenu">
-                            <% category.map((category)=>{%>
-                                <a onclick="findCategory('<%=category.id%>')">
-                                    <%=category.name%>
-                                </a>
-                                <% })%>
-                        </div>
-                    </li>
-                    <li><a href="">Lịch sử</a></li>
-                    <li><a onclick="follow()">Theo dõi</a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- mobile -->
-        <div class="header_mobile">
-            <a href="" class="logo_mobile">
-                <img src="http://truyen48.com/template/frontend/images/logo-icon.png" alt="">
-            </a>
-            <button id="toggle-dark-mode">
-                <i class="fa-regular fa-lightbulb"></i>
-            </button>
-            <div class="rightFeature">
-                <button class="show-search-bar">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-                <button class="btnFeature">Đăng kí</button>
-                <button class="btnFeature">Đăng nhập</button>
-            </div>
-            <div class="search-bar">
-                <input class="search-field fieldmobile" type="text" oninput="type_search('mobile')"
-                    placeholder="Search...">
-                <button class="search-btn">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <div class="search-result resultmobile">
-                    <a class="search-item" href="">
-                        <div class="search-item-img">
-                            <img src="http://i.truyenvua.com/ebook/190x247/witch-hunter_1552226189.jpg?r=r8645456"
-                                alt="">
-                        </div>
-                        <div class="search-item-info">
-                            <b>Name</b>
-                            <p>Other name </p>
-                            <span>Curent chapter</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="menu_mobile">
-            <ul class="menu_mobile_content">
-                <li>
-                    <a href="">Trang chủ</a>
-                    <div class="toggle_menu_mobile">
-                        <i class="fa-sharp fa-solid fa-list"></i>
-                    </div>
-                </li>
-                <li class="category-click ">
-                    <span>Thể loại <i class="fa fa-caret-down"></i></span>
-                    <div class="submenu_mobile cat-submenu-mobile  hidden">
-                        <a href="">Action</a>
-                        <a href="">Adventure</a>
-                        <a href="">Anime</a>
-                        <a href="">Chuyển sinh</a>
-                        <a href="">Cổ đại</a>
-                        <a href="">Comedy</a>
-                        <a href="">Comic</a>
-                        <a href="">Demons</a>
-                        <a href="">Detective</a>
-                        <a href="">Mafia</a>
-                    </div>
-                </li>
-                <li class="chart-click ">
-                    <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
-                    <div class="submenu_mobile chart-submenu-mobile  hidden">
-                        <a href="">Top ngày</a>
-                        <a href="">Top tuần</a>
-                        <a href="">Top tháng</a>
-                        <a href="">Yêu thích</a>
-                        <a href="">Mới cập nhật</a>
-                        <a href="">Truyện mới</a>
-                    </div>
-                </li>
-                <li class=""><a href="">Con gái</a></li>
-                <li class=""><a href="">Con trai</a></li>
-                <li class=""><a href="">Tìm truyện</a></li>
-                <li class=""><a href="">Lịch sử</a></li>
-                <li class=""><a href="">Theo dõi</a></li>
-                <li class=""><a href="">Tải app</a></li>
-                <li class=""><a href="">Thảo luận</a></li>
-
-            </ul>
-        </div>
+        <!-- menu -->
+        <%- include('../../../components/headerHome/header') %>
+            <!-- mobile -->
+            <%- include('../../../components/headerHome/headerMobile') %>
     </header>
     <!-- menu -->
     <!-- main -->
@@ -193,94 +71,28 @@
             </div>
         </div>
         <div class="suggest">
-            <h2><i class="fa-solid fa-star"></i> Truyện hay</h2>
+            <h2><i class="fa-solid fa-star"></i> Truyện được mua nhiều nhất</h2>
             <div class="suggest-bar">
                 <ul>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
+                    <% muaNhieu.map((m, index)=>{%>
+                        <li class="card-item">
+                            <a href="">
+                                <img src='<%=m.avatar%>' alt="">
+                                <div class="more-info">
+                                    <div class="hot">TOP <%= index + 1%>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="bookname">
+                                <%=m.name%>
                             </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-
+                            <%if(chapter[index][0]?.mangaID===m.id){%>
+                                <div class="lastest-chapter">
+                                    Chapter <%=chapter[index][chapter[index].length-1]?.chap%>
+                                </div>
+                                <%}%>
+                        </li>
+                        <%})%>
                 </ul>
             </div>
         </div>
@@ -288,443 +100,44 @@
             <h2><i class="fa-solid fa-cloud-arrow-down"></i> Truyện mới cập nhật</h2>
             <div class="main-content">
                 <ul class="list-item">
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <li class="card-item">
-                        <a href="">
-                            <img src="http://i.truyenvua.com/ebook/190x247/vo-luyen-dinh-phong_1514903369.jpg?r=r8645456"
-                                alt="">
-                            <div class="more-info">
-                                <div class="time">1 giờ trước</div>
-                                <div class="hot">Hot</div>
-                            </div>
-                        </a>
-                        <div class="bookname">Đi đi đừng ngoảnh đầu lại</div>
-                        <div class="lastest-chapter">Chapter 123</div>
-                    </li>
-                    <div class="see-more">
-                        <a href="http://">Xem thêm nhiều truyện</a>
-                    </div>
+                    <%- include('./pagination') %>
                 </ul>
+                <div class="see-more">
+                    <div class="pagination-btn">
+                        <%for(let i=0; i <total; i ++){ %>
+                            <button onclick="nextPages('<%=i+1%>')">
+                                <%=i + 1%>
+                            </button>
+                            <%}%>
+                    </div>
+                </div>
                 <div class="comment-zone">
                     <div class="commentMainLayout">
-                        <div class="commentContainer">
-                            <div class="typeInput">
-                                <div class="typeInput__yourInfo">
-                                    <img src="https://miro.medium.com/fit/c/64/64/0*9nuFDuWbcBYFXVMk" alt="">
-                                    <p>Your name goes here</p>
-                                </div>
-                                <div class="typeInput__comment">
-                                    <textarea name="" id="" placeholder="What are your thoughts?"></textarea>
-                                </div>
-                                <div class="typeInput__commentFeature">
-                                    <button>Cancel</button>
-                                    <button>Respond</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="allCommentContainer">
                             <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
+                                <%comment.map((m, index)=>{%>
+                                    <div class="showComment__info">
+                                        <a href="" class="showComment__info--avatar"><img src="<%=m.userID.avatar%>"
+                                                alt=""></a>
+                                        <div class="showComment__info--nameAndTime">
+                                            <a href="http://">
+                                                <%=m.userID.username%>
+                                            </a>
+                                            <p>Publish timeádasdasssssssssssssss</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
+                                    <div class="showComment__content">
+                                        <%=m?.title%>
                                     </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
-                            </div>
-                            <div class="showComment">
-                                <div class="showComment__info">
-                                    <a href="" class="showComment__info--avatar"><img
-                                            src="https://miro.medium.com/fit/c/40/40/1*Nv8kl1sc8yOG2g40u1fECA.png"
-                                            alt=""></a>
-                                    <div class="showComment__info--nameAndTime">
-                                        <a href="http://">Name here</a>
-                                        <p>Publish time</p>
-                                    </div>
-                                </div>
-                                <div class="showComment__content">
-                                    dnak akdj nadkjan dkajsdna kdjnasjk adk nkanasjkdn axxxxxxxxxxxxxxxxxxxxx
-                                </div>
+                                    <i class="fa-solid fa-thumbs-up like-total">
+                                        <%=m.reaction?.length%>
+                                    </i>
+                                    <%})%>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="seo-link">
-            <a href="http://">Truyện tranh</a>
-            <a href="http://">Truyện tranh hay</a>
-            <a href="http://">Truyện tranh tuan</a>
-            <a href="http://">Truyện tranh manga</a>
-            <a href="http://">Truyện tranh manhua</a>
-            <a href="http://">Truyện tranh</a>
-            <a href="http://">Truyện tranh</a>
-            <a href="http://">Truyện tranh hay</a>
-            <a href="http://">Truyện tranh tuan</a>
-            <a href="http://">Truyện tranh manga</a>
-            <a href="http://">Truyện tranh manhua</a>
-            <a href="http://">Truyện tranh</a>
-
         </div>
     </div>
     <!-- main -->

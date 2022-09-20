@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    let imgInp = $('#addfile')[0]
+    let blah = $('.preview-image')[0]
+    let imgSrc = $('.preview-image').attr('src')
+    imgInp.onchange = e => {
+        const [file] = imgInp.files
+        if (file) blah.src = URL.createObjectURL(file)
+    }
     $('.show-search-bar').click(function () {
         $('.search-bar').toggle()
     })
@@ -67,6 +74,9 @@ async function prev(chap) {
     }
 }
 
+$('.search-result.resultpc').html("")
+
+
 async function next(chap, length) {
     let id = window.location.href.split('/')[4]
     // console.log(+chap + 1);
@@ -89,7 +99,7 @@ async function addComment(chapterID) {
     if (title === undefined) {
         title = ""
     }
-    console.log(title);
+    // console.log(title);
     const form = $("form")[0];
     const formData = new FormData(form);
     formData.append('title', title)
@@ -104,7 +114,7 @@ async function addComment(chapterID) {
             contentType: false,
         })
         if (data.status == 200) {
-            console.log(data.message)
+            // console.log(data.message)
             window.location.reload()
         }
     } catch (e) {
@@ -113,7 +123,7 @@ async function addComment(chapterID) {
 }
 
 async function like(id) {
-    console.log(id);
+    // console.log(id);
     try {
         let data = await $.ajax({
             type: "POST",
@@ -129,7 +139,6 @@ async function like(id) {
 }
 
 async function nextComment(page) {
-    console.log(page);
     let id = window.location.href.split('/')[4]
     let chap = window.location.href.split('/')[5]
 
@@ -137,10 +146,40 @@ async function nextComment(page) {
         let data = await $.ajax({
             url: `/manga/${id}/${chap}/getPaginationComment?page=${page}`,
             type: 'GET',
-            // data: page
 
         })
-        $(".comment").html(data);
+        $(".comment-list").html(data);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function viewRegister() {
+    window.location.href = '/auth/viewRegister'
+}
+
+function viewLogin() {
+    window.location.href = '/auth/viewLogin'
+}
+
+function viewDetails(id) {
+    window.location.href = `/manga/${id}`
+}
+
+function findCategory(id) {
+    window.location.href = `/category/${id}`
+}
+
+async function search() {
+    let name = $('#name').val()
+    // console.log(name);
+    try {
+        let data = await $.ajax({
+            type: "GET",
+            url: `/manga/search?name=${name}`,
+        })
+        // console.log(data);
+        $('.search-result.resultpc').html(data)
     } catch (e) {
         console.log(e);
     }

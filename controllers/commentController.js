@@ -12,21 +12,33 @@ module.exports.createComment = async (req, res) => {
         } else {
             audio = "/" + req.file.path;
             mimeType = req.file.mimetype;
-            // console.log(audio, mimeType);
+            console.log(15, audio, mimeType);
         }
         console.log(req.body);
         if (user) {
             if (req.body.title === "" && audio === "") {
                 res.json({ status: 400 })
             } else {
-                const comment = await CommentModel.create({
-                    userID: user.id,
-                    chapterID: req.body.chapterID,
-                    title: req.body.title,
-                    audio: audio,
-                    mimeType: mimeType,
-                    reaction: [],
-                });
+                // console.log(22, req.body);
+                if (!req.body.chapterID) {
+                    const comment = await CommentModel.create({
+                        userID: user.id,
+                        mangaID: req.body.MangaID,
+                        title: req.body.title,
+                        audio: audio,
+                        mimeType: mimeType,
+                        reaction: [],
+                    });
+                } else {
+                    const comment = await CommentModel.create({
+                        userID: user.id,
+                        chapterID: req.body.chapterID,
+                        title: req.body.title,
+                        audio: audio,
+                        mimeType: mimeType,
+                        reaction: [],
+                    });
+                }
                 res.json({
                     message: "create comment successfully",
                     status: 200,

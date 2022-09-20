@@ -25,6 +25,8 @@ function type_search(type) {
         $(`.result${type}`).css({ 'display': 'none' })
 }
 
+$('.search-result.resultpc').html("")
+
 async function unfollow(id) {
     try {
         let data = await $.ajax({

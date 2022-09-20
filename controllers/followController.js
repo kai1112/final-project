@@ -1,5 +1,5 @@
 const Follow = require('../models/library.model')
-
+const CategoryModel = require('../models/category.model')
 module.exports.createFollow = async (req, res) => {
     try {
         if (req.user._id === null) {
@@ -39,9 +39,10 @@ module.exports.unFollow = async (req, res) => {
 
 module.exports.viewAllFollows = async (req, res) => {
     try {
+        let category = await CategoryModel.find().sort({ name: 'asc' })
         let follows = await Follow.find({ userID: req.user._id }).populate('mangaID')
         if (follows) {
-            res.render('pages/Home/follow/follow', { follows })
+            res.render('pages/Home/follow/follow', { follows, category })
             console.log(40, follows);
         } else {
             console.log(42, 'follows not found');

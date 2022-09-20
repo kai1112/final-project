@@ -46,7 +46,7 @@ function findCategory(id) {
 
 async function search() {
     let name = $('#name').val()
-    console.log(name);
+    //console.log(name);
     try {
         let data = await $.ajax({
             type: "GET",
@@ -66,7 +66,7 @@ async function follow() {
             type: "GET",
             url: `/follow/viewFollow`
         })
-        console.log(69, data);
+        //console.log(69, data);
         if (data.status === 403) {
             if (confirm(data.message)) {
                 window.location.href = `/auth/viewLogin`
@@ -74,6 +74,21 @@ async function follow() {
         } else {
             window.location.href = `/follow/viewFollow`
         }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function nextPages(page) {
+    try {
+        let data = await $.ajax({
+            url: `/manga/pagination?page=${page}`,
+            type: 'GET',
+            // data: page
+
+        })
+        //console.log(data);
+        $(".list-item").html(data);
     } catch (e) {
         console.log(e);
     }

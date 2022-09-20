@@ -14,6 +14,10 @@ const CommentSchema = mongoose.Schema(
       type: String,
       ref: "Chapter",
     },
+    mangaID: {
+      type: String,
+      ref: "Manga",
+    },
     reaction: [String],
   },
   { collection: "Comment", timestamps: true }

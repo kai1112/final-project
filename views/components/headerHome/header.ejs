@@ -1,0 +1,54 @@
+<!-- pc -->
+<div class="header">
+    <div class="headerFeature">
+        <a href="/" class="logo">
+            <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
+        </a>
+        <button id="toggle-dark-mode">
+            <i class="fa-regular fa-lightbulb"></i>
+        </button>
+        <div class="search-bar">
+            <input id="name" class="search-field fieldpc" oninput="type_search('pc')" type="text"
+                placeholder="Search...">
+            <button class="search-btn" onclick="search()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <div class="search-result resultpc">
+                <%- include('./search.ejs') %>
+            </div>
+        </div>
+        <div class="rightFeature">
+            <button class="btnFeature" onclick="viewRegister()">Đăng kí</button>
+            <button class="btnFeature" onclick="viewLogin()">Đăng nhập</button>
+        </div>
+    </div>
+</div>
+<div class="menu">
+    <div class="menu-content">
+        <ul class="menu_pc">
+            <li><a href="/">Trang chủ</a></li>
+            <li class="category-hover">
+                <span>Thể loại <i class="fa fa-caret-down"></i></span>
+                <div class="submenu cat-submenu">
+                    <% category.map((category)=>{%>
+                        <a onclick="findCategory('<%=category.id%>')">
+                            <%=category.name%>
+                        </a>
+                        <% })%>
+                </div>
+            </li>
+            <li class="chart-hover">
+                <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
+                <div class="submenu chart-submenu">
+                    <% user.map((user)=>{%>
+                        <a href=""><img src="<%=user.avatar%>" alt="">
+                            <%=user.username%>
+                        </a>
+                        <% })%>
+                </div>
+            </li>
+            <li><a href="">Lịch sử</a></li>
+            <li><a onclick="follow()">Theo dõi</a></li>
+        </ul>
+    </div>
+</div>

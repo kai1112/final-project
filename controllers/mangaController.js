@@ -7,7 +7,8 @@ const Follow = require('../models/library.model')
 const fs = require('fs');
 const slug = require('slugify');
 const commentModel = require('../models/comment.model');
-const CategoryModel = require('../models/category.model')
+const CategoryModel = require('../models/category.model');
+const CommentModel = require('../models/comment.model');
 
 
 // quản lý manga của author post
@@ -269,94 +270,42 @@ module.exports.ChangeMangaAvatar = async (req, res) => {
 
 
 //-----------------------------------------
-module.exports.userViewManga = async (req, res) => {
-    try {
-        let allManga = await MangaModel.find()
-        let listManga = await MangaModel.find().limit(10)
-        let total = allManga.length
-        if (allManga.length) {
-            console.log(280, allManga);
-        } else {
-            console.log(282, 'No manga found');
-        }
-        res.json({ status: 200 })
-    } catch (error) {
-        res.json(err)
-    }
-}
-
-module.exports.userViewPagination = async (req, res) => {
-    try {
-        let listManga = await MangaModel.find().skip(req.query.limit * (req.query.page - 1))
-            .limit(req.query.limit);
-        if (listManga) {
-            console.log(297, listManga);
-        }
-        res.json({ status: 200 })
-    } catch (error) {
-        res.json(error)
-    }
-}
 
 module.exports.userViewMangaDetail = async (req, res) => {
     try {
         const cookie = req.cookies;
-        let manga = await MangaModel.findById(req.params.id).populate('author');
-
-
-        let user
+        let mangaDetail = await MangaModel.findById(req.params.id).populate('author');
+        let manga = await MangaModel.find().sort({ views: 'asc' })
+        let category = await CategoryModel.find().sort({ name: 'asc' })
+        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+        let userDetails
         if (cookie) {
-            user = await UserModel.findOne({ token: cookie.user })
-            // console.log(309, user);
+            userDetails = await UserModel.findOne({ token: cookie.user })
         }
-        // console.log(user);
-
-        let buyed = manga.buyed
-        let checked
-        for (let i = 0; i < buyed.length; i++) {
-            if (buyed[i] != user._id) {
-                buyed.push(user._id)
-            } else {
+        let buyed = mangaDetail.buyed
+        let checked = false
+        if (userDetails) {
+            let userID = buyed.filter((id) => {
+                return id === userDetails.id
+            })
+            if (userID[0] === userDetails.id) {
+                console.log(319, userID);
                 checked = true
             }
         }
-
-        if (manga) {
-            // console.log(manga);
-            // console.log(312);
-            let chapter = await ChapterModel.find({ mangaID: manga._id })
-            let followers = await Follow.find({ mangaID: manga._id }).populate('userID')
+        if (mangaDetail) {
+            let comments = await CommentModel.find({ mangaID: mangaDetail._id })
+            let comment
+            if (userDetails) {
+                comment = await CommentModel.find({ mangaID: mangaDetail._id, userID: userDetails._id })
+            }
+            let chapter = await ChapterModel.find({ mangaID: mangaDetail._id })
+            let followers = await Follow.find({ mangaID: mangaDetail._id }).populate('userID')
             let follow
-            if (user) {
-                follow = await Follow.findOne({ mangaID: manga._id, userID: user.id })
-                console.log(330, follow);
+            if (userDetails) {
+                follow = await Follow.findOne({ mangaID: mangaDetail._id, userID: userDetails.id })
             }
-            // console.log(follow[0].userID === user.id);
-            // console.log(user.id);
-            if (manga.price > 0 && user) {
-                console.log(follow);
-                if (checked) {
-                    res.render('pages/home/page/page', { manga, chapter, followers, user, follow })
-                    console.log(327, manga, chapter, followers);
-                } else if (req.body.accept && user.monney > manga.price) {
-                    console.log('ban co muon mua chuyen khong');
-                    let monney = user.monney - manga.price;
-                    let user = await UserModel.findOneAndUpdate({ _id: user._id }, { monney: monney })
-                    let manga = await MangaModel.findOneAndUpdate({ _id: manga._id }, { buyed: buyed })
-                    res.render('pages/home/page/page', { manga, chapter, followers, user, follow })
-                    console.log(334, manga, chapter, followers);
-                } else {
-                    console.log('ban khong co du tien de mua truyen');
-                    console.log(327, manga, chapter, followers);
-
-                }
-            } else if (manga.price > 0 && !user) {
-                console.log('ban chua dang nhap');
-            } else {
-                // let follow = null
-                res.render('pages/home/page/page', { manga, chapter, followers, user, follow })
-                // console.log(342, followers);
-            }
+            res.render('pages/home/page/page', { mangaDetail, chapter, followers, userDetails, follow, comments, comment, checked, manga, category, user })
         } else {
             console.log(312, 'chapter not found');
         }
@@ -365,18 +314,45 @@ module.exports.userViewMangaDetail = async (req, res) => {
     }
 }
 
+module.exports.userViewPagination = async (req, res) => {
+    try {
+        let listManga = await MangaModel.find().skip(10 * (req.query.page - 1))
+            .limit(10);
+        // console.log(listManga);
+        let chapter = []
+        for (let i = 0; i < listManga.length; i++) {
+            let chap = await ChapterModel.find({ mangaID: listManga[i]._id }).sort({ chap: 'asc' })
+            chapter.push(chap)
+        }
+        if (listManga) {
+            res.render('pages/home/home/pagination', { listManga, chapter })
+            // console.log(297, listManga);
+        }
+        // res.json({ status: 200 })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 module.exports.HomePage = async (req, res) => {
     try {
         let manga = await MangaModel.find().sort({ views: 'asc' })
+        let listManga = await MangaModel.find().skip(10 * (req.query.page - 1)).limit(10).sort({ views: 'asc' });
+
         let category = await CategoryModel.find().sort({ name: 'asc' })
+        let muaNhieu = await MangaModel.find().sort({ buyed: 'desc' }).limit(7)
+        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+        let comment = await CommentModel.find().sort({ like: 'desc' }).populate("userID").limit(10)
         // console.log(category);
+        let total = Math.ceil(manga.length / 10)
         let chapter = []
-        for (let i = 0; i < manga.length; i++) {
-            let chap = await ChapterModel.find({ mangaID: manga[i]._id }).sort({ chap: 'desc' })
+        for (let i = 0; i < listManga.length; i++) {
+            let chap = await ChapterModel.find({ mangaID: listManga[i]._id }).sort({ chap: 'asc' })
             chapter.push(chap)
         }
-        // console.log(chapter);
-        res.render('pages/home/home/home', { manga, chapter, category })
+        // console.log(user);
+        res.render('pages/home/home/home', { manga, chapter, category, muaNhieu, user, comment, total, listManga })
     } catch (e) {
         console.log(e);
     }
@@ -384,16 +360,60 @@ module.exports.HomePage = async (req, res) => {
 
 module.exports.userViewChap = async (req, res) => {
     try {
-        let allChapter = await ChapterModel.find({ mangaID: req.params.id })
+        const cookie = req.cookies;
+        let manga = await MangaModel.find().sort({ views: 'asc' })
+        let mangaDetail = await MangaModel.findById(req.params.id).populate('author');
+
+        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+        let category = await CategoryModel.find().sort({ name: 'asc' })
+
         let chapter = await ChapterModel.findOne({ mangaID: req.params.id, chap: req.params.chap })
-        let allComment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' })
+        let allChapter = await ChapterModel.find({ mangaID: req.params.id })
+
         let comment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' }).limit(1)
+        let allComment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' })
         let total = Math.ceil((allComment.length + 1) / (comment.length + 1))
 
+        let buyed = mangaDetail.buyed
+        let checked = false
+        let userDetail
 
-        let chapterUpdate = await ChapterModel.updateOne({ _id: chapter._id }, { $inc: { views: 1 } })
-        // let chapterManga = await MangaModel.updateOne({ _id: chapter.mangaID }, { $inc: { views: 1 } })
-        res.render('pages/Home/read/read', { chapter, allChapter, comment, total })
+        if (cookie) {
+            userDetail = await UserModel.findOne({ token: cookie.user })
+        }
+        if (userDetail) {
+            let userID = buyed.filter((id) => {
+                return id === userDetail.id
+            })
+            if (userID === userDetail.id) {
+                checked = true
+            } else {
+                buyed.push(userDetail.id)
+            }
+        }
+        if (mangaDetail.price > 0 && userDetail) {
+            if (checked) {
+                let chapterUpdate = await ChapterModel.updateOne({ _id: chapter._id }, { $inc: { views: 1 } })
+
+                res.render('pages/Home/read/read', { chapter, allChapter, comment, total, manga, category, user, mangaDetail })
+            } else if (userDetail.monney >= mangaDetail.price) {
+                userDetail.buyed.push(mangaDetail.id)
+                let monney = userDetail.monney - mangaDetail.price;
+
+                let user1 = await UserModel.findOneAndUpdate({ _id: userDetail._id }, { monney: monney, buyed: userDetail.buyed })
+                let manga1 = await MangaModel.findOneAndUpdate({ _id: mangaDetail._id }, { buyed: buyed })
+                let chapterUpdate = await ChapterModel.updateOne({ _id: chapter._id }, { $inc: { views: 1 } })
+
+                res.render('pages/Home/read/read', { chapter, allChapter, comment, total, manga, category, user, mangaDetail })
+            } else {
+                console.log('ban khong co du tien de mua truyen');
+            }
+        } else if (mangaDetail.price > 0 && !user) {
+            console.log('ban chua dang nhap');
+        } else {
+            let chapterUpdate = await ChapterModel.updateOne({ _id: chapter._id }, { $inc: { views: 1 } })
+            res.render('pages/Home/read/read', { chapter, allChapter, comment, total, manga, category, user, mangaDetail })
+        }
     } catch (e) {
         console.log(e)
     }
@@ -401,12 +421,12 @@ module.exports.userViewChap = async (req, res) => {
 
 module.exports.getpaginationComment = async (req, res) => {
     try {
-        console.log(391, req.query.page);
+        // console.log(391, req.query.page);
         let chapter = await ChapterModel.findOne({ mangaID: req.params.id, chap: req.params.chap })
         let allComment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' })
         let comment = await commentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' }).skip(1 * (req.query.page - 1))
             .limit(1);
-        console.log(comment);
+        // console.log(comment);
         let total = Math.ceil((allComment.length + 1) / (comment.length + 1))
         if (chapter) {
             res.render('pages/Home/read/comment', { comment, total })
@@ -420,10 +440,46 @@ module.exports.getpaginationComment = async (req, res) => {
 
 module.exports.search = async (req, res) => {
     try {
-        let manga = await MangaModel.find({ name: { $regex: req.query.name, $options: 'i' } }).populate('author');
-        console.log(421, manga.length);
-        res.render('pages/Home/home/search', { manga })
+        let manga = await MangaModel.find({ slug: { $regex: req.query.name, $options: 'i' } }).populate('author');
+        console.log(421, manga);
+        res.render('components/headerHome/search', { manga })
     } catch (e) {
         console.log(422, e);
+    }
+}
+
+module.exports.updateManga = async (req, res) => {
+    try {
+        let manga = await MangaModel.findOne({ _id: req.body.id });
+        // console.log(39, req.body.id, manga);
+        if (manga) {
+            let reaction = manga.like
+            console.log(reaction);
+            console.log(443, req.user._id);
+            let liked = []
+            if (reaction.length) {
+                liked = reaction.filter((reaction) => {
+                    return reaction !== req.user.id
+                })
+                if (reaction.length != liked.length) {
+                    reaction = liked
+                } else {
+                    reaction.push(req.user.id);
+                }
+            } else {
+                reaction.push(req.user.id);
+                console.log(453, req.user.id);
+            }
+            console.log(60, reaction);
+            let updateManga = await MangaModel.findOneAndUpdate({ _id: manga._id }, { like: reaction });
+            res.json({
+                status: 200,
+                message: 'like manga successfully'
+            })
+        } else {
+            console.log('manga not found');
+        }
+    } catch (err) {
+        res.json(err)
     }
 }

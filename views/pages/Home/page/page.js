@@ -1,4 +1,12 @@
+
 $(document).ready(function () {
+    let imgInp = $('#addfile')[0]
+    let blah = $('.preview-image')[0]
+    let imgSrc = $('.preview-image').attr('src')
+    imgInp.onchange = e => {
+        const [file] = imgInp.files
+        if (file) blah.src = URL.createObjectURL(file)
+    }
     $('.show-search-bar').click(function () {
         $('.search-bar').toggle()
     })
@@ -48,10 +56,34 @@ function type_search(type) {
         $(`.result${type}`).css({ 'display': 'none' })
 }
 
-async function viewChapter(chap) {
+$('.search-result.resultpc').html("")
+
+async function viewChapter(chap, price, monney, checked) {
     let id = window.location.href.split('/')[4]
-    // console.log(id, chap);
-    window.location.href = `/manga/${id}/${chap}`
+    //console.log(checked == true);
+    try {
+        if (price > 0 && !monney) {
+            if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                window.location.href = '/auth/viewLogin'
+            }
+        } else if (price > 0 && monney) {
+            if (checked == "true") {
+                //console.log(69);
+                window.location.href = `/manga/${id}/${chap}`
+            } else if (monney < price) {
+                alert('ban chua du tien de mua truyen')
+            } else {
+                if (confirm('ban co muon mua chuyen khong')) {
+                    window.location.href = `/manga/${id}/${chap}`
+                    alert('mua truyen thanh cong')
+                }
+            }
+        } else {
+            window.location.href = `/manga/${id}/${chap}`
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 async function follow(id) {
@@ -86,6 +118,101 @@ async function readFirst(chap) {
 async function findbyCategory(id) {
     try {
         window.location.href = `/category/${id}`
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function comment() {
+    let title = $('#contentComment').val()
+    if (title === undefined) {
+        title = ""
+    }
+    let MangaID = window.location.href.split('/')[4]
+    const form = $("form")[0];
+    const formData = new FormData(form);
+    formData.append('title', title)
+    formData.append('MangaID', MangaID)
+    try {
+        let data = await $.ajax({
+            type: "POST",
+            url: '/comment/createComment',
+            data: formData,
+            processData: false,
+            contentType: false,
+        })
+        // console.log(data.status);
+        if (data.status == 200) {
+            // console.log(data.message)
+            window.location.reload()
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function like(id) {
+    //console.log(id);
+    try {
+        let data = await $.ajax({
+            type: "POST",
+            url: '/comment/updateComment',
+            data: { id }
+        })
+        if (data.status === 200) {
+            window.location.reload();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function mangaLike(id, userID) {
+    try {
+        if (userID === "") {
+            if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                window.location.href = '/auth/viewLogin';
+            }
+        } else {
+            let data = await $.ajax({
+                type: "POST",
+                url: '/manga/updateManga',
+                data: { id }
+            })
+            if (data.status === 200) {
+                window.location.reload();
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function viewRegister() {
+    window.location.href = '/auth/viewRegister'
+}
+
+function viewLogin() {
+    window.location.href = '/auth/viewLogin'
+}
+
+function viewDetails(id) {
+    window.location.href = `/manga/${id}`
+}
+
+function findCategory(id) {
+    window.location.href = `/category/${id}`
+}
+
+async function search() {
+    let name = $('#name').val()
+    //console.log(name);
+    try {
+        let data = await $.ajax({
+            type: "GET",
+            url: `/manga/search?name=${name}`,
+        })
+        $('.search-result.resultpc').html(data)
     } catch (e) {
         console.log(e);
     }

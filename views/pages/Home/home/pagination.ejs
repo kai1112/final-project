@@ -1,0 +1,20 @@
+<% listManga.map((m, index)=>{%>
+    <li class="card-item" onclick="viewDetails('<%=m._id%>')">
+        <a>
+            <img src='<%=m.avatar%>' alt="">
+            <div class="more-info">
+                <div class="time">1 giờ trước</div>
+            </div>
+        </a>
+        <div class="bookname">
+            <%=m.name%>
+        </div>
+        <div class="lastest-chapter">
+            <%if(chapter[index][0]?.mangaID===m.id){%>
+                <div class="lastest-chapter">
+                    Chapter <%=chapter[index][chapter[index].length-1]?.chap%>
+                </div>
+                <%}%>
+        </div>
+    </li>
+    <%})%>

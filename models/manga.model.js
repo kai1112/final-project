@@ -12,13 +12,13 @@ const MangaSchema = mongoose.Schema(
     },
     description: String,
     views: { type: Number, default: 0 },
-    like: Number,
+    like: [{}],
     price: { type: Number, default: 0 },
     reviewManga: {
       type: String,
       ref: 'ReviewManga'
     },
-    buyed: [String],
+    buyed: [{}],
     slug: String,
   },
   { collection: "Manga", timestamps: true }

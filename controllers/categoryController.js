@@ -1,20 +1,34 @@
 const CategoryModel = require('../models/category.model')
 const Reviewmanga = require('../models/reviewManga')
 const MangaModel = require('../models/manga.model')
+const UserModel = require('../models/user.model')
+
+
+module.exports.viewCreateCategory = async (req, res) => {
+    try {
+        res.render("pages/category/createCategory/createCategory")
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 module.exports.createCategory = async (req, res) => {
     try {
-        let category = await CategoryModel.find({ name: req.body.name })
-        if (category) {
-            res.json('name category da ton tai')
+        let category = await CategoryModel.find({ name: req.body.category })
+        // console.log(!category.length);
+        if (category.length) {
+            // console.log(20, req.body);
+            console.log('name category da ton tai')
         } else {
             let newCategory = await CategoryModel.create({
-                name: req.body.name,
+                name: req.body.category,
                 description: req.body.description
             })
+            res.json({ status: 200 })
         }
-        res.json({ status: 200 })
     } catch (e) {
-        res.json(e)
+        console.log(e)
     }
 }
 
@@ -67,8 +81,10 @@ module.exports.deleteCategory = async (req, res) => {
 module.exports.findMangaByCategory = async (req, res) => {
     try {
         console.log(req.params.id);
+        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+        let category = await CategoryModel.find().sort({ name: 'asc' })
         let manga = await MangaModel.find({ 'category.id': req.params.id })
-        res.render('pages/findByCategory/findByCategory', { manga })
+        res.render('pages/findByCategory/findByCategory', { manga, user, category })
         console.log(79, manga);
     } catch (err) {
         console.log(err);

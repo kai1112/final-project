@@ -165,7 +165,7 @@ module.exports.deleteManga = async (req, res) => {
     const chapter = await ReviewChapterModel.find({ mangaID: manga._id })
     if (manga) {
       // console.log(manga.avatar.slice(1));
-      fs.unlinkSync(manga.avatar.slice(1))
+      // fs.unlinkSync(manga.avatar.slice(1))
       await ReviewMangaModel.findByIdAndDelete(manga._id);
       for (let i = 0; i < chapter.length; i++) {
         await ReviewChapterModel.findByIdAndDelete(chapter[i]._id);
