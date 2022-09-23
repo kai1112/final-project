@@ -105,7 +105,9 @@ module.exports.viewDetails = async (req, res) => {
 //edit manga
 module.exports.viewEditManga = async (req, res) => {
   try {
-    res.render("pages/author/reviewManga/editManga/editManga");
+    let manga = await ReviewMangaModel.findOne({ _id: req.params.id })
+    console.log(manga);
+    res.render("pages/author/reviewManga/editManga/editManga", { manga });
   } catch (err) {
     console.log(err);
     // res.json(err);
@@ -155,6 +157,11 @@ module.exports.editManga = async (req, res) => {
     res.json({ message: "loi 3" });
   }
 };
+
+
+
+
+
 
 //delete manga
 module.exports.deleteManga = async (req, res) => {

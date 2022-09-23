@@ -60,53 +60,23 @@ $('.detailHideBtn').on('click', (e) => {
 
 
 
-//change
-async function ChangeName(id) {
-    let newName = $('.Name-span').text();
-    console.log(newName);
-    let res = await $.ajax({
-        type: "PATCH",
-        url: `/manga/change-name/${id}`,
-        data: { newName }
-    })
-    alert(res.mess)
-    window.location.reload();
-}
-async function ChangeDes(id) {
-    let newDes = $('.Des-span').text();
-    let res = await $.ajax({
-        type: "PATCH",
-        url: `/manga/change-des/${id}`,
-        data: { newDes }
-    })
-    alert(res.mess)
-    window.location.reload();
-}
 
-async function ChangeAvatar(id) {
+async function edit() {
     try {
-        const form = $('.changeAvatar-form')[0]//chuyen ve DOM
+        let id = window.location.href.split('/')[5]
+        const form = $('.edit-form')[0]//chuyen ve DOM
         const formData = new FormData(form)//Tra ve formData
-        const res = await $.ajax({
-            url: `/manga/change-avatar/${id}`,
+        const data = await $.ajax({
+            url: `/reviewManga/editManga/${id}`,
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
         })
-        alert(res.mess)
-        window.location.reload();
-    } catch (error) {
-        console.log(error);
+        if (data.status === 200) {
+            window.location.href = `/reviewManga/viewAllManga`
+        }
+    } catch (e) {
+        console.log(e);
     }
-}
-async function ChangePrice(id) {
-    let Price = $('.price-span').text();
-    let res = await $.ajax({
-        type: "PATCH",
-        url: `/manga/change-price/${id}`,
-        data: { Price }
-    })
-    alert(res.mess)
-    window.location.reload();
 }

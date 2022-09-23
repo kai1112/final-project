@@ -60,7 +60,6 @@ $('.search-result.resultpc').html("")
 
 async function viewChapter(chap, price, monney, checked) {
     let id = window.location.href.split('/')[4]
-    //console.log(checked == true);
     try {
         if (price > 0 && !monney) {
             if (confirm('ban can dang nhap de su dung tinh nang nay')) {
@@ -213,6 +212,17 @@ async function search() {
             url: `/manga/search?name=${name}`,
         })
         $('.search-result.resultpc').html(data)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+async function review(chap) {
+    try {
+        let mangaID = window.location.href.split('/')[4]
+        console.log(mangaID);
+        window.location.href = `/manga/${mangaID}/${chap}/review`
     } catch (e) {
         console.log(e);
     }

@@ -43,8 +43,14 @@ async function giftpoints(id, index) {
 async function searchUser() {
     try {
         let username = $('#searchUser').val()
+
         console.log(username);
-        window.location.href = `/user/findUserByName/${username}`
+        if (username == '') {
+            window.location.href = `/user/getAllUsers`
+        } else {
+            window.location.href = `/user/findUserByName/${username}`
+        }
+
     } catch (err) {
         console.log(err)
     }

@@ -14,18 +14,22 @@
                 <p class="comment-content">
                     <%=c.title%>
                 </p>
-                <img src="https://metruyenchu.com/images/avatar-profile.png?97b80827721f6116c3dbc797d11d629b" alt=""
-                    class="comment-img">
-                <!-- <audio controls autoplay>
+                <%if(!c.audio){%>
+
+                    <%}else{%>
+                        <img src="<%=c.audio%>" alt="" class="comment-img">
+                        <%}%>
+
+                            <!-- <audio controls autoplay>
                     <source src="horse.ogg" type="audio/ogg">
                     <source src="horse.mp3" type="audio/mpeg">
                   Your browser does not support the audio element.
                 </audio> -->
-                <button class="like-field" onclick="like('<%=c._id%>')">
-                    <i class="fa-solid fa-thumbs-up">
-                        <%= c.reaction.length%>
-                    </i>
-                </button>
+                            <button class="like-field" onclick="like('<%=c._id%>')">
+                                <i class="fa-solid fa-thumbs-up">
+                                    <%= c.reaction.length%>
+                                </i>
+                            </button>
             </div>
         </div>
     </div>

@@ -36,12 +36,12 @@ function viewLogin() {
     window.location.href = '/auth/viewLogin'
 }
 
-function viewDetails(id) {
-    window.location.href = `/manga/${id}`
+function viewDetails(slug) {
+    window.location.href = `/manga/${slug}`
 }
 
-function findCategory(id) {
-    window.location.href = `/category/${id}`
+function findCategory(slug) {
+    window.location.href = `/category/${slug}`
 }
 
 async function search() {

@@ -24,7 +24,7 @@
     <div class="main-container">
         <div class="banner">
             <div class="banner_left">
-                <a onclick="viewDetails('<%=manga[1]?._id%>')">
+                <a onclick="viewDetails('<%=manga[1]?.slug%>')">
                     <img src='<%=manga[1]?.avatar%>' alt="">
                     <div class="cover_chapter">Chương <%=chapter[1][0]?.chap%>
                     </div>
@@ -32,7 +32,7 @@
                         <%= manga[1]?.name%>
                     </div>
                 </a>
-                <a onclick="viewDetails('<%=manga[2]?._id%>')">
+                <a onclick="viewDetails('<%=manga[2]?.slug%>')">
                     <img src='<%=manga[2]?.avatar%>' alt="">
                     <div class="cover_chapter">Chương <%=chapter[2][0]?.chap%>
                     </div>
@@ -42,7 +42,7 @@
                 </a>
             </div>
             <div class="banner_mid">
-                <a onclick="viewDetails('<%=manga[0]?._id%>')">
+                <a onclick="viewDetails('<%=manga[0]?.slug%>')">
                     <img src='<%=manga[0]?.avatar%>' alt="">
                     <div class="cover_chapter">Chương <%=chapter[0][0]?.chap%>
                     </div>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="banner_right">
-                <a onclick="viewDetails('<%=manga[3]?._id%>')">
+                <a onclick="viewDetails('<%=manga[3]?.slug%>')">
                     <img src='<%=manga[3]?.avatar%>' alt="">
                     <div class="cover_chapter">Chương <%=chapter[3][0]?.chap%>
                     </div>
@@ -60,7 +60,7 @@
                         <%= manga[3]?.name%>
                     </div>
                 </a>
-                <a onclick="viewDetails('<%=manga[4]?._id%>')">
+                <a onclick="viewDetails('<%=manga[4]?.slug%>')">
                     <img src='<%=manga[4]?.avatar%>' alt="">
                     <div class="cover_chapter">Chương <%=chapter[4][0]?.chap%>
                     </div>
@@ -75,8 +75,8 @@
             <div class="suggest-bar">
                 <ul>
                     <% muaNhieu.map((m, index)=>{%>
-                        <li class="card-item">
-                            <a href="">
+                        <li class="card-item" onclick="viewDetails('<%=m._id%>')">
+                            <a>
                                 <img src='<%=m.avatar%>' alt="">
                                 <div class="more-info">
                                     <div class="hot">TOP <%= index + 1%>
@@ -156,14 +156,11 @@
             </div>
             <div class="footer-right">
                 <div class="footer-cat">
-                    <a href="http://">Chuyển sinh</a>
-                    <a href="http://">Manhwa</a>
-                    <a href="http://">Romance</a>
-                    <a href="http://">Cổ đại</a>
-                    <a href="http://">Chuyển sinh</a>
-                    <a href="http://">Manhwa</a>
-                    <a href="http://">Romance</a>
-                    <a href="http://">Cổ đại</a>
+                    <% category.map((category)=>{%>
+                        <a onclick="findCategory('<%=category.id%>')">
+                            <%=category.name%>
+                        </a>
+                        <% })%>
                 </div>
                 <p class="copyright">Mọi thông tin và hình ảnh trên website đều được sưu tầm trên Internet.
                     Chúng tôi không sở hữu hay chịu trách nhiệm bất kỳ thông tin nào trên web này.

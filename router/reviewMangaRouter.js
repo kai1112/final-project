@@ -27,4 +27,6 @@ router.get('/viewDetails/:id', auth.checkToken, auth.checkRoleAuthor, controller
 router.get('/editManga/:id', auth.checkToken, auth.checkRoleAuthor, controller.viewEditManga)
 router.post('/editManga/:id', auth.checkToken, auth.checkRoleAuthor, upload.single('avatar'), controller.editManga)
 router.delete('/deleteManga/:id', auth.checkToken, auth.checkRoleAuthor, controller.deleteManga)
+
+
 module.exports = router

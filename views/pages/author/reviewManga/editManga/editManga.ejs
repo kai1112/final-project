@@ -6,16 +6,17 @@
   <div class="editManga-info">
     <form class="edit-form" action="" enctype="multipart/form-data">
       <div class="edit-form-left">
-        <span>Category</span>
-        <input class="form-control" type="text" name="category" id="category" placeholder="Category..." />
-        <br>
         <span>Description</span>
         <input class="form-control" type="text" name="description" id="description" placeholder="Description..." />
-        <br>
-        <span>Price</span>
-        <input class="form-control" type="number" name="price" id="price" placeholder="Price..." />
-        <br>
-        <button class="btn btn-primary" type="button" onclick="edit()">submit</button>
+        <%=manga.description%>
+          <br>
+          <span>Price</span>
+          <input class="form-control" type="number" name="price" id="price" placeholder="Price..." />
+          <p>
+            <%=manga.price%>
+          </p>
+          <br>
+          <button class="btn btn-primary" type="button" onclick="edit()">submit</button>
       </div>
       <div class="edit-form-right">
         <label for="avatar">Choose avatar</label>

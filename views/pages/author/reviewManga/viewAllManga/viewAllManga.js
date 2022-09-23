@@ -28,3 +28,12 @@ async function delette(id) {
         console.log(e);
     }
 }
+
+async function searchByCategory(name) {
+    try {
+        console.log(name);
+        window.location.href = `/reviewManga/viewByCategory/${name}`
+    } catch (e) {
+        console.log(e);
+    }
+}

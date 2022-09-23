@@ -43,14 +43,17 @@ router.patch('/change-manga-des/:id', auth.checkToken, auth.checkRoleAdmin, cont
 router.post('/change-manga-avatar/:id', auth.checkToken, auth.checkRoleAdmin, upload.single('avatar'), controller.ChangeMangaAvatar)
 
 router.get('/viewDetailManga/:id', auth.checkToken, auth.checkRoleAdmin, controller.viewDetailManga)
+// router.get('/viewByAuthorName/:name', auth.checkToken, auth.checkRoleAdmin, controller.viewByAuthorName)
 
 //-------------------------------------------
 // quản lý manga User interface
 router.get('/pagination', controller.userViewPagination)
 router.get('/search', controller.search)
-router.get('/:id', controller.userViewMangaDetail)
-router.get('/:id/:chap', controller.userViewChap)
-router.get('/:id/:chap/getPaginationComment', controller.getpaginationComment)
+router.get('/:slug', controller.userViewMangaDetail)
+router.get('/:slug/:chap', controller.userViewChap)
+router.get('/:slug/:chap/getPaginationComment', controller.getpaginationComment)
 router.post('/updateManga', auth.checkToken, controller.updateManga)
+router.get('/:slug/:chap/review', controller.preview)
+
 
 module.exports = router

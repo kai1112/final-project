@@ -16,8 +16,8 @@ module.exports.viewProfile = async (req, res) => {
     console.log(err);
   }
 }
-// change profile
 
+// change profile
 module.exports.changeProfile = async (req, res) => {
   try {
     let userID = req.params.id;
@@ -50,10 +50,10 @@ module.exports.getAllUsers = async (req, res) => {
   try {
     let allUser = await UserModel.find({ role: 'user' });
     // console.log(allUser)
-    let listUsers = await UserModel.find({ role: 'user' }).limit(1);
+    let listUsers = await UserModel.find({ role: 'user' }).limit(10);
     let total = allUser.length;
     if (allUser) {
-      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers, total: Math.ceil(total / 1) })
+      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers, total: Math.ceil(total / 10) })
     } else {
       listUsers = {}
       res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers })

@@ -77,7 +77,14 @@ module.exports.deleteCategory = async (req, res) => {
         res.json(err)
     }
 }
-
+module.exports.viewAllCategory = async (req, res) => {
+    try {
+        let category = await CategoryModel.find()
+        res.render('pages/category/viewAllCategory/viewAllCategory', { category })
+    } catch (err) {
+        console.log(err);
+    }
+}
 module.exports.findMangaByCategory = async (req, res) => {
     try {
         console.log(req.params.id);
@@ -90,3 +97,4 @@ module.exports.findMangaByCategory = async (req, res) => {
         console.log(err);
     }
 }
+

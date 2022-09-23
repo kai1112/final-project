@@ -3,7 +3,7 @@ const controller = require('../controllers/reviewChapterController')
 const auth = require('../middleware/auth')
 
 // using chapterController
-router.get("/viewDetailChapter/:id", auth.checkToken, auth.checkRoleAuthor, controller.getChapter);
+router.get("/viewDetailChapter/:id", auth.checkToken, controller.getChapter);
 router.get("/paginationChapter/:id", auth.checkToken, auth.checkRoleAuthor, controller.paginationChapter);
 //create chapter
 router.post("/createChapter/:id", auth.checkToken, auth.checkRoleAuthor, controller.createChapter);

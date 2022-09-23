@@ -32,6 +32,7 @@ module.exports.login = async (req, res) => {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 6000000),
         });
+        
         let user = await UserModel.findOne({ email: req.body.email })
         res.json({ role: user.role })
       } else {

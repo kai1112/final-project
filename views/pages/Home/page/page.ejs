@@ -63,18 +63,18 @@
                 </div>
                 <div class="read-and-save">
                     <button class="read"
-                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=manga?.price%>', '<%=user?.monney%>', '<%=checked%>')"><i
+                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=mangaDetail?.price%>', '<%=user?.monney%>', '<%=checked%>')"><i
                             class="fa-solid fa-glasses"></i>
                         Đọc truyện</button>
-                    <button class="save" onclick="follow('<%=manga._id%>')"><i class="fa-regular fa-bookmark"></i>
+                    <button class="save" onclick="follow('<%=mangaDetail._id%>')"><i class="fa-regular fa-bookmark"></i>
                         <% if(follow){%>
                             <%= follow.status %>
                                 <%}else{%>
                                     <span>Follow</span>
                                     <%}%>
                     </button>
-                    <% if(manga.price> 0){%>
-                        <button class="read" onclick="readFirst('<%= chapter[0]?.chap%>')"><i
+                    <% if(mangaDetail.price> 0){%>
+                        <button class="read" onclick="review('<%= chapter[0]?.chap%>')"><i
                                 class="fa-solid fa-glasses"></i>
                             Review truyện</button>
                         <%}%>
@@ -103,7 +103,8 @@
                         <table class="des-detail">
                             <tr>
                                 <th>Cảm xúc</th>
-                                <td><button class="likeBtn" onclick="mangaLike('<%=mangaDetail._id%>', '<%=user.id%>')">
+                                <td><button class="likeBtn"
+                                        onclick="mangaLike('<%=mangaDetail._id%>', '<%=userDetails.id%>')">
                                         <i class="fa-solid fa-thumbs-up">
                                             <%=mangaDetail.like.length%>
                                         </i></td>
@@ -127,7 +128,7 @@
                     <!-- <p>a</p> -->
                     <% chapter?.map((c)=>{%>
                         <a
-                            onclick="viewChapter('<%=c.chap%>','<%=manga?.price%>', '<%=user?.monney%>', '<%=checked%>')"><span>Chap
+                            onclick="viewChapter('<%=c.chap%>','<%=mangaDetail?.price%>', '<%=user?.monney%>', '<%=checked%>')"><span>Chap
                                 <%=c.chap%>: <%=c.title%>
                             </span><span>
                                 <%=c.createdAt?.toLocaleString()%>
