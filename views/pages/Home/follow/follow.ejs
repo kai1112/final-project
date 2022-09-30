@@ -15,10 +15,14 @@
 <body>
     <!-- menu -->
     <header>
-        <!-- menu -->
-        <%- include('../../../components/headerHome/header') %>
-            <!-- mobile -->
-            <%- include('../../../components/headerHome/headerMobile') %>
+        <% if(userDetail){%>
+            <%- include('../../../components/login_header/login_header') %>
+                <%}else{%>
+                    <!-- menu -->
+                    <%- include('../../../components/headerHome/header') %>
+                        <!-- mobile -->
+                        <%- include('../../../components/headerHome/headerMobile') %>
+                            <% } %>
     </header>
     <!-- menu -->
     <!-- main -->
@@ -29,7 +33,7 @@
                 <ul class="list-item">
                     <%follows.map((f)=>{%>
                         <li class="card-item">
-                            <a href="">
+                            <a onclick="viewDetails('<%=f.mangaID.slug%>')">
                                 <img src="<%=f.mangaID.avatar%>" alt="">
                                 <div class="more-info">
                                     <div class="unfollow" onclick="unfollow('<%=f._id%>')"><i
@@ -39,7 +43,7 @@
                             <div class="bookname">
                                 <%=f.mangaID.name%>
                             </div>
-                            <div class="lastest-chapter">Chapter 123</div>
+                            <!-- <div class="lastest-chapter">Chapter 123</div> -->
                         </li>
                         <%})%>
                 </ul>
@@ -85,5 +89,6 @@
     integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/views/pages/Home/follow/follow.js"></script>
+<script src="/views/components/headerHome/header.js"></script>
 
 </html>

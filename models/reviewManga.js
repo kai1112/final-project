@@ -1,7 +1,9 @@
 const mongoose = require("./dbConnection");
+
 const ReviewMangaSchema = mongoose.Schema(
   {
     avatar: String,
+    backgroud_avatar: String,
     category: [{}],
     name: { type: String, required: true },
     author: { type: String, ref: 'User', required: true },

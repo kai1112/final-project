@@ -15,15 +15,19 @@
 <body>
     <!-- menu -->
     <header>
-        <!-- pc -->
-        <%- include('../../../components/headerHome/header') %>
-            <!-- mobile -->
-            <%- include('../../../components/headerHome/headerMobile') %>
+        <% if(userDetail){%>
+            <%- include('../../../components/login_header/login_header') %>
+                <%}else{%>
+                    <!-- menu -->
+                    <%- include('../../../components/headerHome/header') %>
+                        <!-- mobile -->
+                        <%- include('../../../components/headerHome/headerMobile') %>
+                            <% } %>
     </header>
     <!-- menu -->
     <!-- main -->
     <a href="" class="large-background">
-        <img src="https://tmsquynhon.com.vn/wp-content/uploads/2021/11/Hinh-nen-den-dep-ngau-18.jpg" alt="" srcset="">
+        <img src="<%=mangaDetail.backgroud_avatar%>" alt="" srcset="">
     </a>
     <div class="main-container">
         <div class="item-container">
@@ -63,10 +67,11 @@
                 </div>
                 <div class="read-and-save">
                     <button class="read"
-                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=mangaDetail?.price%>', '<%=user?.monney%>', '<%=checked%>')"><i
+                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=mangaDetail?.price%>', '<%=userDetail?.monney%>', '<%=checked%>')"><i
                             class="fa-solid fa-glasses"></i>
                         Đọc truyện</button>
-                    <button class="save" onclick="follow('<%=mangaDetail._id%>')"><i class="fa-regular fa-bookmark"></i>
+                    <button class="save" onclick="followManga('<%=mangaDetail._id%>')"><i
+                            class="fa-regular fa-bookmark"></i>
                         <% if(follow){%>
                             <%= follow.status %>
                                 <%}else{%>
@@ -104,7 +109,7 @@
                             <tr>
                                 <th>Cảm xúc</th>
                                 <td><button class="likeBtn"
-                                        onclick="mangaLike('<%=mangaDetail._id%>', '<%=userDetails.id%>')">
+                                        onclick="mangaLike('<%=mangaDetail?._id%>', '<%=userDetails?.id%>')">
                                         <i class="fa-solid fa-thumbs-up">
                                             <%=mangaDetail.like.length%>
                                         </i></td>
@@ -128,7 +133,7 @@
                     <!-- <p>a</p> -->
                     <% chapter?.map((c)=>{%>
                         <a
-                            onclick="viewChapter('<%=c.chap%>','<%=mangaDetail?.price%>', '<%=user?.monney%>', '<%=checked%>')"><span>Chap
+                            onclick="viewChapter('<%=c.chap%>','<%=mangaDetail?.price%>', '<%=userDetail?.monney%>', '<%=checked%>')"><span>Chap
                                 <%=c.chap%>: <%=c.title%>
                             </span><span>
                                 <%=c.createdAt?.toLocaleString()%>
@@ -149,7 +154,7 @@
                         </div>
                         <div class="your-comment">
                             <textarea name="" id="contentComment" placeholder="Bình luận của bạn"></textarea>
-                            <button class="send-btn" onclick="comment()">
+                            <button class="send-btn" onclick="comment('<%=userDetail%>')">
                                 <i class="fas fa-paper-plane    "></i>
                             </button>
                         </div>
@@ -187,41 +192,15 @@
     <!-- main -->
 
     <!-- footer -->
-    <footer>
-        <div class="footer">
-            <div class="footer-left">
-                <a href="" class="logo">
-                    <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
-                </a>
-                <p class="quote">Luôn cập nhật liên tục các bộ truyện mới nhanh nhất để phục vụ độc giả.
-                    Đọc truyện hoàn toàn miễn phí, hỗ trợ đa thiết bị.
-                </p>
-                <p class="contact">Email: adstruyenqq@gmail.com</p>
-            </div>
-            <div class="footer-right">
-                <div class="footer-cat">
-                    <a href="http://">Chuyển sinh</a>
-                    <a href="http://">Manhwa</a>
-                    <a href="http://">Romance</a>
-                    <a href="http://">Cổ đại</a>
-                    <a href="http://">Chuyển sinh</a>
-                    <a href="http://">Manhwa</a>
-                    <a href="http://">Romance</a>
-                    <a href="http://">Cổ đại</a>
-                </div>
-                <p class="copyright">Mọi thông tin và hình ảnh trên website đều được sưu tầm trên Internet.
-                    Chúng tôi không sở hữu hay chịu trách nhiệm bất kỳ thông tin nào trên web này.
-                    Nếu làm ảnh hưởng đến cá nhân hay tổ chức nào, khi được yêu cầu,
-                    chúng tôi sẽ xem xét và gỡ bỏ ngay lập tức.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <!-- footer -->
+    <%- include('../../../components/footer') %>
+        <!-- footer -->
     <!-- footer -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
     integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/views/pages/Home/page/page.js"></script>
+<script src="/views/components/headerHome/header.js"></script>
 
 </html>

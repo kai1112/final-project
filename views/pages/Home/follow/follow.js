@@ -32,7 +32,7 @@ async function unfollow(id) {
         let data = await $.ajax({
             type: 'DELETE',
             url: `/follow/unFollow`,
-            data: id
+            data: { id }
         })
         if (data.status === 200) {
             alert('unfollow success')
@@ -41,3 +41,9 @@ async function unfollow(id) {
         console.log(e);
     }
 }
+
+function viewDetails(slug) {
+    console.log(slug);
+    window.location.href = `/manga/${slug}`
+}
+

@@ -2,9 +2,18 @@
 let imgInp = $('#avatar')[0]
 let blah = $('.preview-avatar')[0]
 let imgSrc = $('.preview-avatar').attr('src')
-imgInp.onchange = e =>{
-    const [file] = imgInp.files 
-    if(file)    blah.src = URL.createObjectURL(file)
+
+let back_imgInp = $('#backgroud_avatar')[0]
+let back_blah = $('.preview-backgroud_avatar')[0]
+let back_imgSrc = $('.preview-backgroud_avatar').attr('src')
+imgInp.onchange = e => {
+    const [file] = imgInp.files
+    if (file) blah.src = URL.createObjectURL(file)
+}
+
+back_imgInp.onchange = e => {
+    const [file] = back_imgInp.files
+    if (file) back_blah.src = URL.createObjectURL(file)
 }
 
 const categoryIdElement = document.querySelector('#selectNode');

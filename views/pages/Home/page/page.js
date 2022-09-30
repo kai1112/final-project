@@ -59,33 +59,36 @@ function type_search(type) {
 $('.search-result.resultpc').html("")
 
 async function viewChapter(chap, price, monney, checked) {
-    let id = window.location.href.split('/')[4]
+    let slug = window.location.href.split('/')[4]
+    // console.log(chap, price, monney, checked);
+
     try {
         if (price > 0 && !monney) {
             if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                sessionStorage.setItem("href", `/manga/${slug}`);
                 window.location.href = '/auth/viewLogin'
             }
         } else if (price > 0 && monney) {
             if (checked == "true") {
                 //console.log(69);
-                window.location.href = `/manga/${id}/${chap}`
+                window.location.href = `/manga/${slug}/${chap}`
             } else if (monney < price) {
                 alert('ban chua du tien de mua truyen')
             } else {
                 if (confirm('ban co muon mua chuyen khong')) {
-                    window.location.href = `/manga/${id}/${chap}`
+                    window.location.href = `/manga/${slug}/${chap}`
                     alert('mua truyen thanh cong')
                 }
             }
         } else {
-            window.location.href = `/manga/${id}/${chap}`
+            window.location.href = `/manga/${slug}/${chap}`
         }
     } catch (e) {
         console.log(e);
     }
 }
 
-async function follow(id) {
+async function followManga(id) {
     try {
         let data = await $.ajax({
             type: 'POST',
@@ -97,6 +100,7 @@ async function follow(id) {
             window.location.reload()
         } else {
             if (confirm('ban can dang nhap de dung tinh nabg nay')) {
+                sessionStorage.setItem("href", `/manga/${slug}`);
                 window.location.href = '/auth/viewLogin'
             }
         }
@@ -105,14 +109,37 @@ async function follow(id) {
     }
 }
 
-async function readFirst(chap) {
-    let id = window.location.href.split('/')[4]
+
+async function readFirst(chap, price, monney, checked) {
+    let slug = window.location.href.split('/')[4]
     try {
-        window.location.href = `/manga/${id}/${chap}`
+        if (price > 0 && !monney) {
+            if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                sessionStorage.setItem("href", `/manga/${slug}`);
+                window.location.href = '/auth/viewLogin'
+            }
+        } else if (price > 0 && monney) {
+            if (checked == "true") {
+                //console.log(69);
+                window.location.href = `/manga/${slug}/${chap}`
+            } else if (monney < price) {
+                alert('ban chua du tien de mua truyen')
+            } else {
+                if (confirm('ban co muon mua chuyen khong')) {
+                    window.location.href = `/manga/${slug}/${chap}`
+                    alert('mua truyen thanh cong')
+                }
+            }
+        } else {
+            window.location.href = `/manga/${slug}/${chap}`
+        }
     } catch (e) {
         console.log(e);
     }
 }
+
+
+
 
 async function findbyCategory(id) {
     try {
@@ -122,7 +149,7 @@ async function findbyCategory(id) {
     }
 }
 
-async function comment() {
+async function comment(user) {
     let title = $('#contentComment').val()
     if (title === undefined) {
         title = ""
@@ -133,17 +160,23 @@ async function comment() {
     formData.append('title', title)
     formData.append('MangaID', MangaID)
     try {
-        let data = await $.ajax({
-            type: "POST",
-            url: '/comment/createComment',
-            data: formData,
-            processData: false,
-            contentType: false,
-        })
-        // console.log(data.status);
-        if (data.status == 200) {
-            // console.log(data.message)
-            window.location.reload()
+        if (user) {
+            let data = await $.ajax({
+                type: "POST",
+                url: '/comment/createComment',
+                data: formData,
+                processData: false,
+                contentType: false,
+            })
+            // console.log(data.status);
+            if (data.status == 200) {
+                // console.log(data.message)
+                window.location.reload()
+            }
+        } else {
+            alert("ban can dang nhap de su dung tinh nang nay")
+            sessionStorage.setItem("href", `/manga/${slug}`);
+            window.location.href = "/auth/viewLogin"
         }
     } catch (e) {
         console.log(e);
@@ -170,6 +203,7 @@ async function mangaLike(id, userID) {
     try {
         if (userID === "") {
             if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                sessionStorage.setItem("href", `/manga/${slug}`);
                 window.location.href = '/auth/viewLogin';
             }
         } else {

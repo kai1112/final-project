@@ -49,4 +49,8 @@ router.use('/comment', commentRoute)
 // using category routes
 const categoryRoute = require("./categoryRouter")
 router.use('/category', categoryRoute)
+
+// using history routes
+const historyRoute = require("./historyRouter")
+router.use('/history', historyRoute)
 module.exports = router;

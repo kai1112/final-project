@@ -21,8 +21,8 @@ module.exports.viewProfile = async (req, res) => {
 
 module.exports.ChangeUserName = async (req, res) => {
   let newName = req.body.newName
-  console.log(newName);
   let userId = req.user._id
+  // console.log(newName);
   try {
     await UserModel.updateOne({ _id: userId }, { username: newName })
     res.json({ mess: 'success' })
@@ -34,7 +34,7 @@ module.exports.ChangeUserName = async (req, res) => {
 module.exports.ChangeUserDes = async (req, res) => {
   let { newDes } = req.body
   let userId = req.user._id
-  console.log(62, 'hello');
+  // console.log(62, 'hello');
   try {
     await UserModel.updateOne({ _id: userId }, { discription: newDes })
     res.json({ mess: 'success' })
@@ -47,7 +47,7 @@ module.exports.ChangeUserAvatar = async (req, res) => {
   let userId = req.user._id
   try {
     let userInfo = await UserModel.findOne({ _id: userId })
-    console.log(userInfo.avatar);
+    // console.log(userInfo.avatar);
     let path
     if (req.file == undefined) {
       path = userInfo.avatar
@@ -105,12 +105,13 @@ module.exports.viewCreateAuthor = async (req, res) => {
     console.log(err);
   }
 }
+
 // create account
 module.exports.createAuthor = async (req, res) => {
   try {
     let author = await UserModel.findOne({ email: req.body.email })
     let role = 'author'
-    console.log(role);
+    // console.log(role);
     if (author && author.role === 'user') {
       const password = await bcrypt.hash(req.body.password, 10)
       let data = await UserModel.create({
@@ -119,6 +120,7 @@ module.exports.createAuthor = async (req, res) => {
         password: password,
         role: role
       })
+
     } else if (!author) {
       const password = await bcrypt.hash(req.body.password, 10)
       let data = await UserModel.create({
@@ -145,12 +147,12 @@ module.exports.getAllAuthor = async (req, res) => {
     // console.log(allUser)
     let listAuthor = await UserModel.find({ role: 'author' }).limit(10);
     let total = allAuthor.length;
-    if (allAuthor) {
-      res.render('pages/admin/manageAuthor/viewAllAuthorEjs/viewAllAuthor', { allAuthor, listAuthor, total: Math.ceil(total / 10) })
-    } else {
+    if (!allAuthor) {
       allAuthor = {}
       listAuthor = {}
       res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { allAuthor, listAuthor })
+    } else {
+      res.render('pages/admin/manageAuthor/viewAllAuthorEjs/viewAllAuthor', { allAuthor, listAuthor, total: Math.ceil(total / 10) })
     }
   } catch (err) {
     console.log(err);
@@ -160,12 +162,11 @@ module.exports.getAllAuthor = async (req, res) => {
 // phaan trang author
 module.exports.getPaginationAuthor = async (req, res) => {
   try {
-    let allAuthor = await UserModel.find({ role: 'author' }).skip(req.query.limit * (req.query.page - 1))
-      .limit(req.query.limit);
-    if (allAuthor) {
-      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { allAuthor })
-    } else {
+    let allAuthor = await UserModel.find({ role: 'author' }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    if (!allAuthor) {
       res.json('khong co user ton tai')
+    } else {
+      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { allAuthor })
     }
   } catch (e) {
     console.log({ message: 'Error getting pagination user' });
@@ -179,7 +180,7 @@ module.exports.banAuthor = async (req, res) => {
   try {
     // console.log(allUser)
     let user = await UserModel.findOne({ _id: req.body.id })
-    console.log(90, user.status === 'active');
+    // console.log(90, user.status === 'active');
     if (user.status === 'active') {
       status = 'banned'
     } else {
@@ -204,7 +205,7 @@ module.exports.banAuthor = async (req, res) => {
 module.exports.giftPointAuthor = async (req, res) => {
   try {
     let user = await UserModel.findOne({ _id: req.body.id });
-    console.log(115, user);
+    // console.log(115, user);
     // console.log(116, req.body.money);
     let money = 0;
     money = Number(req.body.money) + user.monney

@@ -5,6 +5,7 @@ async function readMore(monney, price, checked) {
     try {
         if (price > 0 && !monney) {
             if (confirm('ban can dang nhap de su dung tinh nang nay')) {
+                sessionStorage.setItem("href", `/manga/${id}/${chap}/review`);
                 window.location.href = '/auth/viewLogin'
             }
         } else if (price > 0 && monney) {

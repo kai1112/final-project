@@ -1,6 +1,6 @@
+const auth = require('../middleware/auth')
 const router = require('express').Router();
 const controller = require('../controllers/reviewMangaController')
-const auth = require('../middleware/auth')
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,12 +15,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-
+var cpUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'backgroud_avatar', maxCount: 1 },
+]);
 // view all managa author created
 router.get('/viewAllManga', auth.checkToken, auth.checkRoleAuthor, controller.viewAllMangaAuthorCreated)
 //view page author's create  manga 
 router.get('/createManga', auth.checkToken, auth.checkRoleAuthor, controller.viewMangaAuthorCreated)
-router.post('/createManga', auth.checkToken, auth.checkRoleAuthor, upload.single('avatar'), controller.createMangaAuthor)
+router.post('/createManga', auth.checkToken, auth.checkRoleAuthor, cpUpload, controller.createMangaAuthor)
 // view detail manga
 router.get('/viewDetails/:id', auth.checkToken, auth.checkRoleAuthor, controller.viewDetails)
 // view edit manga

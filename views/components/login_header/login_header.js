@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.show-search-bar').click(function(){
+    $('.show-search-bar').click(function () {
         $('.search-bar').toggle()
     })
     //dark mode
@@ -9,36 +9,89 @@ $(document).ready(function () {
     //     $('#toggle-dark-mode').toggleClass('dark-toggle-btn')
     //     $('.menu').toggleClass('dark-menu')
     // })
-    click_to_flex('.category-click','.cat-submenu-mobile','hidden')
-    click_to_flex('.chart-click','.chart-submenu-mobile','hidden')
-    click_to_flex('.toggle_menu_mobile','.menu_mobile_content','height-fit')
-    click_to_flex('.toggle-user-feature','.user-feature','hidden')
-    click_to_flex('.toggle-noti-feature','.noti-list','hidden')
+    click_to_flex('.category-click', '.cat-submenu-mobile', 'hidden')
+    click_to_flex('.chart-click', '.chart-submenu-mobile', 'hidden')
+    click_to_flex('.toggle_menu_mobile', '.menu_mobile_content', 'height-fit')
+    click_to_flex('.toggle-user-feature', '.user-feature', 'hidden')
+    click_to_flex('.toggle-noti-feature', '.noti-list', 'hidden')
 
-    click_out_to_hide(".user-feature",'.toggle-user-feature')
-    click_out_to_hide(".noti-list",'.toggle-noti-feature')
+    click_out_to_hide(".user-feature", '.toggle-user-feature')
+    click_out_to_hide(".noti-list", '.toggle-noti-feature')
 
 })
-function click_to_flex(element_click,element_show,class_active){
-    $(`${element_click}`).click(function(){
+function click_to_flex(element_click, element_show, class_active) {
+    $(`${element_click}`).click(function () {
         $(`${element_show}`).toggleClass(class_active)
     })
 }
 
-function type_search(type){
-    if($(`.field${type}`).val() != "")
-        $(`.result${type}`).css({'display':'flex'})
+function type_search(type) {
+    if ($(`.field${type}`).val() != "")
+        $(`.result${type}`).css({ 'display': 'flex' })
     else
-         $(`.result${type}`).css({'display':'none'})
+        $(`.result${type}`).css({ 'display': 'none' })
 }
-function click_out_to_hide(class_hide,button_trigger){
-    $(document).mouseup(function(e) 
-    {
+function click_out_to_hide(class_hide, button_trigger) {
+    $(document).mouseup(function (e) {
         var container = $(class_hide);
         var btn = $(button_trigger)
-        if (!btn.is(e.target) && btn.has(e.target).length === 0 &&  !container.is(e.target) && container.has(e.target).length === 0 && !container.hasClass('hidden')) 
-        {
+        if (!btn.is(e.target) && btn.has(e.target).length === 0 && !container.is(e.target) && container.has(e.target).length === 0 && !container.hasClass('hidden')) {
             container.addClass('hidden');
         }
     });
+}
+
+async function search() {
+    let name = $('#name').val()
+    console.log(name);
+    try {
+        let data = await $.ajax({
+            type: "GET",
+            url: `/manga/search?name=${name}`,
+        })
+        // console.log(data);
+        $('.search-result.resultpc').html(data)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+async function follow() {
+    try {
+        let data = await $.ajax({
+            type: "GET",
+            url: `/follow/viewFollow`
+        })
+        //console.log(69, data);
+        if (data.status === 403) {
+            if (confirm(data.message)) {
+                window.location.href = `/auth/viewLogin`
+            }
+        } else {
+            window.location.href = `/follow/viewFollow`
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+async function history() {
+    try {
+        let data = await $.ajax({
+            type: "GET",
+            url: `/history/viewHistory`
+        })
+        //console.log(69, data);
+        if (data.status === 403) {
+            if (confirm(data.message)) {
+                window.location.href = `/auth/viewLogin`
+            }
+        } else {
+            window.location.href = `/history/viewHistory`
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }

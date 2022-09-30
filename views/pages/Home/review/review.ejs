@@ -15,10 +15,14 @@
 <body>
     <!-- menu -->
     <header>
-        <!-- pc -->
-        <%- include('../../../components/headerHome/header') %>
-            <!-- mobile -->
-            <%- include('../../../components/headerHome/headerMobile') %>
+        <% if(userDetail){%>
+            <%- include('../../../components/login_header/login_header') %>
+                <%}else{%>
+                    <!-- menu -->
+                    <%- include('../../../components/headerHome/header') %>
+                        <!-- mobile -->
+                        <%- include('../../../components/headerHome/headerMobile') %>
+                            <% } %>
     </header>
     <!-- menu -->
     <!-- main -->
@@ -38,11 +42,13 @@
         </div>
     </div>
     <div class="chapter-content">
-        <%= chapter.content%>
+        <%- chapter.content%>
     </div>
     <button onclick="readMore('<%= user?.monney%>', '<%= mangaDetail.price%>', '<%=checked%>')">view more</button>
     <!-- main -->
-
+    <!-- footer -->
+    <%- include('../../../components/footer') %>
+        <!-- footer -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
     integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="

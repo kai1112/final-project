@@ -1,6 +1,5 @@
 const mongoose = require('./dbConnection');
-// const mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/ExpressDemo");
+
 const ReviewChapterSchema = mongoose.Schema({
   chap: { type: Number, default: 1 },
   title: String,

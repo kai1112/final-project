@@ -1,7 +1,8 @@
+const reviewMangaModel = require("../models/reviewManga");
 const ReviewChapterModel = require("../models/reviewChapter");
 const reviewChapterModel = require("../models/reviewChapter");
-const reviewMangaModel = require("../models/reviewManga");
 // const UserModel = require("../models/user.model");
+
 // create new chapter
 module.exports.createChapter = async (req, res) => {
   try {
@@ -36,9 +37,14 @@ module.exports.createChapter = async (req, res) => {
     res.json({ message: "loi" });
   }
 };
+
 // view chapter create
 module.exports.viewCreateChapter = async (req, res) => {
-  res.render("pages/author/reviewChapter/createChapter/createChapter");
+  try{
+    res.render("pages/author/reviewChapter/createChapter/createChapter");
+  }catch(e){
+    console.log(e);
+  }
 };
 
 // edit chapter
@@ -55,15 +61,17 @@ module.exports.editChapter = async (req, res) => {
     res.json({ err });
   }
 };
+
 module.exports.viewEditchapter = async (req, res) => {
   try {
     let chapter = await ReviewChapterModel.findOne({ _id: req.params.id })
-    console.log(chapter);
+    // console.log(chapter);
     res.render("pages/author/reviewChapter/editChapter/editChapter", { chapter });
   } catch (err) {
     res.json({ err });
   }
 };
+
 // // delete chapter
 module.exports.deleteChapter = async (req, res) => {
   // console.log(req.params.id);
@@ -79,13 +87,14 @@ module.exports.deleteChapter = async (req, res) => {
     res.json(err);
   }
 };
+
 // // view all chapter
 module.exports.getChapter = async (req, res) => {
   try {
     let chapter = await reviewChapterModel.findOne({ _id: req.params.id });
     let allChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID });
     let listChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID }).limit(1);
-    console.log(76, listChapter);
+    // console.log(76, listChapter);
     let total = allChapter.length;
     res.render('pages/author/reviewChapter/viewDetailChapter/viewDetailChapter', { allChapter, listChapter, total: Math.ceil(total / 1) })
   } catch (err) {
@@ -98,13 +107,12 @@ module.exports.paginationChapter = async (req, res) => {
     // console.log(85, req.params.id);
     // console.log(86, req.query)
     let chapter = await reviewChapterModel.findOne({ _id: req.params.id });
-    let listChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID }).skip(req.query.limit * (req.query.page - 1))
-      .limit(req.query.limit);
-    if (listChapter) {
-      res.render('pages/author/reviewChapter/viewDetailChapter/paginationChapter', { listChapter })
-      console.log(listChapter);
-    } else {
+    let listChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    if (!listChapter) {
+      // console.log(listChapter);
       console.log('chapter not found')
+    } else {
+      res.render('pages/author/reviewChapter/viewDetailChapter/paginationChapter', { listChapter })
     }
   } catch (e) {
     console.log(e)

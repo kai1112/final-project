@@ -1,6 +1,4 @@
 const mongoose = require("./dbConnection");
-// const mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/ExpressDemo");
 
 const UserSchema = mongoose.Schema(
   {
@@ -11,10 +9,10 @@ const UserSchema = mongoose.Schema(
     dateOfBirth: Date,
     token: String,
     email: String,
+    loginExpired: Date,
     monney: { type: Number, default: 0 },
     status: { type: String, enum: ['active', 'banned'], default: 'active' },
     role: { type: String, enum: ['user', 'admin', 'author'], default: 'user' },
-    buyed: [{}],
     avatar: { type: String, default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }
   },
   { collection: "User", timestamps: true }

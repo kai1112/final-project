@@ -1,6 +1,4 @@
 const mongoose = require('./dbConnection');
-// const mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/ExpressDemo");
 
 const CategorySchema = mongoose.Schema({
     name: String,

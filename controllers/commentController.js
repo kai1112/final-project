@@ -1,5 +1,5 @@
 const CommentModel = require('../models/comment.model')
-const ChapterModel = require('../models/chapter.model')
+
 module.exports.createComment = async (req, res) => {
     try {
         // console.log(5, req.file);
@@ -14,7 +14,7 @@ module.exports.createComment = async (req, res) => {
             mimeType = req.file.mimetype;
             console.log(15, audio, mimeType);
         }
-        console.log(req.body);
+        // console.log(req.body);
         if (user) {
             if (req.body.title === "" && audio === "") {
                 res.json({ status: 400 })
@@ -70,7 +70,7 @@ module.exports.updateComment = async (req, res) => {
                 reaction.push(req.user._id);
             }
             console.log(60, reaction);
-            let updateComment = await CommentModel.findOneAndUpdate({ _id: comment._id }, { reaction: reaction });
+            await CommentModel.findOneAndUpdate({ _id: comment._id }, { reaction: reaction });
             res.json({
                 status: 200,
                 message: 'like comment successfully'
@@ -82,7 +82,6 @@ module.exports.updateComment = async (req, res) => {
         res.json(err)
     }
 }
-
 
 module.exports.deleteComment = async (req, res) => {
     try {

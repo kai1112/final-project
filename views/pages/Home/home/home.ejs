@@ -14,10 +14,14 @@
 
 <body>
     <header>
-        <!-- menu -->
-        <%- include('../../../components/headerHome/header') %>
-            <!-- mobile -->
-            <%- include('../../../components/headerHome/headerMobile') %>
+        <% if(userDetail){%>
+            <%- include('../../../components/login_header/login_header') %>
+                <%}else{%>
+                    <!-- menu -->
+                    <%- include('../../../components/headerHome/header') %>
+                        <!-- mobile -->
+                        <%- include('../../../components/headerHome/headerMobile') %>
+                            <% } %>
     </header>
     <!-- menu -->
     <!-- main -->
@@ -75,7 +79,7 @@
             <div class="suggest-bar">
                 <ul>
                     <% muaNhieu.map((m, index)=>{%>
-                        <li class="card-item" onclick="viewDetails('<%=m._id%>')">
+                        <li class="card-item" onclick="viewDetails('<%=m.slug%>')">
                             <a>
                                 <img src='<%=m.avatar%>' alt="">
                                 <div class="more-info">
@@ -117,10 +121,9 @@
                             <div class="showComment">
                                 <%comment.map((m, index)=>{%>
                                     <div class="showComment__info">
-                                        <a href="" class="showComment__info--avatar"><img src="<%=m.userID.avatar%>"
-                                                alt=""></a>
+                                        <a class="showComment__info--avatar"><img src="<%=m.userID.avatar%>" alt=""></a>
                                         <div class="showComment__info--nameAndTime">
-                                            <a href="http://">
+                                            <a>
                                                 <%=m.userID.username%>
                                             </a>
                                             <p>Publish timeádasdasssssssssssssss</p>
@@ -141,40 +144,15 @@
         </div>
     </div>
     <!-- main -->
+    <!-- footer -->
+    <%- include('../../../components/footer') %>
+        <!-- footer -->
 
-    <!-- footer -->
-    <footer>
-        <div class="footer">
-            <div class="footer-left">
-                <a href="" class="logo">
-                    <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
-                </a>
-                <p class="quote">Luôn cập nhật liên tục các bộ truyện mới nhanh nhất để phục vụ độc giả.
-                    Đọc truyện hoàn toàn miễn phí, hỗ trợ đa thiết bị.
-                </p>
-                <p class="contact">Email: adstruyenqq@gmail.com</p>
-            </div>
-            <div class="footer-right">
-                <div class="footer-cat">
-                    <% category.map((category)=>{%>
-                        <a onclick="findCategory('<%=category.id%>')">
-                            <%=category.name%>
-                        </a>
-                        <% })%>
-                </div>
-                <p class="copyright">Mọi thông tin và hình ảnh trên website đều được sưu tầm trên Internet.
-                    Chúng tôi không sở hữu hay chịu trách nhiệm bất kỳ thông tin nào trên web này.
-                    Nếu làm ảnh hưởng đến cá nhân hay tổ chức nào, khi được yêu cầu,
-                    chúng tôi sẽ xem xét và gỡ bỏ ngay lập tức.
-                </p>
-            </div>
-        </div>
-    </footer>
-    <!-- footer -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
     integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/views/components/headerHome/header.js"></script>
 <script src="/views/pages/Home/home/home.js"></script>
 
 </html>

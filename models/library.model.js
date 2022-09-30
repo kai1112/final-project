@@ -1,6 +1,5 @@
 const mongoose = require("./dbConnection");
-// const mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/ExpressDemo");
+
 const LibrarySchema = mongoose.Schema(
   {
     status: String,

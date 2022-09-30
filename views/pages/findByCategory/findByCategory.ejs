@@ -28,7 +28,7 @@
             <div class="main-content">
                 <ul class="list-item">
                     <%manga.map((m)=>{%>
-                        <li class="card-item" onclick="viewDetails('<%=m._id%>')">
+                        <li class="card-item" onclick="viewDetails('<%=m.slug%>')">
                             <a>
                                 <img src="<%=m.avatar%>" alt="">
                             </a>

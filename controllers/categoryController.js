@@ -1,7 +1,7 @@
-const CategoryModel = require('../models/category.model')
-const Reviewmanga = require('../models/reviewManga')
-const MangaModel = require('../models/manga.model')
 const UserModel = require('../models/user.model')
+const MangaModel = require('../models/manga.model')
+const Reviewmanga = require('../models/reviewManga')
+const CategoryModel = require('../models/category.model')
 
 
 module.exports.viewCreateCategory = async (req, res) => {
@@ -21,7 +21,7 @@ module.exports.createCategory = async (req, res) => {
             // console.log(20, req.body);
             console.log('name category da ton tai')
         } else {
-            let newCategory = await CategoryModel.create({
+            await CategoryModel.create({
                 name: req.body.category,
                 description: req.body.description
             })
@@ -35,12 +35,13 @@ module.exports.createCategory = async (req, res) => {
 module.exports.editCategory = async (req, res) => {
     try {
         let category = await CategoryModel.findOne({ id: req.params.id })
-        if (category) {
-            let updateCategory = await CategoryModel.updateOne({ _id: category._id },
+        if (!category) {
+            res.json('category khong ton tai')
+        } else {
+            await CategoryModel.updateOne(
+                { _id: category._id },
                 { name: req.body.name, description: req.body.description }
             )
-        } else {
-            res.json('category khong ton tai')
         }
         res.json({ status: 200 })
     } catch (err) {
@@ -50,11 +51,11 @@ module.exports.editCategory = async (req, res) => {
 
 module.exports.deleteCategory = async (req, res) => {
     try {
-        let category = await CategoryModel.findOne({ _id: req.params.id })
-        let reviewmanga = await Reviewmanga.find()
         let manga = await MangaModel.findOne()
+        let reviewmanga = await Reviewmanga.find()
+        let category = await CategoryModel.findOne({ _id: req.params.id })
         if (category) {
-            let categorydele = await CategoryModel.findOneAndDelete({ _id: category._id })
+            await CategoryModel.findOneAndDelete({ _id: category._id })
             for (let i = 0; i < reviewmanga.length; i++) {
                 for (let j = 0; j < reviewmanga.category.length; j++) {
                     if (reviewmanga.category[j] === category._id) {
@@ -77,6 +78,7 @@ module.exports.deleteCategory = async (req, res) => {
         res.json(err)
     }
 }
+
 module.exports.viewAllCategory = async (req, res) => {
     try {
         let category = await CategoryModel.find()
@@ -85,14 +87,15 @@ module.exports.viewAllCategory = async (req, res) => {
         console.log(err);
     }
 }
+
 module.exports.findMangaByCategory = async (req, res) => {
     try {
-        console.log(req.params.id);
-        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+        // console.log(req.params.id);
         let category = await CategoryModel.find().sort({ name: 'asc' })
+        let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
         let manga = await MangaModel.find({ 'category.id': req.params.id })
         res.render('pages/findByCategory/findByCategory', { manga, user, category })
-        console.log(79, manga);
+        // console.log(79, manga);
     } catch (err) {
         console.log(err);
     }

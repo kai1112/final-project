@@ -1,16 +1,25 @@
 const UserModel = require('../models/user.model')
+const MangaModel = require('../models/manga.model')
+const CategoryModel = require('../models/category.model')
 const fs = require("fs");
-
+const { header } = require('../service/headerData')
 //view profile
+
 module.exports.viewProfile = async (req, res) => {
   try {
     // khai bao bien cookies
     const cookies = req.cookies;
-    const user = await UserModel.findOne({ token: cookies.user })
-    if (user) {
-      res.render('pages/user/profileUser/profileUser', { user })
-    } else {
+    // let a = await header(req, res)
+    let userDetail = await UserModel.findOne({ token: cookies.user })
+    let manga = await MangaModel.find()
+    let category = await CategoryModel.find().sort({ name: 'asc' })
+    let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+    // console.log(17, a.cookie);
+    const userProfile = await UserModel.findOne({ token: cookies.user })
+    if (!user) {
       console.log('user chuwa dang nhap');
+    } else {
+      res.render('pages/user/profileUser/profileUser', { userDetail: userDetail, user: user, userProfile, manga, category: category })
     }
   } catch (err) {
     console.log(err);
@@ -28,7 +37,7 @@ module.exports.changeProfile = async (req, res) => {
         req.body
       )
       fs.unlinkSync(user.avatar)
-      console.log('Success');
+      // console.log('Success');
       res.json({
         status: 200,
         message: 'Success',
@@ -52,11 +61,11 @@ module.exports.getAllUsers = async (req, res) => {
     // console.log(allUser)
     let listUsers = await UserModel.find({ role: 'user' }).limit(10);
     let total = allUser.length;
-    if (allUser) {
-      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers, total: Math.ceil(total / 10) })
-    } else {
+    if (!allUser) {
       listUsers = {}
       res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers })
+    } else {
+      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/viewAllUser', { listUsers, total: Math.ceil(total / 10) })
     }
   } catch (e) {
     res.json({ message: 'khong co user' })
@@ -66,12 +75,11 @@ module.exports.getAllUsers = async (req, res) => {
 // phaan trang user
 module.exports.getPaginationUser = async (req, res) => {
   try {
-    let listUsers = await UserModel.find({ role: 'user' }).skip(req.query.limit * (req.query.page - 1))
-      .limit(req.query.limit);
-    if (listUsers) {
-      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/paginationUser', { listUsers })
-    } else {
+    let listUsers = await UserModel.find({ role: 'user' }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    if (!listUsers) {
       res.json('khong co user ton tai')
+    } else {
+      res.render('pages/admin/manageUser/viewAllUser/viewAllUserEjs/paginationUser', { listUsers })
     }
   } catch (e) {
     console.log({ message: 'Error getting pagination user' });
@@ -145,5 +153,42 @@ module.exports.getFindUserByNameUser = async (req, res) => {
     }
   } catch (e) {
     console.log(e);
+  }
+}
+
+module.exports.buyed = async (req, res) => {
+  try {
+    let userDetail = await UserModel.findOne({ id: req.user._id }).populate('buyed')
+    // console.log(userDetail);
+    let buyedManga = []
+    for (let i = 0; i < userDetail.buyed.length; i++) {
+      let manga = await MangaModel.findOne({ id: userDetail.buyed[i] })
+      if (manga) {
+        buyedManga.push(manga);
+      }
+    }
+    console.log(buyedManga);
+    let category = await CategoryModel.find().sort({ name: 'asc' })
+    let user = await UserModel.find().sort({ buyed: 'desc' }).limit(10)
+    let manga1 = await MangaModel.find().sort({ views: 'desc' }).limit(5)
+    res.render('pages/user/buyed/buyed', { user, category, manga: manga1, userDetail, buyed: buyedManga })
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+module.exports.logoutUser = async (req, res) => {
+  try {
+    let token = req.cookies
+    let user = UserModel.findOne({ token: token.user })
+    if (user) {
+      user.token = "";
+      res.cookie("user", user.token);
+      res.render('components/login/login')
+    } else {
+      res.json("nguwoif dung chua dang nhap")
+    }
+  } catch (e) {
+    console.log(e)
   }
 }

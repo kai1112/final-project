@@ -18,46 +18,30 @@
         <!-- pc -->
         <div class="header">
             <div class="headerFeature">
-                <a href="" class="logo">
+                <a href="/" class="logo">
                     <img src="http://truyen48.com/template/frontend/images/logo.png" alt="">
                 </a>
                 <button id="toggle-dark-mode">
                     <i class="fa-regular fa-lightbulb"></i>
                 </button>
                 <div class="search-bar">
-                    <input class="search-field fieldpc" oninput="type_search('pc')" type="text" placeholder="Search...">
-                    <button class="search-btn">
+                    <input id="name" class="search-field fieldpc" oninput="type_search('pc')" type="text"
+                        placeholder="Search...">
+                    <button class="search-btn" onclick="search()">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <div class="search-result resultpc">
-                        <a class="search-item" href="">
-                            <div class="search-item-img">
-                                <img src="http://i.truyenvua.com/ebook/190x247/witch-hunter_1552226189.jpg?r=r8645456"
-                                    alt="">
-                            </div>
-                            <div class="search-item-info">
-                                <b>Name</b>
-                                <p>Other name </p>
-                                <span>Curent chapter</span>
-                            </div>
-                        </a>
+                        <%- include('../headerHome/search.ejs') %>
                     </div>
                 </div>
+
                 <div class="rightFeature">
-                    <button class="btnFeature toggle-noti-feature">
-                        <i class="fa-solid fa-bell"></i>
-                        <div class="noti-list hidden">
-                            <div class="noti-item">Thong bao 1</div>
-                            <div class="noti-item">Thong bao 2</div>
-                        </div>
-                    </button>
                     <button class="btnFeature toggle-user-feature">
                         <i class="fa-solid fa-user"></i>
                         <div class="user-feature hidden">
-                            <a href="">Danh sách theo dõi</a>
-                            <a href="">Lịch sử đọc truyện</a>
-                            <a href="">Cài đặt thông tin</a>
-                            <a href="">Đăng xuất</a>
+                            <a href="/user/buyed">Truyện đã mua</a>
+                            <a href="/user/userProfile">Profile</a>
+                            <a href="/user/logout">Đăng xuất</a>
                         </div>
                     </button>
                 </div>
@@ -66,40 +50,29 @@
         <div class="menu">
             <div class="menu-content">
                 <ul class="menu_pc">
-                    <li><a href="">Trang chủ</a></li>
+                    <li><a href="/">Trang chủ</a></li>
                     <li class="category-hover">
                         <span>Thể loại <i class="fa fa-caret-down"></i></span>
                         <div class="submenu cat-submenu">
-                            <a href="">Action</a>
-                            <a href="">Adventure</a>
-                            <a href="">Anime</a>
-                            <a href="">Chuyển sinh</a>
-                            <a href="">Cổ đại</a>
-                            <a href="">Comedy</a>
-                            <a href="">Comic</a>
-                            <a href="">Demons</a>
-                            <a href="">Detective</a>
-                            <a href="">Mafia</a>
+                            <% category.map((category)=>{%>
+                                <a onclick="findCategory('<%=category.id%>')">
+                                    <%=category.name%>
+                                </a>
+                                <% })%>
                         </div>
                     </li>
                     <li class="chart-hover">
                         <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
                         <div class="submenu chart-submenu">
-                            <a href="">Top ngày</a>
-                            <a href="">Top tuần</a>
-                            <a href="">Top tháng</a>
-                            <a href="">Yêu thích</a>
-                            <a href="">Mới cập nhật</a>
-                            <a href="">Truyện mới</a>
+                            <% user.map((user)=>{%>
+                                <a href=""><img src="<%=user.avatar%>" alt="">
+                                    <%=user.username%>
+                                </a>
+                                <% })%>
                         </div>
                     </li>
-                    <li><a href="">Con gái</a></li>
-                    <li><a href="">Con trai</a></li>
-                    <li><a href="">Tìm truyện</a></li>
-                    <li><a href="">Lịch sử</a></li>
-                    <li><a href="">Theo dõi</a></li>
-                    <li><a href="">Tải app</a></li>
-                    <li><a href="">Thảo luận</a></li>
+                    <li><a onclick="history()">Lịch sử</a></li>
+                    <li><a onclick="follow()">Theo dõi</a></li>
                 </ul>
             </div>
         </div>
@@ -112,23 +85,12 @@
                 <i class="fa-regular fa-lightbulb"></i>
             </button>
             <div class="rightFeature">
-                <button class="show-search-bar">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-                <button class="btnFeature toggle-noti-feature">
-                    <i class="fa-solid fa-bell"></i>
-                    <div class="noti-list hidden">
-                        <div class="noti-item">Thong bao 1</div>
-                        <div class="noti-item">Thong bao 2</div>
-                    </div>
-                </button>
                 <button class="btnFeature toggle-user-feature">
                     <i class="fa-solid fa-user"></i>
                     <div class="user-feature hidden">
-                        <a href="">Danh sách theo dõi</a>
-                        <a href="">Lịch sử đọc truyện</a>
-                        <a href="">Cài đặt thông tin</a>
-                        <a href="">Đăng xuất</a>
+                        <a href="/user/buyed">Truyện đã mua</a>
+                        <a href="/user/userProfile">Profile</a>
+                        <a href="/user/logout">Đăng xuất</a>
                     </div>
                 </button>
             </div>
@@ -145,9 +107,7 @@
                                 alt="">
                         </div>
                         <div class="search-item-info">
-                            <b>Name</b>
-                            <p>Other name </p>
-                            <span>Curent chapter</span>
+                            <%- include('../headerHome/search.ejs') %>
                         </div>
                     </a>
                 </div>
@@ -164,37 +124,25 @@
                 <li class="category-click ">
                     <span>Thể loại <i class="fa fa-caret-down"></i></span>
                     <div class="submenu_mobile cat-submenu-mobile  hidden">
-                        <a href="">Action</a>
-                        <a href="">Adventure</a>
-                        <a href="">Anime</a>
-                        <a href="">Chuyển sinh</a>
-                        <a href="">Cổ đại</a>
-                        <a href="">Comedy</a>
-                        <a href="">Comic</a>
-                        <a href="">Demons</a>
-                        <a href="">Detective</a>
-                        <a href="">Mafia</a>
+                        <% category.map((category)=>{%>
+                            <a onclick="findCategory('<%=category.id%>')">
+                                <%=category.name%>
+                            </a>
+                            <% })%>
                     </div>
                 </li>
-                <li class="chart-click ">
+                <li class="chart-click">
                     <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
                     <div class="submenu_mobile chart-submenu-mobile  hidden">
-                        <a href="">Top ngày</a>
-                        <a href="">Top tuần</a>
-                        <a href="">Top tháng</a>
-                        <a href="">Yêu thích</a>
-                        <a href="">Mới cập nhật</a>
-                        <a href="">Truyện mới</a>
+                        <% user.map((user)=>{%>
+                            <a href=""><img src="<%=user.avatar%>" alt="">
+                                <%=user.username%>
+                            </a>
+                            <% })%>
                     </div>
                 </li>
-                <li class=""><a href="">Con gái</a></li>
-                <li class=""><a href="">Con trai</a></li>
-                <li class=""><a href="">Tìm truyện</a></li>
-                <li class=""><a href="">Lịch sử</a></li>
-                <li class=""><a href="">Theo dõi</a></li>
-                <li class=""><a href="">Tải app</a></li>
-                <li class=""><a href="">Thảo luận</a></li>
-
+                <li class=""><a onclick="history()">Lịch sử</a></li>
+                <li class=""><a onclick="follow()">Theo dõi</a></li>
             </ul>
         </div>
     </header>

@@ -1,6 +1,6 @@
+const auth = require('../middleware/auth')
 const router = require('express').Router();
 const controller = require('../controllers/chapterController')
-const auth = require('../middleware/auth')
 
 // quan ly chapter author
 router.post('/createChapter/:id', controller.createChapter)

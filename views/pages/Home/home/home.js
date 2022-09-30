@@ -28,56 +28,13 @@ function type_search(type) {
 $('.search-result.resultpc').html("")
 
 
-function viewRegister() {
-    window.location.href = '/auth/viewRegister'
-}
-
-function viewLogin() {
-    window.location.href = '/auth/viewLogin'
-}
 
 function viewDetails(slug) {
+    console.log(slug);
     window.location.href = `/manga/${slug}`
 }
 
-function findCategory(slug) {
-    window.location.href = `/category/${slug}`
-}
 
-async function search() {
-    let name = $('#name').val()
-    //console.log(name);
-    try {
-        let data = await $.ajax({
-            type: "GET",
-            url: `/manga/search?name=${name}`,
-        })
-        // console.log(data);
-        $('.search-result.resultpc').html(data)
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-async function follow() {
-
-    try {
-        let data = await $.ajax({
-            type: "GET",
-            url: `/follow/viewFollow`
-        })
-        //console.log(69, data);
-        if (data.status === 403) {
-            if (confirm(data.message)) {
-                window.location.href = `/auth/viewLogin`
-            }
-        } else {
-            window.location.href = `/follow/viewFollow`
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 async function nextPages(page) {
     try {

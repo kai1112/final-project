@@ -1,5 +1,5 @@
 <% listManga.map((m, index)=>{%>
-    <li class="card-item" onclick="viewDetails('<%=m._id%>')">
+    <li class="card-item" onclick="viewDetails('<%=m.slug%>')">
         <a>
             <img src='<%=m.avatar%>' alt="">
             <div class="more-info">

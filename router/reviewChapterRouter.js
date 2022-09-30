@@ -1,6 +1,6 @@
+const auth = require('../middleware/auth')
 const router = require('express').Router();
 const controller = require('../controllers/reviewChapterController')
-const auth = require('../middleware/auth')
 
 // using chapterController
 router.get("/viewDetailChapter/:id", auth.checkToken, controller.getChapter);

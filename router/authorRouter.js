@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const controller = require('../controllers/authorController')
-const auth = require('../middleware/auth')
 const multer = require("multer");
+const auth = require('../middleware/auth')
+const controller = require('../controllers/authorController')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/uploads");

@@ -7,11 +7,11 @@ function createChapter(id) {
 }
 
 function edichapter(id, status) {
-  if (status === 'posted') {
-    alert('khong the edichapter')
-  } else {
-    window.location.href = `/reviewChapter/editChapter/${id}`;
-  }
+  // if (status === 'posted') {
+  // alert('khong the edichapter')
+  // } else {
+  window.location.href = `/reviewChapter/editChapter/${id}`;
+  // }
 }
 
 async function deleteChapter(id) {

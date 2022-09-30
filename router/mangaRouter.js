@@ -1,6 +1,6 @@
+const auth = require('../middleware/auth')
 const router = require('express').Router();
 const controller = require('../controllers/mangaController')
-const auth = require('../middleware/auth')
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,6 +14,11 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+var cpUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'backgroud_avatar', maxCount: 1 },
+]);
 
 
 // quản lý author post
@@ -30,7 +35,7 @@ router.get('/editMangaAuthor/:id', auth.checkToken, auth.checkRoleAdmin, control
 
 router.patch('/change-name/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangeMangaAuthorName)
 router.patch('/change-des/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangeMangaAuthorDes)
-router.post('/change-avatar/:id', auth.checkToken, auth.checkRoleAdmin, upload.single('avatar'), controller.ChangeMangaAuthorAvatar)
+router.post('/change-avatar/:id', auth.checkToken, auth.checkRoleAdmin, cpUpload, controller.ChangeMangaAuthorAvatar)
 router.patch('/change-price/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangePrice)
 //-------------------------------------------
 //quản lý admin post

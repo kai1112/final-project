@@ -1,6 +1,6 @@
 const UserModel = require('../models/user.model')
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // show login form
 module.exports.viewLogin = async (req, res) => {
@@ -10,13 +10,15 @@ module.exports.viewLogin = async (req, res) => {
     res.json(e);
   }
 }
+
 // login
 module.exports.login = async (req, res) => {
   try {
-    // console.log(req.body);
+    // console.log(req.body.href);
     const data = await UserModel.findOne({
       email: req.body.email,
     });
+
     if (data) {
       const checkPassword = await bcrypt.compare(
         req.body.password,
@@ -32,7 +34,6 @@ module.exports.login = async (req, res) => {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 6000000),
         });
-        
         let user = await UserModel.findOne({ email: req.body.email })
         res.json({ role: user.role })
       } else {
@@ -45,6 +46,7 @@ module.exports.login = async (req, res) => {
     res.json(76, err);
   }
 }
+
 // view regiter
 module.exports.viewRegister = async (req, res) => {
   try {
@@ -53,14 +55,13 @@ module.exports.viewRegister = async (req, res) => {
     res.json(err);
   }
 }
+
 // register 
 module.exports.register = async (req, res) => {
   try {
-    // console.log(61, req.body);
     let user = await UserModel.findOne({ email: req.body.email })
     // console.log(user);
     if (user) {
-      // console.log('user da ton tai');
       res.json({
         status: 400,
         message: 'email da ton tai',
@@ -76,7 +77,6 @@ module.exports.register = async (req, res) => {
         email: req.body.email,
         role: "user",
       });
-      // console.log(72,newUser);
       res.json({
         message: "login success",
         status: 200,

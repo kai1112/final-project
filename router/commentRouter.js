@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const controller = require('../controllers/commentController')
 const auth = require('../middleware/auth')
+const controller = require('../controllers/commentController')
 
 const multer = require("multer");
 const storage = multer.diskStorage({

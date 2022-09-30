@@ -16,8 +16,8 @@ module.exports.viewProfile = async (req, res) => {
     res.json(err);
   }
 }
-// change profile
 
+// change profile
 module.exports.ChangeUserName = async (req, res) => {
   let { newName } = req.body
   let userId = req.user._id
@@ -28,6 +28,7 @@ module.exports.ChangeUserName = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
 module.exports.ChangeUserDes = async (req, res) => {
   let { newDes } = req.body
   let userId = req.user._id
@@ -39,6 +40,7 @@ module.exports.ChangeUserDes = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
 module.exports.ChangeUserAvatar = async (req, res) => {
   let userId = req.user._id
   try {
@@ -56,6 +58,7 @@ module.exports.ChangeUserAvatar = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
 module.exports.ChangeUserEmail = async (req, res) => {
   let { newEmail } = req.body
   let userId = req.user._id
@@ -69,6 +72,7 @@ module.exports.ChangeUserEmail = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
 module.exports.ChangeUserPassword = async (req, res) => {
   let { oldPass, newPass } = req.body
   let userId = req.user._id
@@ -87,8 +91,6 @@ module.exports.ChangeUserPassword = async (req, res) => {
     res.status(500).json(error)
   }
 }
-
-
 
 module.exports.Logout = async (req, res) => {
   try {
