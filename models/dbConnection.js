@@ -2,6 +2,6 @@
 // const mongooseDBLinkk = process.env.mongodblink
 // mongoose.createConnection(mongooseDBLinkk)
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/final-project');
+mongoose.connect(process.env.mongodblink);
 
 module.exports = mongoose;

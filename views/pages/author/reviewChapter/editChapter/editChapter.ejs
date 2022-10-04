@@ -5,8 +5,8 @@
   
   <div class="edit-chapter">
     <h3>Edit</h3>
-    <input class="form-control" type="text" id="title" placeholder="title" /><br>
-    <textarea class="form-control z-depth-1" id="content" rows="3" placeholder="Content"></textarea><br>
+    <input class="form-control" type="text" id="title" placeholder="title" value="<%=chapter.title %>"/><br>
+    <textarea class="form-control z-depth-1" id="content" rows="3" placeholder="Content"><%=chapter.content %> %</textarea><br>
     <button class="btn btn-primary" onclick="editChapter('<%=chapter._id %>')">Edit chapter</button>
   </div>
 </div>

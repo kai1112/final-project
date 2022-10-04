@@ -326,43 +326,23 @@ body {
     flex-wrap: wrap;
     display: flex;
     padding: 0px 10px;
+    flex-direction: column;
 }
 
 .submenu_mobile>a {
-    width: 50%;
+    width: 100%;
     padding: 10px 0;
     text-decoration: none;
     color: #333;
+    display: flex;
+    align-items: center;
+}
+.submenu_mobile > a > img{
+    width: 50px;
+    height: 50px;
 }
 
-/* class-active */
-.hidden {
-    display: none;
-}
 
-.height-fit {
-    height: fit-content;
-}
-
-.dark {
-    background: #18191a;
-    color: #fff;
-}
-
-.dark-input {
-    background-color: #3a3b3c;
-    border-color: #3a3b3c;
-    color: #b0b3b8;
-}
-
-.dark-toggle-btn {
-    background-color: #e4e6eb !important;
-    color: #242526 !important;
-}
-
-.dark-menu {
-    background-color: #242526;
-}
 
 /* main */
 .main-container {
@@ -591,7 +571,7 @@ body {
 }
 
 .comment-zone {
-    max-width: 350px;
+    min-width: 350px;
 }
 
 .commentMainLayout {
@@ -744,7 +724,9 @@ body {
 
 .see-more {
     margin: 20px 0;
-    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .see-more a {
@@ -755,7 +737,15 @@ body {
     border-radius: 8px;
     font-size: 18px;
 }
-
+.pagination-btn{
+    color: #18191a;
+    background: #f18121;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 3px;
+}
 .seo-link {
     display: flex;
     flex-wrap: wrap;
@@ -817,7 +807,34 @@ footer {
     line-height: 21px;
     font-size: 13px;
 }
+/* class-active */
+.hidden {
+    display: none;
+}
 
+.height-fit {
+    height: fit-content;
+}
+
+.dark {
+    background: #18191a;
+    color: #fff;
+}
+
+.dark-input {
+    background-color: #3a3b3c;
+    border-color: #3a3b3c;
+    color: #b0b3b8;
+}
+
+.dark-toggle-btn {
+    background-color: #e4e6eb !important;
+    color: #242526 !important;
+}
+
+.dark-menu {
+    background-color: #242526;
+}
 @media screen and (max-width: 720px) {
 
     .header,

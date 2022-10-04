@@ -601,10 +601,12 @@ body {
     border-bottom: 1px dashed #666;
 }
 
-.chapterList-component>a:hover span:first-child {
+.chapterList-component>a:hover  span:first-child{
     color: #f18121;
 }
-
+a:visited{
+    color: red;
+}
 .chapterList-component>a span:first-child {
     font-size: 15px;
 }

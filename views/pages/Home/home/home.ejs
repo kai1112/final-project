@@ -105,16 +105,14 @@
             <div class="main-content">
                 <ul class="list-item">
                     <%- include('./pagination') %>
-                </ul>
-                <div class="see-more">
-                    <div class="pagination-btn">
+                    <div class="see-more">
                         <%for(let i=0; i <total; i ++){ %>
-                            <button onclick="nextPages('<%=i+1%>')">
+                            <button class="pagination-btn" onclick="nextPages('<%=i+1%>')">
                                 <%=i + 1%>
                             </button>
                             <%}%>
                     </div>
-                </div>
+                </ul>
                 <div class="comment-zone">
                     <div class="commentMainLayout">
                         <div class="allCommentContainer">
@@ -126,7 +124,7 @@
                                             <a>
                                                 <%=m.userID.username%>
                                             </a>
-                                            <p>Publish timeádasdasssssssssssssss</p>
+                                            <p>Publish</p>
                                         </div>
                                     </div>
                                     <div class="showComment__content">

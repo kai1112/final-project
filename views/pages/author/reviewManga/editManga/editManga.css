@@ -8,7 +8,7 @@
 }
 
 .edit-form {
-    width: 50%;
+    width: 70%;
     display: flex;
     padding: 1rem 0;
 }
@@ -16,14 +16,16 @@
 .edit-form-left {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 65%;
     padding-right: 10px;
     border-right: 1px solid orange;
 }
-
+#description{
+    height: 300px;
+}
 .edit-form-right {
     display: flex;
-    width: 30%;
+    width: 35%;
     margin-left: 10px;
     display: flex;
     flex-direction: column;
