@@ -280,7 +280,7 @@ module.exports.userViewMangaDetail = async (req, res) => {
         let category = await CategoryModel.find().sort({ name: 'asc' })
 
         let userDetails
-        if (a.cookie) {
+        if (a?.cookie) {
             userDetails = await UserModel.findOne({ token: a.cookie.user })
         }
 
@@ -291,7 +291,7 @@ module.exports.userViewMangaDetail = async (req, res) => {
                 return id === userDetails.id
             })
             if (userID[0] === userDetails.id) {
-                console.log(319, userID);
+                // console.log(319, userID);
                 checked = true
             }
         }
@@ -315,7 +315,7 @@ module.exports.userViewMangaDetail = async (req, res) => {
                     })
                 }
             }
-            res.render('pages/home/page/page', { userDetail: a.userDetail, mangaDetail, chapter, followers, userDetails, follow, comments, comment, checked, manga, category, user: a.user, userDetails })
+            res.render('pages/home/page/page', { userDetail: a.userDetail, mangaDetail, chapter, followers, userDetails, follow, comments, comment, checked, manga, category, user: a.user })
         } else {
             console.log(312, 'chapter not found');
         }
@@ -378,7 +378,7 @@ module.exports.userViewChap = async (req, res) => {
         let checked = false
         let userDetail
 
-        if (a.cookie) {
+        if (a?.cookie) {
             userDetail = await UserModel.findOne({ token: a.cookie.user })
         }
 
@@ -410,7 +410,7 @@ module.exports.userViewChap = async (req, res) => {
             } else {
                 console.log('ban khong co du tien de mua truyen');
             }
-        } else if (mangaDetail.price > 0 && !user) {
+        } else if (mangaDetail.price > 0 && !a.userDetail) {
             console.log('ban chua dang nhap');
 
         } else {
@@ -506,7 +506,7 @@ module.exports.preview = async (req, res) => {
                 return id === userDetail.id
             })
             if (userID[0] === userDetail.id) {
-                console.log(319, userID);
+                // console.log(319, userID);
                 checked = true
             }
         }

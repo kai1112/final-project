@@ -154,7 +154,7 @@
                         </div>
                         <div class="your-comment">
                             <textarea name="" id="contentComment" placeholder="Bình luận của bạn"></textarea>
-                            <button class="send-btn" onclick="comment('<%=userDetail%>')">
+                            <button class="send-btn" onclick="comment('<%=userDetail?._id%>')">
                                 <i class="fas fa-paper-plane    "></i>
                             </button>
                         </div>
@@ -195,7 +195,7 @@
     <!-- footer -->
     <%- include('../../../components/footer') %>
         <!-- footer -->
-    <!-- footer -->
+        <!-- footer -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
     integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="

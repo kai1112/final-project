@@ -154,6 +154,7 @@ async function comment(user) {
     if (title === undefined) {
         title = ""
     }
+    console.log(157, 'a');
     let MangaID = window.location.href.split('/')[4]
     const form = $("form")[0];
     const formData = new FormData(form);
