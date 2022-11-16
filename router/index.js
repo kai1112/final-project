@@ -53,4 +53,13 @@ router.use('/category', categoryRoute)
 // using history routes
 const historyRoute = require("./historyRouter")
 router.use('/history', historyRoute)
+
+// using router google
+const googleRoute = require("./googleRouter")
+router.use('/google', googleRoute)
+
+// using router report
+const reportRoute = require("./reportRouter")
+router.use('/report', reportRoute)
+
 module.exports = router;

@@ -39,7 +39,7 @@
                     <button class="btnFeature toggle-user-feature">
                         <i class="fa-solid fa-user"></i>
                         <div class="user-feature hidden">
-                            <a href="/user/buyed">Truyện đã mua</a>
+                            <a href="/user/buyed1">Truyện đã mua</a>
                             <a href="/user/userProfile">Profile</a>
                             <a href="/user/logout">Đăng xuất</a>
                         </div>
@@ -65,8 +65,9 @@
                         <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
                         <div class="submenu chart-submenu">
                             <% user.map((user)=>{%>
-                                <a href=""><img src="<%=user.avatar%>" alt="">
-                                    <%=user.username%>
+
+                                <a href=""><img src="<%=user._id.avatar%>" alt="">
+                                    <%=user._id.username%>
                                 </a>
                                 <% })%>
                         </div>
@@ -90,7 +91,7 @@
                     <div class="user-feature hidden">
                         <a href="/user/buyed">Truyện đã mua</a>
                         <a href="/user/userProfile">Profile</a>
-                        <a href="/user/logout">Đăng xuất</a>
+                        <a onclick="logout()">Đăng xuất</a>
                     </div>
                 </button>
             </div>
@@ -135,8 +136,8 @@
                     <span>Xếp hạng <i class="fa fa-caret-down"></i></span>
                     <div class="submenu_mobile chart-submenu-mobile  hidden">
                         <% user.map((user)=>{%>
-                            <a href=""><img src="<%=user.avatar%>" alt="">
-                                <%=user.username%>
+                            <a href=""><img src="<%=user._id.avatar%>" alt="">
+                                <%=user._id.username%>
                             </a>
                             <% })%>
                     </div>

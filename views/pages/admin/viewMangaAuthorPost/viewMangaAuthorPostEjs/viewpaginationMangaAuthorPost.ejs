@@ -33,7 +33,7 @@
         <td><img src="<%=manga.avatar%>" alt="" width="40px"></td>
         <td><input style="width: 70%" class="form-control" type="number" placeholder="input price" id="price"></td>
         <td>
-          <% if(manga.author===listAuthor[index].id){%>
+          <% if(manga.author===listAuthor[index]?.id){%>
             <%= listAuthor[index].username%>
               <%}%>
         </td>

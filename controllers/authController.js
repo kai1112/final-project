@@ -11,7 +11,8 @@ module.exports.viewLogin = async (req, res) => {
   }
 }
 
-// login
+
+
 module.exports.login = async (req, res) => {
   try {
     // console.log(req.body.href);
@@ -32,7 +33,7 @@ module.exports.login = async (req, res) => {
           { token: token }
         );
         res.cookie("user", token, {
-          expires: new Date(Date.now() + 6000000),
+          expires: new Date(Date.now() + 60 * 60 * 24 * 60),
         });
         let user = await UserModel.findOne({ email: req.body.email })
         res.json({ role: user.role })
@@ -45,7 +46,8 @@ module.exports.login = async (req, res) => {
   } catch (err) {
     res.json(76, err);
   }
-}
+
+};
 
 // view regiter
 module.exports.viewRegister = async (req, res) => {
@@ -59,6 +61,8 @@ module.exports.viewRegister = async (req, res) => {
 // register 
 module.exports.register = async (req, res) => {
   try {
+
+
     let user = await UserModel.findOne({ email: req.body.email })
     // console.log(user);
     if (user) {
@@ -75,6 +79,7 @@ module.exports.register = async (req, res) => {
         dateOfBirth: req.body.dateOfBirth,
         monney: 0,
         email: req.body.email,
+        buyed: [],
         role: "user",
       });
       res.json({

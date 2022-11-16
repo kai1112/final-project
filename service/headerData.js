@@ -6,10 +6,12 @@ const BuyedModel = require('../models/buyed.model');
 async function header(req, res) {
     try {
         const cookie = req.cookies;
+
         let userDetail = await UserModel.findOne({ token: cookie.user })
         if (!userDetail) {
             userDetail == ""
         }
+        // console.log(userDetail);
         let category = await CategoryModel.find().sort({ name: 'asc' })
         // let userBuyed = await BuyedModel.find()
         let userBuyed = await BuyedModel.aggregate([
@@ -25,10 +27,10 @@ async function header(req, res) {
                 }
             }
         ])
-        let data = await UserModel.populate(userBuyed, { path: "_id" })
+        let user = await UserModel.populate(userBuyed, { path: "_id" })
         // console.log(12, data);
         return {
-            category, user: data, cookie, userDetail
+            category, user, cookie, userDetail
         }
     } catch (err) {
         console.log(err);

@@ -21,10 +21,8 @@
                 <td><img src="<%=manga.avatar%>" alt="" width="40px"></td>
                 <td>
                     <% for(let i=0; i < manga.category.length; i++) {%>
-                        <a onclick="searchByCategory('<%=manga.category[i].name%>')">
-                            <%=manga.category[i].name%>
-                        </a>
-                        <%}%>
+                        <%=manga.category[i].name%>
+                            <%}%>
                 </td>
                 <td>
                     <%=user%>

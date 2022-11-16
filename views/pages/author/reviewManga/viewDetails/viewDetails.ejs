@@ -12,10 +12,10 @@
         <p>
           Category: <% manga.category.forEach(cat=>{ %>
             <%= cat.name %>
-          <% }) %>
+              <% }) %>
         </p>
         <h5>
-          Author: <%= manga.author %>
+          Author: <%= manga.author.username %>
         </h5>
         <p>
           Description: <%= manga.description %>
@@ -37,19 +37,22 @@
       </thead>
       <tbody>
         <% chapter.map((chapter, index)=>{%>
-        <tr>
-          <td><%= index+1%></td>
-          <td><a onclick="viewDetailChapter('<%= chapter._id %>')"> Chapter: <%= chapter.title %></a></td>
-          <td>
-            <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
-            <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button> 
-          </td>
-        </tr>
-        <!-- <td>chap <%= chapter.content %></td> -->
-        <%})%>
+          <tr>
+            <td>
+              <%= index+1%>
+            </td>
+            <td><a onclick="viewDetailChapter('<%= chapter._id %>')"> Chapter: <%= chapter.title %></a></td>
+            <td>
+              <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit
+                chapter</button>
+              <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
+            </td>
+          </tr>
+          <!-- <td>chap <%= chapter.content %></td> -->
+          <%})%>
       </tbody>
     </table>
-    
+
 
   </div>
 </div>

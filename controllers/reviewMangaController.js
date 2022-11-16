@@ -3,8 +3,8 @@ const ReviewMangaModel = require('../models/reviewManga')
 const CategoryModel = require('../models/category.model')
 const ReviewChapterModel = require('../models/reviewChapter')
 const fs = require("fs");
-const { sendMail } = require('../service/nodemail')
-
+const { mailCreateMangaAuthor } = require('../service/nodemail')
+const { refeshToken } = require('../service/refeshToken')
 // view all manga author created  
 module.exports.viewAllMangaAuthorCreated = async (req, res) => {
   try {
@@ -38,7 +38,9 @@ module.exports.createMangaAuthor = async (req, res) => {
   try {
     // const cookies = req.cookies;
     // let user = await UserModel.findOne({ token: cookies.user })
+    console.log(44, req.user);
     let user = req.user
+    console.log(44, user.status);
     if (user.status === 'active') {
       // console.log(41, req.files['backgroud_avatar']);
       let category = []
@@ -62,13 +64,14 @@ module.exports.createMangaAuthor = async (req, res) => {
           description: req.body.description,
           price: req.body.price
         });
+        console.log(71, newManga);
+        await mailCreateMangaAuthor(user, newManga)
       }
     } else {
       console.log('user nay dang bi ban khong cos quyen create manga')
     }
 
     // console.log(68, subject);
-    // await sendMail()
     // console.log(70, 'aa');
     res.json({
       message: "create manga success",
@@ -86,7 +89,7 @@ module.exports.viewDetails = async (req, res) => {
   try {
     // const cookies = req.cookies;
     // const user = await UserModel.findOne({ token: cookies.user });
-    const manga = await ReviewMangaModel.findOne({ _id: req.params.id });
+    const manga = await ReviewMangaModel.findOne({ _id: req.params.id }).populate('author')
     // console.log(manga);
     const chapter = await ReviewChapterModel.find({ mangaID: req.params.id });
     // console.log(71, chapter);

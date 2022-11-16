@@ -1,7 +1,8 @@
 const MangaModel = require('../models/manga.model')
 const ChapterModel = require('../models/chapter.model')
 const ReviewChapterModel = require('../models/reviewChapter')
-
+const LibraryModel = require('../models/library.model')
+const { noticeEmailNewChapter } = require('../service/nodemail')
 
 // review chapter
 module.exports.editChapter = async (req, res) => {
@@ -39,6 +40,7 @@ module.exports.createChapter = async (req, res) => {
     try {
         let chapter = await ReviewChapterModel.findOne({ _id: req.params.id })
         let manga = await MangaModel.findOne({ reviewManga: chapter.mangaID })
+        let follower = await LibraryModel.find({ mangaID: manga._id }).populate('userID')
         if (chapter.stautus === 'review') {
             await ChapterModel.create({
                 chap: chapter.chap,
@@ -46,6 +48,9 @@ module.exports.createChapter = async (req, res) => {
                 content: chapter.content,
                 mangaID: manga._id
             })
+            let chapter1 = await ChapterModel.findOne({ mangaID: manga._id, chapter: chapter.chap })
+            // console.log(50, follower);
+            await noticeEmailNewChapter(follower, chapter1, manga)
             await ReviewChapterModel.updateOne({ _id: req.params.id }, { stautus: 'posted' })
         } else {
             console.log(12, 'manga da duoc post');
@@ -92,6 +97,20 @@ module.exports.viewDetailChapter = async (req, res) => {
     }
 }
 
+module.exports.viewDetailChapterRivew = async (req, res) => {
+    try {
+        let chapter = await ReviewChapterModel.findOne({ _id: req.params.id });
+        let allChapter = await ReviewChapterModel.find({ mangaID: chapter.mangaID });
+        // let listChapter = await ReviewChapterModel.find({ mangaID: chapter.mangaID }).limit(1);
+        // console.log(76, chapter);
+        let total = allChapter.length;
+        res.render('pages/admin/viewChapterAuthorPost/viewDetailChapter/viewDetailChapter', { allChapter, chapter, total: Math.ceil(total / 1) })
+    } catch (err) {
+        res.json({ message: "loix" });
+    }
+}
+
+
 module.exports.ChangeChapterTitle = async (req, res) => {
     let { newName } = req.body
     try {
@@ -105,6 +124,9 @@ module.exports.ChangeChapterTitle = async (req, res) => {
 module.exports.ChangeChapterContent = async (req, res) => {
     let { newDes } = req.body
     try {
+
+
+
         await ChapterModel.updateOne({ _id: req.params.id }, { content: newDes })
         res.json({ mess: 'success' })
     } catch (error) {
@@ -114,6 +136,9 @@ module.exports.ChangeChapterContent = async (req, res) => {
 
 module.exports.viewDetailChapterPagination = async (req, res) => {
     try {
+
+
+
         // console.log(85, req.params.id);
         // console.log(86, req.query)
         let chapter = await ChapterModel.findOne({ _id: req.params.id });
@@ -131,18 +156,18 @@ module.exports.viewDetailChapterPagination = async (req, res) => {
 
 
 // chapter user
-module.exports.viewChapter = async (req, res) => {
-    try {
+// module.exports.viewChapter = async (req, res) => {
+//     try {
 
-    } catch (err) {
-        res.json(err)
-    }
-}
+//     } catch (err) {
+//         res.json(err)
+//     }
+// }
 
-module.exports.viewPaginationChapter = async (req, res) => {
-    try {
+// module.exports.viewPaginationChapter = async (req, res) => {
+//     try {
 
-    } catch (err) {
-        res.json(err)
-    }
-}
+//     } catch (err) {
+//         res.json(err)
+//     }
+// }

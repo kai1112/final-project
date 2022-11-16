@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get('/userProfile', auth.checkToken, auth.checkRoleUser, controller.viewProfile)
+router.get('/userProfile', auth.checkToken, controller.viewProfile)
 // router.post('/changeProfile/:id', upload.single('avatar'), controller.changeProfile)
 
 // get all user
@@ -28,7 +28,9 @@ router.post("/changeStatus", controller.banUser)
 router.get("/findUserByName/:username", controller.getFindUserByNameUser)
 // gift point
 router.post("/giftPoint", controller.giftPointUser)
+router.post("/removePoint", controller.revomePointUser)
 //buyed
 // router.get("/buyed", auth.checkToken, controller.buyed)
+router.get("/buyed1", auth.checkToken, controller.buyed)
 router.get("/logout", auth.checkToken, controller.logoutUser)
 module.exports = router;

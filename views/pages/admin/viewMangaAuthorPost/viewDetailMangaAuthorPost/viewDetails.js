@@ -1,5 +1,5 @@
 function viewDetailChapter(id) {
-  window.location.href = `/reviewChapter/viewDetailChapter/${id}`;
+  window.location.href = `/chapter/viewDetailChapter/review/${id}`;
 }
 
 async function post(id) {

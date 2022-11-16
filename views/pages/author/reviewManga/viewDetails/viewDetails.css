@@ -8,18 +8,18 @@
 }
 .post-info{
     display: flex;
-    width: 50%;
+    width: 70%;
     margin-top: 1rem;
 }
 .left-info{
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 65%;
     margin-right: 10px;
     border-right: 1px solid orange;
 }
 .right-info{
-    width: 30%;
+    width: 35%;
     display: flex;
     margin-left: 10px;
 }

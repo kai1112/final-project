@@ -32,6 +32,6 @@ const upload = multer(
 router.post('/createComment', upload.single('addfile'), auth.checkToken, controller.createComment)
 router.post('/updateComment', auth.checkToken, controller.updateComment)
 router.delete('/deleteComment', auth.checkToken, controller.deleteComment)
-// router.get('/getPaginationComment', controller.getpaginationComment)
+router.get('/commentHight', auth.checkToken, controller.viewHightComment)
 
 module.exports = router

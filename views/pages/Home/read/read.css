@@ -533,7 +533,9 @@ button {
     font-size: 16px;
     line-height: 20px;
 }
-
+.comment-content img{
+    width: 50%;
+}
 .like-field {
     border: none;
     background: none;

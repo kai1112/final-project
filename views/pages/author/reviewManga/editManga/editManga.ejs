@@ -7,14 +7,10 @@
     <form class="edit-form" action="" enctype="multipart/form-data">
       <div class="edit-form-left">
         <span>Description</span>
-        <input class="form-control" type="text" name="description" id="description" placeholder="Description..." />
-        <%=manga.description%>
+        <textarea class="form-control" type="text" name="description" id="description" placeholder="Description..." ><%=manga.description%></textarea>
           <br>
           <span>Price</span>
-          <input class="form-control" type="number" name="price" id="price" placeholder="Price..." />
-          <p>
-            <%=manga.price%>
-          </p>
+          <input class="form-control" type="number" value="<%=manga.price%>" name="price" id="price" placeholder="Price..." />
           <br>
           <button class="btn btn-primary" type="button" onclick="edit()">submit</button>
       </div>

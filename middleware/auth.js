@@ -53,7 +53,7 @@ module.exports.checkToken = async (req, res, next) => {
                 next()
             }
         } else {
-            res.json({ status: 403, message: 'ban chua dang nhap' })
+            res.render('components/error')
         }
     } catch (error) {
         if (error.message == 'jwt expired') {

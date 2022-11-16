@@ -1,7 +1,8 @@
 const reviewMangaModel = require("../models/reviewManga");
 const ReviewChapterModel = require("../models/reviewChapter");
-const reviewChapterModel = require("../models/reviewChapter");
+const { mailCreateNewChapterAuthor } = require('../service/nodemail')
 // const UserModel = require("../models/user.model");
+// const { refeshToken } = require("../service/refeshToken")
 
 // create new chapter
 module.exports.createChapter = async (req, res) => {
@@ -10,20 +11,22 @@ module.exports.createChapter = async (req, res) => {
     if (user.status === "active") {
       const revieManga = await reviewMangaModel.findOne({ _id: req.params.id });
       let chapter = 1;
-      const reviewChapter = await reviewChapterModel.find({ mangaID: req.params.id })
+      const reviewChapter = await ReviewChapterModel.find({ mangaID: req.params.id })
       chapter = reviewChapter.length + 1;
-      // console.log(chapter);
-      // console.log(8, revieManga);
       if (!revieManga) {
         res.json({ chapter: chapter });
       } else {
-        await reviewChapterModel.create({
+        // console.log(51, req.body);
+        await ReviewChapterModel.create({
           chap: chapter,
           mangaID: req.params.id,
           title: req.body.title,
           content: req.body.content,
           views: 0,
         });
+        let chapter1 = await ReviewChapterModel.findOne({ chap: chapter, mangaID: req.params.id })
+        console.log(chapter1);
+        await mailCreateNewChapterAuthor(user, chapter1, revieManga)
       }
       res.json({
         message: "create chapter success",
@@ -40,9 +43,9 @@ module.exports.createChapter = async (req, res) => {
 
 // view chapter create
 module.exports.viewCreateChapter = async (req, res) => {
-  try{
+  try {
     res.render("pages/author/reviewChapter/createChapter/createChapter");
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
 };
@@ -50,11 +53,11 @@ module.exports.viewCreateChapter = async (req, res) => {
 // edit chapter
 module.exports.editChapter = async (req, res) => {
   try {
-    const chapter = await reviewChapterModel.findById(req.params.id);
+    const chapter = await ReviewChapterModel.findById(req.params.id);
     if (!chapter) {
       res.json({ message: "Chapter not found" });
     } else {
-      await reviewChapterModel.updateOne(req.body);
+      await ReviewChapterModel.updateOne(req.body);
       res.json({ message: "Chapter update successfully" });
     }
   } catch (err) {
@@ -76,9 +79,9 @@ module.exports.viewEditchapter = async (req, res) => {
 module.exports.deleteChapter = async (req, res) => {
   // console.log(req.params.id);
   try {
-    const chapter = await reviewChapterModel.findOne({ _id: req.params.id });
+    const chapter = await ReviewChapterModel.findOne({ _id: req.params.id });
     if (chapter) {
-      await reviewChapterModel.findByIdAndDelete(chapter._id);
+      await ReviewChapterModel.findByIdAndDelete(chapter._id);
       res.json({ message: "delete chapter successfully" });
     } else {
       res.json({ message: "Chapter not found" });
@@ -91,9 +94,9 @@ module.exports.deleteChapter = async (req, res) => {
 // // view all chapter
 module.exports.getChapter = async (req, res) => {
   try {
-    let chapter = await reviewChapterModel.findOne({ _id: req.params.id });
-    let allChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID });
-    let listChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID }).limit(1);
+    let chapter = await ReviewChapterModel.findOne({ _id: req.params.id });
+    let allChapter = await ReviewChapterModel.find({ mangaID: chapter.mangaID });
+    let listChapter = await ReviewChapterModel.find({ mangaID: chapter.mangaID }).limit(1);
     // console.log(76, listChapter);
     let total = allChapter.length;
     res.render('pages/author/reviewChapter/viewDetailChapter/viewDetailChapter', { allChapter, listChapter, total: Math.ceil(total / 1) })
@@ -106,8 +109,8 @@ module.exports.paginationChapter = async (req, res) => {
   try {
     // console.log(85, req.params.id);
     // console.log(86, req.query)
-    let chapter = await reviewChapterModel.findOne({ _id: req.params.id });
-    let listChapter = await reviewChapterModel.find({ mangaID: chapter.mangaID }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let chapter = await ReviewChapterModel.findOne({ _id: req.params.id });
+    let listChapter = await ReviewChapterModel.find({ mangaID: chapter.mangaID }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
     if (!listChapter) {
       // console.log(listChapter);
       console.log('chapter not found')

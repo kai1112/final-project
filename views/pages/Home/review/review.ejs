@@ -27,24 +27,27 @@
     <!-- menu -->
     <!-- main -->
     </div>
-    <div class="item-title">
-        Chương <%=chapter.chap %> : <%=chapter.title %>
-    </div>
-    <div class="item-info">
-        <a href="" class="item-name"><i class="fa-solid fa-book"></i>
-            <%=mangaDetail.name%>
-        </a>
-        <a href="" class="item-author"><i class="fa-solid fa-file-pen"></i>
-            <%=mangaDetail.author.username%>
-        </a>
-        <div class="item-time"><i class="fa-solid fa-clock"></i>
-            <%=mangaDetail.createdAt.toLocaleString()%>
+    <div class="padding-common">
+        <div class="item-title">
+            Chương <%=chapter.chap %> : <%=chapter.title %>
         </div>
+        <div class="item-info">
+            <a href="" class="item-name"><i class="fa-solid fa-book"></i>
+                <%=mangaDetail.name%>
+            </a>
+            <a href="" class="item-author"><i class="fa-solid fa-file-pen"></i>
+                <%=mangaDetail.author.username%>
+            </a>
+            <div class="item-time"><i class="fa-solid fa-clock"></i>
+                <%=mangaDetail.createdAt.toLocaleString()%>
+            </div>
+        </div>
+        <div class="chapter-content">
+            <%- chapter.content.slice(0,1500)%>
+        </div>
+        <button class="more-btn"
+            onclick="readMore('<%= user?.monney%>', '<%= mangaDetail.price%>', '<%=checked%>')">view more</button>
     </div>
-    <div class="chapter-content">
-        <%- chapter.content%>
-    </div>
-    <button onclick="readMore('<%= user?.monney%>', '<%= mangaDetail.price%>', '<%=checked%>')">view more</button>
     <!-- main -->
     <!-- footer -->
     <%- include('../../../components/footer') %>

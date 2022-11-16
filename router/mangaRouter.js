@@ -21,7 +21,7 @@ var cpUpload = upload.fields([
 ]);
 
 
-// quản lý author post
+// manage author post
 // view post manga
 router.get('/viewCreateManga', auth.checkToken, auth.checkRoleAdmin, controller.viewCreateManga)
 // view pagination post manga
@@ -35,10 +35,11 @@ router.get('/editMangaAuthor/:id', auth.checkToken, auth.checkRoleAdmin, control
 
 router.patch('/change-name/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangeMangaAuthorName)
 router.patch('/change-des/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangeMangaAuthorDes)
-router.post('/change-avatar/:id', auth.checkToken, auth.checkRoleAdmin, cpUpload, controller.ChangeMangaAuthorAvatar)
+router.post('/change-avatar/:id', auth.checkToken, auth.checkRoleAdmin, 
+                                cpUpload, controller.ChangeMangaAuthorAvatar)
 router.patch('/change-price/:id', auth.checkToken, auth.checkRoleAdmin, controller.ChangePrice)
 //-------------------------------------------
-//quản lý admin post
+//manage admin post
 router.get('/viewAllManga', auth.checkToken, auth.checkRoleAdmin, controller.viewAllManga)
 router.get('/viewPaginationManga', auth.checkToken, auth.checkRoleAdmin, controller.PaginationManga)
 router.get('/editManga/:id', auth.checkToken, auth.checkRoleAdmin, controller.viewEditManga)
@@ -51,9 +52,10 @@ router.get('/viewDetailManga/:id', auth.checkToken, auth.checkRoleAdmin, control
 // router.get('/viewByAuthorName/:name', auth.checkToken, auth.checkRoleAdmin, controller.viewByAuthorName)
 
 //-------------------------------------------
-// quản lý manga User interface
+// manage manga User interface
 router.get('/pagination', controller.userViewPagination)
 router.get('/search', controller.search)
+router.get('/:slug/checked', controller.ckecked)
 router.get('/:slug', controller.userViewMangaDetail)
 router.get('/:slug/:chap', controller.userViewChap)
 router.get('/:slug/:chap/getPaginationComment', controller.getpaginationComment)

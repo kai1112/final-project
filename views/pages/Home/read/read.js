@@ -38,7 +38,11 @@ $(document).ready(function () {
     click_to_flex('.chapter-list-bottom-toggle', '.chapter-list-bottom-container', 'hidden')
     click_to_flex('.list-chapter', '.chapter-list-top', 'hidden')
     click_to_flex('.select-chapter', '.feature-bar-chapter-list', 'hidden')
+    click_to_flex('.toggle-user-feature', '.user-feature', 'hidden')
+    click_to_flex('.toggle-noti-feature', '.noti-list', 'hidden')
 
+    click_out_to_hide(".user-feature", '.toggle-user-feature')
+    click_out_to_hide(".noti-list", '.toggle-noti-feature')
     click_out_to_hide('.feature-bar-chapter-list', '.select-chapter')
 })
 function click_to_flex(element_click, element_show, class_active) {

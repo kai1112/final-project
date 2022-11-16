@@ -1,5 +1,5 @@
-const auth = require('../middleware/auth')
 const router = require('express').Router();
+const auth = require('../middleware/auth')
 const controller = require('../controllers/followController')
 
 router.get('/viewFollow', auth.checkToken, controller.viewAllFollows)

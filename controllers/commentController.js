@@ -1,5 +1,5 @@
 const CommentModel = require('../models/comment.model')
-
+const { refeshToken } = require('../service/refeshToken')
 module.exports.createComment = async (req, res) => {
     try {
         // console.log(5, req.file);
@@ -16,6 +16,8 @@ module.exports.createComment = async (req, res) => {
         }
         // console.log(req.body);
         if (user) {
+
+
             if (req.body.title === "" && audio === "") {
                 res.json({ status: 400 })
             } else {
@@ -45,6 +47,7 @@ module.exports.createComment = async (req, res) => {
                 });
             }
         }
+
     } catch (err) {
         res.json(err)
     }
@@ -100,21 +103,26 @@ module.exports.deleteComment = async (req, res) => {
 };
 
 
-// module.exports.getpaginationComment = async (req, res) => {
-//     console.log('hi');
-//     try {
-//         // console.log(391, req.body);
-//         console.log(req.params.id, req.params.chap);
-//         let chapter = await ChapterModel.findOne({ mangaID: req.params.id, chap: req.params.chap })
-//         console.log(97, chapter);
-//         let comment = await CommentModel.find({ chapterID: chapter.id }).populate('userID').sort({ reactionn: 'asc' }).skip(1 * (req.params.page - 1))
-//             .limit(1);
-//         if (chapter) {
-//             res.render('pages/Home/read/comment', { comment })
-//         } else {
-//             res.json('khong co user ton tai')
-//         }
-//     } catch (e) {
-//         console.log({ message: 'Error getting pagination user' });
-//     }
-// }
+module.exports.viewHightComment = async (req, res) => {
+    try {
+        let comment = await CommentModel.find().sort({ reaction: 'desc' }).populate("userID")
+        // let Comment = [];
+        for (let i = 0; i < comment.length; i++) {
+            // console.log(i, comment.audio);
+            if (comment[i].audio == "") {
+                // console.log(392, i, comment[i].userID);
+                comment.splice(i, 1)
+            }
+        }
+        for (let i = 0; i < comment.length; i++) {
+            for (let j = i + 1; j < comment.length; j++) {
+                if (comment[i].userID == comment[j].userID) {
+                    comment.splice(j, 1)
+                }
+            }
+        }
+        res.render('pages/admin/viewCommentHeight/viewComment', { comment })
+    } catch (e) {
+        console.log(e);
+    }
+}

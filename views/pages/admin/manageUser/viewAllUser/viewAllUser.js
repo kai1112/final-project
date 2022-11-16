@@ -39,6 +39,31 @@ async function giftpoints(id, index) {
     }
 }
 
+async function removepoints(id, index) {
+    try {
+        // console.log(index);
+        let idMoney = "money" + index
+        // console.log(idMoney)
+        let money = $(`#${idMoney}`).val();
+        // console.log(money, id)
+        let data = await $.ajax({
+            url: '/user/removePoint',
+            type: "POST",
+            data: {
+                money,
+                id
+            }
+        })
+        if (data.status === 200) {
+            alert(data.message)
+            window.location.reload();
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
 
 async function searchUser() {
     try {

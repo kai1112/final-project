@@ -2,11 +2,11 @@
     <div class="comment-list">
         <div class="comment-item">
             <a href="">
-                <img src="https://metruyenchu.com/images/avatar-profile.png?97b80827721f6116c3dbc797d11d629b" alt="">
+                <img src="/<%=c?.userID?.avatar%>" alt="">
             </a>
             <div class="comment-info">
                 <a class="comment-username">
-                    <%=c.userID.username%>
+                    <%=c?.userID?.username%>
                 </a>
                 <p class="comment-time"><i class="fa-regular fa-clock"></i>
                     <%=c.createdAt.toLocaleString()%>
@@ -14,22 +14,23 @@
                 <p class="comment-content">
                     <%=c.title%>
                 </p>
-                <%if(!c.audio){%>
+                <%if(c?.audio.split(".").includes("jpg", "png" )){%>
+                    <img src="<%= c?.audio  %> " alt="" width="100px" class="comment-img">
+                    <%}else if(c?.audio=="" ){%>
+                        <%}else{%>
+                            <audio controls>
+                                <source src="<%= c?.audio  %> " type="audio/ogg" class="comment-img">
+                                <source src="<%= c?.audio  %> " type="audio/ogg" class="comment-img">
+                            </audio>
+                            <%}%>
 
-                    <%}else{%>
-                        <img src="<%=c.audio%>" alt="" class="comment-img">
-                        <%}%>
 
-                            <!-- <audio controls autoplay>
-                    <source src="horse.ogg" type="audio/ogg">
-                    <source src="horse.mp3" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                </audio> -->
-                            <button class="like-field" onclick="like('<%=c._id%>')">
-                                <i class="fa-solid fa-thumbs-up">
-                                    <%= c.reaction.length%>
-                                </i>
-                            </button>
+
+                                <button class="like-field" onclick="like('<%=c._id%>')">
+                                    <i class="fa-solid fa-thumbs-up">
+                                        <%= c.reaction.length%>
+                                    </i>
+                                </button>
             </div>
         </div>
     </div>

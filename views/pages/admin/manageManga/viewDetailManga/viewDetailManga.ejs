@@ -20,10 +20,10 @@
         <p>
           Category: <% manga.category.forEach(cat=>{ %>
             <%= cat.name %>
-          <% }) %>
+              <% }) %>
         </p>
         <h5>
-          Author: <%= manga.author %>
+          Author: <%= manga.author.username %>
         </h5>
         <p>
           Description: <%= manga.description %>
@@ -33,35 +33,42 @@
         <img src="<%= manga.avatar %>" alt="avatar" width="50px" />
       </div>
     </div>
-      <!-- chapter -->
-      <h1> Chapter List</h1>
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <th>#</th>
-          <th>Chapter name</th>
-          <th>Tools</th>
-        </thead>
-        <tbody>
-          <% chapter.map((chapter, index)=>{%>
-            <tr>
-              <th scope="row">
-                <%=index + 1%>
-              </th>
-              <td scope="row">
-                <a onclick="viewDetailChapter('<%= chapter._id %>')">
-                  <%= chapter.title %>
-                </a>
-              </td>
-              <td scope="row">
-                <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>')">edit chapter</button>
-                <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
-              </td>
-            </tr>
-            <%})%>
-        </tbody>
-      </table>
+    <!-- chapter -->
+    <h1> Chapter List</h1>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <th>#</th>
+        <th>Chapter name</th>
+        <th>length</th>
+        <th>Tools</th>
+      </thead>
+      <tbody>
+        <% chapter.map((chapter, index)=>{%>
+          <tr>
+            <th scope="row">
+              <%=index + 1%>
+            </th>
+
+            <td scope="row">
+              <a onclick="viewDetailChapter('<%= chapter._id %>')">
+                <%= chapter.title %>
+              </a>
+            </td>
+            <td scope="row">
+              <a>
+                <%= chapter.content.length %>
+              </a>
+            </td>
+            <td scope="row">
+              <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>')">edit chapter</button>
+              <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
+            </td>
+          </tr>
+          <%})%>
+      </tbody>
+    </table>
   </div>
-  </div>
+</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"

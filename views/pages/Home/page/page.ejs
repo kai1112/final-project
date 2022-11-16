@@ -15,7 +15,7 @@
 <body>
     <!-- menu -->
     <header>
-        <% if(userDetail){%>
+        <% if(userDetails){%>
             <%- include('../../../components/login_header/login_header') %>
                 <%}else{%>
                     <!-- menu -->
@@ -67,7 +67,7 @@
                 </div>
                 <div class="read-and-save">
                     <button class="read"
-                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=mangaDetail?.price%>', '<%=userDetail?.monney%>', '<%=checked%>')"><i
+                        onclick="readFirst('<%= chapter[0]?.chap%>','<%=mangaDetail?.price%>', '<%=userDetails?.monney%>', '<%=checked%>')"><i
                             class="fa-solid fa-glasses"></i>
                         Đọc truyện</button>
                     <button class="save" onclick="followManga('<%=mangaDetail._id%>')"><i
@@ -96,6 +96,8 @@
                         <%=comments.length%>
                     </span></a>
                 <a id="feature-bar-follow">Hâm mộ</a>
+                <!-- <a id="feature-bar-chapter">report <span class="total">
+                    </span></a> -->
             </div>
             <div class="feature-content">
                 <!-- giới thiệu component -->
@@ -117,7 +119,8 @@
                             </tr>
                             <tr>
                                 <th>New Chap</th>
-                                <td><a onclick="viewChapter('<%=chapter[chapter.length-1]?.chap%>')">
+                                <td><a
+                                        onclick="viewChapter('<%=chapter[chapter.length-1]?.chap%> ', '<%=mangaDetail?.price%>', '<%=userDetail?.monney%>', '<%=checked%>')">
                                         <%= chapter[chapter.length-1]?.title %>
                                     </a></td>
                                 <td>
@@ -175,10 +178,10 @@
                                     <%= index + 1%>
                                 </span>
                                 <a href="" class="follow-item-info">
-                                    <img src="<%= f.userID.avatar%>" alt="">
+                                    <img src="<%= f.userID?.avatar%>" alt="">
                                     <div class="follow-item-other-info">
                                         <p class="item-name">
-                                            <%= f.userID.username%>
+                                            <%= f.userID?.username%>
                                         </p>
                                     </div>
                                 </a>

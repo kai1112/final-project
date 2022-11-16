@@ -1,10 +1,11 @@
 const UserModel = require('../models/user.model')
 const fs = require("fs");
-
 //view profile
 module.exports.viewProfile = async (req, res) => {
   try {
     // khai bao bien cookies
+    // 
+
     const cookies = req.cookies;
     const user = await UserModel.findOne({ token: cookies.user })
     if (user) {
@@ -19,9 +20,12 @@ module.exports.viewProfile = async (req, res) => {
 
 // change profile
 module.exports.ChangeUserName = async (req, res) => {
+
   let { newName } = req.body
   let userId = req.user._id
   try {
+
+
     await UserModel.updateOne({ _id: userId }, { username: newName })
     res.json({ mess: 'success' })
   } catch (error) {
@@ -30,6 +34,8 @@ module.exports.ChangeUserName = async (req, res) => {
 }
 
 module.exports.ChangeUserDes = async (req, res) => {
+
+
   let { newDes } = req.body
   let userId = req.user._id
   // console.log(62, 'hello');
@@ -94,17 +100,10 @@ module.exports.ChangeUserPassword = async (req, res) => {
 
 module.exports.Logout = async (req, res) => {
   try {
-    let token = req.cookies
-    let user = UserModel.findOne({ token: token.user })
-    if (user) {
-      user.token = "";
-      res.cookie("user", user.token);
-      res.render('components/login/login')
-    } else {
-      res.json("nguwoif dung chua dang nhap")
-    }
-  } catch (e) {
-    // console.log(e)
-    res.json(e)
+    res.clearCookie("user");
+    res.render('components/login/login')
+  } catch (error) {
+    console.log(error);
+    // res.json(error);
   }
 }

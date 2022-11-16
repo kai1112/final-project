@@ -20,10 +20,10 @@
         <p>
           Category: <% manga.category.forEach(cat=>{ %>
             <%= cat.name %>
-          <% }) %>
+              <% }) %>
         </p>
         <h5>
-          Author: <%= manga.author %>
+          Author: <%= manga.author.username %>
         </h5>
         <p>
           Description: <%= manga.description %>
@@ -53,13 +53,14 @@
               </a>
             </td>
             <td scope="row">
-              <% let classBtn = (chapter.stautus === 'review') ? 'outline-success' : 'success'%>
-              <button class="btn btn-<%=classBtn%>" onclick="post('<%= chapter._id%>')">
-                <%= chapter.stautus %>
-              </button>
+              <% let classBtn=(chapter.stautus==='review' ) ? 'outline-success' : 'success' %>
+                <button class="btn btn-<%=classBtn%>" onclick="post('<%= chapter._id%>')">
+                  <%= chapter.stautus %>
+                </button>
 
-              <button class="btn btn-warning" onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
-              <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
+                <button class="btn btn-warning"
+                  onclick="edichapter('<%= chapter._id %>', '<%= chapter.stautus %>')">edit chapter</button>
+                <button class="btn btn-danger" onclick="deleteChapter('<%= chapter._id %>')">delete chapter</button>
             </td>
           </tr>
           <%})%>

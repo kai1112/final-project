@@ -1,6 +1,6 @@
 async function login() {
   // let data1 = 'a'
-  let href = sessionStorage.getItem("href");
+  let href = localStorage.getItem("href");
   // console.log(personName);
   let email = $('#email').val();
   let password = $('#password').val();
@@ -15,6 +15,7 @@ async function login() {
       }
     })
     if (!href) {
+      console.log(18, data.role);
       if (data.role === "admin") {
         alert('login success')
         window.location.href = '/admin/adminProfile'
@@ -29,10 +30,14 @@ async function login() {
         window.location.href = '/auth/viewLogin'
       }
     } else {
-      window.location.href = href
-    }
-    // console.log(data.role);
+      if (data.role) {
+        window.location.href = href
+        localStorage.clear();
 
+      } else {
+        alert('login fail')
+      }
+    }
   } catch (e) {
     res.json(e);
   }
@@ -41,4 +46,8 @@ async function login() {
 
 async function register() {
   window.location.href = '/auth/viewRegister'
+}
+
+async function viewLogin() {
+  window.location.href = '/auth/viewLogin'
 }

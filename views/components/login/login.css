@@ -1,10 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-.container-SI{
+.container-SI {
     width: 100%;
     text-align: center;
     display: flex;
@@ -12,30 +12,38 @@
     position: relative;
     height: 100vh;
 }
-.container-SI > img{
+
+.container-SI>img {
     width: 100%;
     height: 100%;
 }
-.home-SI{
+
+.home-SI {
     width: 22%;
     position: absolute;
     right: 0;
     margin-top: 200px;
 }
 
-.container-SI h1{
+.container-SI h1 {
     margin-bottom: 30px;
 }
 
-.menu-text,.menu-tex-button, .menu-text-input, .quotes {
+.menu-text,
+.menu-tex-button,
+.menu-text-input,
+.quotes {
     margin-bottom: 20px;
 }
-.menu-tex-button{
+
+.menu-tex-button {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.signIn-google,.signIn-facebook{
+
+.signIn-google,
+.signIn-facebook {
     color: #fff;
     border: none;
     border-radius: 20px;
@@ -44,42 +52,49 @@
     font-size: 15px;
     margin-bottom: 10px;
 }
-#email,#password{
+
+#email,
+#password {
     background: transparent;
 }
-.signIn-google{
+
+.signIn-google {
     background: #ea4335;
 }
-.signIn-facebook{
+
+/* .signIn-facebook{
     background: #4267b2;
-}
-.menu-text-input{
+} */
+.menu-text-input {
     padding: 0px 15px 0px 15px;
 }
 
-.input{
-   font-size:18px;
-        padding:10px 10px 10px 5px;
-        display:block;
-        width:300px;
-        border:none;
-        border-bottom:1px solid #757575;
-    }
-    input:focus     { outline:none; }
-
-    
-.title-SI{
-text-align: start;
-margin-top: 20px;
-font-size: 15px;
-font-weight: bold;
+.input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
 }
 
-.menu-tex-button{
+input:focus {
+    outline: none;
+}
+
+
+.title-SI {
+    text-align: start;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.menu-tex-button {
     margin-bottom: 20px;
 }
 
-.signIn{
+.signIn {
     cursor: pointer;
     background-color: black;
     color: white;
@@ -89,7 +104,8 @@ font-weight: bold;
     font-size: 15px;
 }
 
-.signInGG0, .signInFB{
+.signInGG0,
+.signInFB {
     cursor: pointer;
     width: 200px;
     border-radius: 20px;
@@ -104,9 +120,7 @@ font-weight: bold;
     text-align: start;
 }
 
-.link a{
- color: rgb(87, 179, 116);
- text-decoration: none;
+.link a {
+    color: rgb(87, 179, 116);
+    text-decoration: none;
 }
-
-

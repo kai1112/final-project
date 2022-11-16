@@ -109,14 +109,18 @@ async function ChangeName() {
   window.location.reload();
 }
 async function ChangeDes() {
-  let newDes = $('.Des-span').text();
-  let res = await $.ajax({
-    type: "PATCH",
-    url: '/admin/change-des',
-    data: { newDes }
-  })
-  alert(res.mess)
-  window.location.reload();
+  try {
+    let newDes = $('.Des-span').text();
+    let res = await $.ajax({
+      type: "PATCH",
+      url: '/admin/change-des',
+      data: { newDes }
+    })
+    alert(res.mess)
+    window.location.href = '/admin/adminProfile';
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function ChangeAvatar() {

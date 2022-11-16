@@ -9,7 +9,8 @@ router.patch('/change-title-chapter/:id', auth.checkToken, controller.ChangeChap
 router.patch('/change-content-chapter/:id', auth.checkToken, controller.ChangeChapterContentAuthor)
 
 
-
+router.get("/viewDetailChapter/review/:id", auth.checkToken, controller.viewDetailChapterRivew);
+// router.get("/paginationChapter/review/:id", auth.checkToken, auth.checkRoleAuthor, controller.paginationChapterReview);
 
 // quan ly chapter admin
 router.get('/viewDetailChapter/:id', controller.viewDetailChapter)

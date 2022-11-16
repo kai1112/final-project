@@ -13,6 +13,8 @@ const MangaSchema = mongoose.Schema(
     description: String,
     views: { type: Number, default: 0 },
     like: [{}],
+    status: { type: String, default: 'updating', enum: ['complete', 'updating']},
+    chapOnWeek: Number,
     price: { type: Number, default: 0 },
     reviewManga: {
       type: String,

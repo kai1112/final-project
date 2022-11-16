@@ -1,12 +1,14 @@
 const UserModel = require('../models/user.model')
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+// const { refeshToken } = require('../service/refeshToken')
 
 //view profile
 module.exports.viewProfile = async (req, res) => {
   try {
     // khai bao bien cookies
     const cookies = req.cookies;
+    console.log(req.cookies);
     const user = await UserModel.findOne({ token: cookies.user })
     if (user) {
       res.render('pages/author/profileAuthor/profileAuthor', { user })
@@ -205,13 +207,9 @@ module.exports.banAuthor = async (req, res) => {
 module.exports.giftPointAuthor = async (req, res) => {
   try {
     let user = await UserModel.findOne({ _id: req.body.id });
-    // console.log(115, user);
-    // console.log(116, req.body.money);
     let money = 0;
     money = Number(req.body.money) + user.monney
-    // console.log(117, money);
     if (user) {
-      // await UserModel.findOneAndUpdate({ _id: req.body.id }, { monney: money });
       await UserModel.findOneAndUpdate({ _id: req.body.id }, { monney: money });
     } else {
       res.json({ message: "User not found" })
@@ -225,16 +223,10 @@ module.exports.giftPointAuthor = async (req, res) => {
 
 module.exports.Logout = async (req, res) => {
   try {
-    let token = req.cookies
-    let user = UserModel.findOne({ token: token.user })
-    if (user) {
-      user.token = "";
-      res.cookie("user", user.token);
-      res.render('components/login/login')
-    } else {
-      res.json("nguwoif dung chua dang nhap")
-    }
-  } catch (e) {
-    console.log(e)
+    res.clearCookie("user");
+    res.render('components/login/login')
+  } catch (error) {
+    console.log(error);
+    res.json(error);
   }
 }
