@@ -61,8 +61,6 @@ module.exports.viewRegister = async (req, res) => {
 // register 
 module.exports.register = async (req, res) => {
   try {
-
-
     let user = await UserModel.findOne({ email: req.body.email })
     // console.log(user);
     if (user) {

@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     let imgInp = $('#addfile')[0]
     let blah = $('.preview-image')[0]
@@ -20,24 +19,36 @@ $(document).ready(function () {
             $('.chapterList-component').css({ 'display': 'none' })
             $('.comment-component').css({ 'display': 'none' })
             $('.follow-component').css({ 'display': 'none' })
+            $('.report-component').css({ 'display': 'none' })
         }
         if (aId == 'feature-bar-chapter') {
             $('.des-component').css({ 'display': 'none' })
             $('.chapterList-component').css({ 'display': 'flex' })
             $('.comment-component').css({ 'display': 'none' })
             $('.follow-component').css({ 'display': 'none' })
+            $('.report-component').css({ 'display': 'none' })
+
         }
         if (aId == 'feature-bar-comment') {
             $('.des-component').css({ 'display': 'none' })
             $('.chapterList-component').css({ 'display': 'none' })
             $('.comment-component').css({ 'display': 'flex' })
+            $('.report-component').css({ 'display': 'none' })
             $('.follow-component').css({ 'display': 'none' })
         }
         if (aId == 'feature-bar-follow') {
             $('.des-component').css({ 'display': 'none' })
             $('.chapterList-component').css({ 'display': 'none' })
             $('.comment-component').css({ 'display': 'none' })
+            $('.report-component').css({ 'display': 'none' })
             $('.follow-component').css({ 'display': 'flex' })
+        }
+        if (aId == 'feature-bar-report') {
+            $('.des-component').css({ 'display': 'none' })
+            $('.chapterList-component').css({ 'display': 'none' })
+            $('.comment-component').css({ 'display': 'none' })
+            $('.report-component').css({ 'display': 'flex' })
+            $('.follow-component').css({ 'display': 'none' })
         }
     });
 })
@@ -49,6 +60,11 @@ function click_to_flex(element_click, element_show, class_active) {
 click_to_flex('.category-click', '.cat-submenu-mobile', 'hidden')
 click_to_flex('.chart-click', '.chart-submenu-mobile', 'hidden')
 click_to_flex('.toggle_menu_mobile', '.menu_mobile_content', 'height-fit')
+
+click_to_flex('.toggle-user-feature', '.user-feature', 'hidden')
+click_to_flex('.toggle-noti-feature', '.noti-list', 'hidden')
+
+click_out_to_hide(".user-feature", '.toggle-user-feature')
 function type_search(type) {
     if ($(`.field${type}`).val() != "")
         $(`.result${type}`).css({ 'display': 'flex' })
@@ -59,48 +75,7 @@ function type_search(type) {
 $('.search-result.resultpc').html("")
 
 
-$(document).ready(function () {
-    let imgInp = $('#addfile')[0]
-    let blah = $('.preview-image')[0]
-    let imgSrc = $('.preview-image').attr('src')
-    imgInp.onchange = e => {
-        const [file] = imgInp.files
-        if (file) blah.src = URL.createObjectURL(file)
-    }
-    $('.show-search-bar').click(function () {
-        $('.search-bar').toggle()
-    })
 
-    $('.feature-bar a').click((e) => {
-        $('.nav-active').removeClass('nav-active')
-        $(e.target).addClass('nav-active');
-        let aId = $(e.target).attr('id')
-        if (aId == 'feature-bar-des') {
-            $('.des-component').css({ 'display': 'flex' })
-            $('.chapterList-component').css({ 'display': 'none' })
-            $('.comment-component').css({ 'display': 'none' })
-            $('.follow-component').css({ 'display': 'none' })
-        }
-        if (aId == 'feature-bar-chapter') {
-            $('.des-component').css({ 'display': 'none' })
-            $('.chapterList-component').css({ 'display': 'flex' })
-            $('.comment-component').css({ 'display': 'none' })
-            $('.follow-component').css({ 'display': 'none' })
-        }
-        if (aId == 'feature-bar-comment') {
-            $('.des-component').css({ 'display': 'none' })
-            $('.chapterList-component').css({ 'display': 'none' })
-            $('.comment-component').css({ 'display': 'flex' })
-            $('.follow-component').css({ 'display': 'none' })
-        }
-        if (aId == 'feature-bar-follow') {
-            $('.des-component').css({ 'display': 'none' })
-            $('.chapterList-component').css({ 'display': 'none' })
-            $('.comment-component').css({ 'display': 'none' })
-            $('.follow-component').css({ 'display': 'flex' })
-        }
-    });
-})
 function click_to_flex(element_click, element_show, class_active) {
     $(`${element_click}`).click(function () {
         $(`${element_show}`).toggleClass(class_active)
@@ -316,6 +291,21 @@ async function review(chap) {
         let mangaID = window.location.href.split('/')[4]
         console.log(mangaID);
         window.location.href = `/manga/${mangaID}/${chap}/review`
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function report(id) {
+    try {
+        let slug = window.location.href.split('/')[4]
+        let title = $('#report').val()
+        console.log(title);
+        let data = await $.ajax({
+            url: `/report/createReport`,
+            type: 'post',
+            data: { title, id, slug }
+        })
     } catch (e) {
         console.log(e);
     }

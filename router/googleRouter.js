@@ -14,13 +14,13 @@ passport.use(new GoogleStrategy({
     scope: ['profile', 'email']
 },
 
-    function (accessToken, refreshToken, profile, cb) {
+    async function (accessToken, refreshToken, profile, cb) {
         // console.log(profile);
-        const data = UserModel.findOne({
+        const data = await UserModel.findOne({
             email: profile.emails.value,
         });
         if (!data) {
-            let newUser = UserModel.create({
+            let newUser = await UserModel.create({
                 username: profile.displayName,
                 name: profile.name.givenName,
                 monney: 0,
@@ -28,6 +28,7 @@ passport.use(new GoogleStrategy({
                 role: "user",
             });
         }
+        // console.log(profile);
         a = profile
         return cb(null, { data, profile });
     }

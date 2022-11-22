@@ -6,121 +6,104 @@
 
 .container-SI {
     width: 100%;
-    text-align: center;
-    display: flex;
-    margin: auto;
-    position: relative;
     height: 100vh;
+    background: url(https://thuthuatnhanh.com/wp-content/uploads/2022/05/hinh-nen-may-tinh.jpg);
+    display: flex;
+    justify-content: space-evenly;
 }
 
-.container-SI>img {
-    width: 100%;
+.unsee {
+    width: 25%;
     height: 100%;
 }
 
 .home-SI {
-    width: 22%;
-    position: absolute;
-    right: 0;
-    margin-top: 200px;
+    margin-top: 100px;
+    width: fit-content;
+    height: fit-content;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
 }
 
-.container-SI h1 {
-    margin-bottom: 30px;
+.home-SI h1 {
+    margin-bottom: 25px;
+    font-size: 40px;
 }
 
-.menu-text,
-.menu-tex-button,
-.menu-text-input,
-.quotes {
-    margin-bottom: 20px;
-}
-
-.menu-tex-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.signIn-google,
-.signIn-facebook {
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    width: 200px;
-    font-size: 15px;
+.login_box p {
     margin-bottom: 10px;
+    font-size: 20px;
 }
 
-#email,
-#password {
-    background: transparent;
-}
-
-.signIn-google {
-    background: #ea4335;
-}
-
-/* .signIn-facebook{
-    background: #4267b2;
-} */
-.menu-text-input {
-    padding: 0px 15px 0px 15px;
-}
-
-.input {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-    display: block;
-    width: 300px;
+.login_box input {
+    width: 100%;
+    padding: 5px 10px;
     border: none;
-    border-bottom: 1px solid #757575;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 25px;
 }
 
-input:focus {
-    outline: none;
-}
-
-
-.title-SI {
-    text-align: start;
+.box_button {
     margin-top: 20px;
-    font-size: 15px;
+}
+
+.box_button a {
+    display: block;
+    text-decoration: none;
+}
+
+.box_button a button {
+    background: rgb(106, 175, 255);
+}
+
+.box_button a button i {
+    color: white;
+}
+
+.box_button a button:hover {
+    cursor: pointer;
+    background: red;
+    color: white;
+}
+
+.box_button button,
+.box_button a button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-.menu-tex-button {
-    margin-bottom: 20px;
-}
-
-.signIn {
-    cursor: pointer;
-    background-color: black;
+.signgoogle:hover {
+    background: blue;
     color: white;
-    border-radius: 20px;
-    padding: 10px;
-    width: 200px;
-    font-size: 15px;
-}
-
-.signInGG0,
-.signInFB {
     cursor: pointer;
-    width: 200px;
-    border-radius: 20px;
-    padding: 10px;
 }
 
-.signInGG i {
-    text-align: start;
+.register {
+    background: rgb(251, 255, 146);
 }
 
-.signInFB i {
-    text-align: start;
+.register:hover,
+.signin:hover {
+    background: red;
+    color: white;
+    cursor: pointer;
 }
 
-.link a {
-    color: rgb(87, 179, 116);
-    text-decoration: none;
+.signin {
+    background: rgb(127, 255, 127);
+}
+
+@media screen and (max-width: 850px) {
+    .unsee {
+        display: none;
+    }
 }

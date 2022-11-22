@@ -96,8 +96,8 @@
                         <%=comments.length%>
                     </span></a>
                 <a id="feature-bar-follow">Hâm mộ</a>
-                <!-- <a id="feature-bar-chapter">report <span class="total">
-                    </span></a> -->
+                <a id="feature-bar-report">report <span class="total">
+                    </span></a>
             </div>
             <div class="feature-content">
                 <!-- giới thiệu component -->
@@ -187,6 +187,17 @@
                                 </a>
                             </div>
                             <%})%>
+                    </div>
+                </div>
+                <!-- report -->
+                <div class="report-component ">
+                    <div class="comment-container">
+                        <div class="your-comment">
+                            <textarea name="" id="report" placeholder="Bình luận của bạn"></textarea>
+                            <button class="send-btn" onclick="report('<%=userDetail?._id%>')">
+                                <i class="fas fa-paper-plane    "></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -10,30 +10,28 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/views/components/login/login.css">
 </head>
-<title>Login</title>
-</head>
 
 <body>
-
     <div class="container-SI">
-        <img src="https://thuthuatnhanh.com/wp-content/uploads/2022/05/hinh-nen-may-tinh.jpg" alt="">
+        <div class="unsee"></div>
+        <div class="unsee"></div>
         <div class="home-SI">
-            <h1>Sign In width Email</h1>
-            <div class="menu-text">
-                <p class="quotes"></p>
+            <h1 style="opacity:1">Sign In With Email</h1>
+            <div class="login_box">
+                <p class="">Your Email</p>
+                <input type="email" id="email"></input>
+                <p class="">Your Password</p>
+                <input type="password" id="password"></input>
             </div>
-            <div class="menu-text-input">
-                <p class="title-SI">Your Email</p>
-                <input type="email" id="email" class="input"></input>
-                <p class="title-SI">Your Password</p>
-                <input type="password" id="password" class="input"></input>
-            </div>
-            <div class="menu-tex-button">
-                <a href="/google/login/federated/google"><button class="signIn-google">Sign In with Google</button></a>
-                <button class="signIn" onclick="login()">Sign in</button>
-            </div>
-            <div class="menu-tex-button">
-                <button class="signIn" onclick="register()">register</button>
+            <div class="box_button">
+                <a href="/google/login/federated/google">
+                    <button class="signgoogle">
+                        <i class="fa-brands fa-google"></i>
+                        Sign In with Google
+                    </button>
+                </a>
+                <button class="signin" onclick="login()">Sign In</button>
+                <button class="register" onclick="register()">Register</button>
             </div>
         </div>
     </div>

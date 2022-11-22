@@ -314,7 +314,7 @@ module.exports.userViewMangaDetail = async (req, res) => {
         if (a?.cookie) {
             userDetails = await UserModel.findOne({ token: req.cookies.user })
         }
-        let buyed = mangaDetail.buyed
+        let buyed = mangaDetail?.buyed
         let checked = false
         if (userDetails && buyed.length > 0) {
             let userID = buyed.filter((id) => {
@@ -357,15 +357,26 @@ module.exports.userViewMangaDetail = async (req, res) => {
 
 module.exports.userViewPagination = async (req, res) => {
     try {
-        let listManga = await MangaModel.find().skip(10 * (req.query.page - 1)).limit(10);
+        console.log(req.query.page);
+        let a = await header(req, res);
+        let page = req.query.page;
+        let listManga = await MangaModel.find().skip(1 * (req.query.page - 1)).limit(1);
+        let allManga = await MangaModel.find();
         // console.log(listManga);
+        let total = Math.ceil(allManga.length / 1)
         let chapter = []
         for (let i = 0; i < listManga.length; i++) {
             let chap = await ChapterModel.find({ mangaID: listManga[i]._id }).sort({ chap: 'asc' })
             chapter.push(chap)
         }
+        let d = new Date();
+        let listChapter = []
+        for (let i = 0; i < listManga.length; i++) {
+            let listChap = await ChapterModel.find({ mangaID: listManga[i].id }).sort({ chap: 'asc' })
+            listChapter.push(listChap)
+        }
         if (listManga) {
-            res.render('pages/home/home/pagination', { listManga, chapter })
+            res.render('pages/home/home/pagination', { d, listManga, chapter, listChapter, total, userDetail: a.userDetail, page })
         }
     } catch (error) {
         console.log(error)
@@ -374,6 +385,7 @@ module.exports.userViewPagination = async (req, res) => {
 
 module.exports.HomePage = async (req, res) => {
     try {
+        let page = 1
         let a = await header(req, res);
         let manga = await MangaModel.find().sort({ views: 'desc' }).limit(5)
         let muaNhieu = await MangaModel.find().sort({ buyed: 'desc' }).limit(7)
@@ -400,7 +412,8 @@ module.exports.HomePage = async (req, res) => {
         // console.log(393, comment);
 
         let listManga = await MangaModel.find().skip(10 * (req.query.page - 1)).limit(10).sort({ views: 'desc' });
-        let total = Math.ceil(manga.length / 10)
+        let allManga = await MangaModel.find()
+        let total = Math.ceil(allManga.length / 10)
         let chapter = []
         for (let i = 0; i < manga.length; i++) {
             let chap = await ChapterModel.find({ mangaID: manga[i].id }).sort({ chap: 'asc' })
@@ -415,7 +428,7 @@ module.exports.HomePage = async (req, res) => {
 
         // console.log(chapter[2]);
         let d = new Date();
-        res.render('pages/home/home/home', { d, manga, listChapter, chapter, userDetail: a.userDetail, category: a.category, muaNhieu, user: a.user, comment, total, listManga })
+        res.render('pages/home/home/home', { page, d, manga, listChapter, chapter, userDetail: a.userDetail, category: a.category, muaNhieu, user: a.user, comment, total, listManga })
     } catch (e) {
         console.log(e);
     }

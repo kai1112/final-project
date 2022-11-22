@@ -15,12 +15,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get('/authorProfile', auth.checkToken, auth.checkRoleAuthor, controller.viewProfile)
-router.patch('/change-name', auth.checkToken, auth.checkRoleAuthor, controller.ChangeUserName)
+router.get('/authorProfile', auth.checkToken, controller.viewProfile)
+router.patch('/change-name', auth.checkToken, controller.ChangeUserName)
 router.patch('/change-des', auth.checkToken, controller.ChangeUserDes)
-router.post('/change-avatar', auth.checkToken, auth.checkRoleAuthor, upload.single('avatar'), controller.ChangeUserAvatar)
-router.patch('/change-email', auth.checkToken, auth.checkRoleAuthor, controller.ChangeUserEmail)
-router.patch('/change-password', auth.checkToken, auth.checkRoleAuthor, controller.ChangeUserPassword)
+router.post('/change-avatar', auth.checkToken, upload.single('avatar'), controller.ChangeUserAvatar)
+router.patch('/change-email', auth.checkToken, controller.ChangeUserEmail)
+router.patch('/change-password', auth.checkToken, controller.ChangeUserPassword)
 
 // create author 
 router.get('/viewCreateAuthor', auth.checkToken, auth.checkRoleAdmin, controller.viewCreateAuthor)
